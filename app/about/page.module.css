@@ -1,0 +1,14 @@
+.about {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 3;
+}
+
+.title {
+  position: relative;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: 0.72px;
+  color: var(--text-primary);
+}
