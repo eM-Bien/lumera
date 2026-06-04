@@ -1,0 +1,108 @@
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh; /* usuń, jeśli osadzasz w mniejszym kontenerze */
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% 38%, #1a1140 0%, #0a0720 42%, #05030f 100%);
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Zdjęcie w tle (pod canvasem). Kolejność w DOM: .bg, .scrim, .canvas. */
+.bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* Przyciemnienie zdjęcia — kontrast pod złote logo. Kolor ustawia JS (prop scrim). */
+.scrim {
+  position: absolute;
+  inset: 0;
+}
+
+/* PRAWDZIWE logo — ostre SVG, pojawia się na końcu dokładnie w miejscu drobinek */
+.logo {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  filter: drop-shadow(0 0 26px rgba(216, 193, 160, 0));
+  transition: opacity 1.1s ease, filter 1.1s ease;
+}
+.logo.show {
+  opacity: 1;
+  filter: drop-shadow(0 0 30px rgba(216, 193, 160, 0.45));
+}
+
+/* Tagline jako tekst (font Cinzel z next/font). Pozycję i rozmiar ustawia JS
+   względem boxu logo; tu tylko wygląd i animacja pojawiania. */
+.tagline {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em; /* kompensuje światło po ostatniej literze przy wyśrodkowaniu */
+  line-height: 1;
+  white-space: nowrap;
+  color: #d8c1a0;
+  opacity: 0;
+  transform: translateY(calc(-50% + 12px));
+  transition: opacity 1.1s ease, transform 1.1s ease;
+}
+.tagline.show {
+  opacity: 1;
+  transform: translateY(-50%);
+}
+
+/* delikatna winieta dla głębi */
+.vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(70% 60% at 50% 45%, transparent 55%, rgba(3, 2, 12, 0.55) 100%);
+}
+
+.replay {
+  position: absolute;
+  left: 50%;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 3;
+
+  font: 500 14px/1 Georgia, "Times New Roman", serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #e9dcc1;
+  cursor: pointer;
+
+  padding: 12px 26px;
+  border-radius: 999px;
+  background: rgba(216, 193, 160, 0.06);
+  border: 1px solid rgba(216, 193, 160, 0.35);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: 0.25s ease;
+}
+
+.replay:hover {
+  background: rgba(216, 193, 160, 0.16);
+  border-color: rgba(216, 193, 160, 0.7);
+  box-shadow: 0 0 28px rgba(216, 193, 160, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* animacja sama redukuje ruch; tu nic nie trzeba */
+}
