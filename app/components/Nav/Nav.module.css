@@ -1,7 +1,8 @@
 .nav {
   position: absolute;
   display: flex;
-  justify-content: flex-end;
+  right: 20px;
   gap: 16px;
   padding: 16px;
+  z-index: 3;
 }
