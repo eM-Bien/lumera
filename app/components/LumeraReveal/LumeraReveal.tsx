@@ -16,7 +16,7 @@ const cinzel = Cinzel({
 /* =====================================================================
    Silnik animacji: drobinki światła dryfują, po czym łukami zlatują się
    do pikseli logo i "stygną" do złota (#d8c1a0). Po złożeniu drobinki
-   przygasają do halo, a na wierzch wjeżdża OSTRE, prawdziwe SVG logo.
+   ZNIKAJĄ (haloGlow = 0), a na wierzch wjeżdża OSTRE, prawdziwe SVG logo.
    Czysty Canvas 2D, bez zależności.
 
    Użycie (poza Reactem):
@@ -63,9 +63,9 @@ export interface LumeraOptions {
   loop?: boolean;
   /** Pauza przed pętlą [s]. */
   loopDelay?: number;
-  /** Jak mocno przygasić drobinki po złożeniu (halo za logo). */
+  /** Jak mocno przygasić drobinki po złożeniu. 0 = znikają całkowicie. */
   haloGlow?: number;
-  /** Czas przygaszania [s]. */
+  /** Czas przygaszania / znikania [s]. */
   haloFade?: number;
   /** Wywołane gdy logo złożone (czas na pokazanie prawdziwego SVG). */
   onComplete?: (() => void) | null;
@@ -152,7 +152,8 @@ export function createLumeraReveal(
     autoplay: true,
     loop: false,
     loopDelay: 2.4,
-    haloGlow: 0.5,
+    // 0 = drobinki ZNIKAJĄ po złożeniu logo (poprzednio 0.5 = zostawało halo)
+    haloGlow: 0,
     haloFade: 1.2,
     onComplete: null,
     onLayout: null,
@@ -220,6 +221,15 @@ export function createLumeraReveal(
   let t0 = 0;
 
   function computeBox(): void {
+    // ============================================================
+    //  ROZMIAR LOGO  ←  TUTAJ POWIĘKSZASZ / POMNIEJSZASZ LOGO
+    //  cfg.logoFrac = ułamek min(szerokość, wysokość) kontenera.
+    //    • większa wartość  =  WIĘKSZE logo  (np. 0.75)
+    //    • mniejsza wartość =  MNIEJSZE logo (np. 0.45)
+    //  Steruje JEDNOCZEŚNIE: drobinkami, ostrym SVG logo i taglinem,
+    //  bo wszystko pozycjonuje się względem tego `box`.
+    //  Wartość ustawiasz propem <LumeraReveal logoFrac={0.6} />.
+    // ============================================================
     const size = Math.min(W, H) * cfg.logoFrac;
     box = { x: (W - size) / 2, y: (H - size) / 2, w: size, h: size };
   }
@@ -292,11 +302,14 @@ export function createLumeraReveal(
   }
 
   function drawParticles(t: number, elapsed: number): void {
-    ctx!.globalCompositeOperation = "lighter";
-    // po złożeniu drobinki przygasają do delikatnego halo za prawdziwym logo
+    // po złożeniu drobinki gasną; cfg.haloGlow = 0 => ZNIKAJĄ całkowicie
     const halo = completed
       ? 1 - (1 - cfg.haloGlow) * smooth(0, cfg.haloFade, elapsed - completeAt)
       : 1;
+    // gdy zgasły do zera — w ogóle ich nie rysujemy: logo zostaje czyste,
+    if (completed && halo <= 0.001) return;
+
+    ctx!.globalCompositeOperation = "lighter";
     for (const p of parts) {
       let lt = (elapsed - p.delay) / p.dur; // 0..1 postęp lotu
       if (lt < 0) lt = 0;
@@ -488,6 +501,17 @@ export interface LumeraRevealProps {
   stagger?: number;
   /** Liczba drobinek (więcej = gęściej, ale wolniej). */
   maxParticles?: number;
+  /**
+   * ROZMIAR LOGO — ułamek min(szerokość, wysokość) kontenera.
+   * Większe = większe logo, mniejsze = mniejsze logo. Domyślnie 0.6.
+   * Przykłady: 0.45 (mniejsze), 0.6 (domyślne), 0.75 (większe).
+   */
+  logoFrac?: number;
+  /**
+   * Jak mocno drobinki świecą PO złożeniu logo.
+   * 0 = drobinki ZNIKAJĄ całkowicie (domyślnie). 0.5 = zostaje halo jak wcześniej.
+   */
+  haloGlow?: number;
   /** Zapętlenie animacji. */
   loop?: boolean;
   /** Dodatkowa klasa na kontener. */
@@ -503,10 +527,14 @@ export interface LumeraRevealProps {
 }
 
 export default function LumeraReveal({
-  src = "/lumera.svg",
+  src = "/lumera-logo.svg",
   gather = 2.8,
   stagger = 1.5,
   maxParticles = 3000,
+  // ROZMIAR LOGO: zwiększ, by powiększyć; zmniejsz, by pomniejszyć.
+  logoFrac = 0.6,
+  // 0 = drobinki znikają po pojawieniu się logo.
+  haloGlow = 0,
   loop = false,
   className = "",
   background,
@@ -537,8 +565,8 @@ export default function LumeraReveal({
         // tam, gdzie napis był w oryginale (≈0.805 wysokości logo), skala wg szerokości
         tag.style.left = `${box.x}px`;
         tag.style.width = `${box.w}px`;
-        tag.style.top = `${box.y + box.h * 0.805}px`;
-        tag.style.fontSize = `${box.w * 0.0287}px`;
+        tag.style.top = `${box.y + box.h * 0.85}px`;
+        tag.style.fontSize = `${box.w * 0.04}px`;
       }
     };
 
@@ -547,6 +575,8 @@ export default function LumeraReveal({
       gather,
       stagger,
       maxParticles,
+      logoFrac, // <- ROZMIAR LOGO (większe / mniejsze)
+      haloGlow, // <- 0 = drobinki znikają po złożeniu logo
       loop,
       onLayout: layout, // logo i tagline trzymają się nad drobinkami
       onReplay: () => {
@@ -567,7 +597,7 @@ export default function LumeraReveal({
     return () => reveal.destroy();
     // celowo bez onComplete w deps, by nie re-inicjalizować animacji
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [src, gather, stagger, maxParticles, loop]);
+  }, [src, gather, stagger, maxParticles, logoFrac, haloGlow, loop]);
 
   return (
     <div className={`${styles.stage} ${className}`}>

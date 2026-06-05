@@ -1,12 +1,12 @@
 import styles from "./page.module.css";
 import LumeraReveal from "./components/LumeraReveal/LumeraReveal";
-// import About from "./about/page";
+import Nav from "./components/Nav/Nav";
 
 export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        {/* <About /> */}
+        <Nav />
         <div className={styles.reveal}>
           <LumeraReveal
             tagline="Harmonia twarzy i ciała"
