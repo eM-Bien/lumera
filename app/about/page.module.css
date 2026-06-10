@@ -2,12 +2,13 @@
   background: var(--background);
   color: #d8c1a0;
   min-height: 100dvh;
-  font-family: var(--font-cinzel), serif;
+  /* font-family: var(--font-cinzel), serif; */
+  font-family: Arial, Helvetica, sans-serif, serif;
 }
 
 /* sekcja powitalna — pierwszy nagłówek widoczny od razu */
 .hero {
-  min-height: 100dvh;
+  min-height: 50dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,10 +17,10 @@
 
 /* kolejne bloki — każdy zajmuje sporo wysokości, żeby scroll je odsłaniał */
 .block {
-  min-height: 90vh;
+  min-height: 30vh;
   display: flex;
   align-items: center; /* dla krótkich; przy bardzo długich rozważ flex-start */
-  padding: 6vh 6vw; /* trochę oddechu w pionie */
+  padding: 1vh 6vw; /* trochę oddechu w pionie */
 }
 
 .spacer {
@@ -39,12 +40,11 @@
   font-size: clamp(3rem, 6vw, 12rem);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  text-align: center;
 }
 
 .h2 {
-  font-size: clamp(2rem, 3vw, 8rem);
-  max-width: 28ch; /* łamie długie zdania na kilka wierszy — ładniejszy rytm */
+  font-size: clamp(2rem, 2vw, 8rem);
+  max-width: 50%; /* łamie długie zdania na kilka wierszy — ładniejszy rytm */
 }
 
 /* każde słowo: przygaszone, płynne dochodzenie krycia steruje JS przy scrollu */

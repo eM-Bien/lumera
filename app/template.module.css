@@ -1,0 +1,21 @@
+.enter {
+  opacity: 0;
+  /* startuje z lekkiego przyciemnienia — wynurza się z ciemności po exit */
+  filter: brightness(0.4);
+  transition:
+    opacity 0.9s ease,
+    filter 0.9s ease;
+}
+
+.entered {
+  opacity: 1;
+  filter: brightness(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter {
+    opacity: 1;
+    filter: none;
+    transition: none;
+  }
+}
