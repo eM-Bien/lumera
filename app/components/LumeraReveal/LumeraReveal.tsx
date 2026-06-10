@@ -524,6 +524,8 @@ export interface LumeraRevealProps {
   tagline?: string;
   /** Callback po złożeniu logo. */
   onComplete?: () => void;
+  /** Animacja wyjścia */
+  exiting?: boolean;
 }
 
 export default function LumeraReveal({
@@ -541,6 +543,7 @@ export default function LumeraReveal({
   scrim = 0.5,
   tagline = "Harmonia twarzy i ciała",
   onComplete,
+  exiting = false,
 }: LumeraRevealProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
@@ -600,7 +603,9 @@ export default function LumeraReveal({
   }, [src, gather, stagger, maxParticles, logoFrac, haloGlow, loop]);
 
   return (
-    <div className={`${styles.stage} ${className}`}>
+    <div
+      className={`${styles.stage} ${className} ${exiting ? styles.exiting : ""}`}
+    >
       {/* Zdjęcie w tle + przyciemnienie — pod canvasem; drobinki świecą na zdjęciu */}
       {background && (
         <>

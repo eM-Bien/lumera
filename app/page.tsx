@@ -6,13 +6,26 @@ import Nav from "./components/Nav/Nav";
 import InkBackground from "./components/InkBackground/InkBackground";
 import InkBlobFilter from "./components/InkBlobFilter/InkBlobFilter";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import ExitTransition from "./components/ExitTransition/ExitTransition";
+
+const EXIT_MS = 850;
 
 export default function Home() {
   const [revealed, setRevealed] = useState(false);
+  const [exiting, setExiting] = useState(false);
+  const router = useRouter();
+
+  const handleNavigate = (href: string) => {
+    if (exiting) return;
+    setExiting(true);
+    setTimeout(() => router.push(href), EXIT_MS);
+  };
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <Nav show={revealed} />
+        <Nav show={revealed} onNavigate={handleNavigate} />
         <div className={styles.reveal}>
           <LumeraReveal
             tagline="Harmonia twarzy i ciała"
@@ -30,6 +43,7 @@ export default function Home() {
         />
         <InkBlobFilter />
         <div className={styles.vignette} />
+        <ExitTransition exiting={exiting} />
       </main>
     </div>
   );
