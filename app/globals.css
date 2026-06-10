@@ -1,3 +1,5 @@
+@import "lenis/dist/lenis.css";
+
 :root {
   --background: #03020c;
   --foreground: #171717;
