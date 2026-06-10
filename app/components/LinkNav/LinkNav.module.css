@@ -1,0 +1,103 @@
+/* =========================================================================
+   NavButton — efekt hover (odwzorowanie immersive-g.com, paleta LUMERA)
+
+   Strojenie przez zmienne:
+   --nav-ink        kolor tekstu w spoczynku
+   --nav-gold       kolor tekstu + strzałki na hoverze
+   --nav-arrow-gap  ile miejsca rezerwujemy na strzałkę (steruje przesunięciem)
+   --nav-blob       RGB plamy; --nav-blob-blend tryb mieszania
+   ========================================================================= */
+
+.navButton {
+  --nav-ink: #ffffff; /* tekst w spoczynku                          */
+  --nav-gold: #131313; /* tekst + strzałka na hoverze                */
+  --nav-arrow-gap: 1.5em; /* szerokość strefy strzałki               */
+  --nav-blob: 229, 205, 160; /* RGB plamy. Na jasnym tle daj ciemny  */
+  --nav-blob-blend: screen; /* 'screen' rozjaśnia; na jasnym → 'multiply' */
+
+  --nav-ease: cubic-bezier(0.445, 0.05, 0.55, 0.95); /* ease-in-out */
+  --nav-ease-out: cubic-bezier(0.39, 0.575, 0.565, 1); /* ease-out  */
+
+  --nav-arrow-opacity: 0;
+  --nav-arrow-x: -0.45em;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* --- Rozlewająca się plama pod napisem ---------------------------------- */
+.blob {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 55em; /* duży rozlew daleko poza tekst */
+  height: 36em;
+  transform: translate(-50%, -50%) scale(0.2);
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(var(--nav-blob), 0.5),
+    rgba(var(--nav-blob), 0.22) 45%,
+    rgba(var(--nav-blob), 0) 72%
+  );
+  filter: blur(36px) url(#lumera-ink-blob);
+  mix-blend-mode: var(--nav-blob-blend);
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+  transition:
+    opacity 0.6s var(--nav-ease-out),
+    transform 0.9s var(--nav-ease);
+  will-change: opacity, transform;
+}
+
+/* --- Tekst -------------------------------------------------------------- */
+.label {
+  display: inline-block;
+  color: var(--nav-ink);
+  transform: translateX(calc(var(--nav-arrow-gap) / 2));
+  transition:
+    color 0.8s var(--nav-ease),
+    transform 0.8s var(--nav-ease);
+  will-change: color, transform;
+}
+
+/* --- Stan hover / focus ------------------------------------------------- */
+.navButton:hover,
+.navButton:focus-visible {
+  --nav-arrow-opacity: 1;
+  --nav-arrow-x: 0;
+}
+
+.navButton:hover .blob,
+.navButton:focus-visible .blob {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.navButton:hover .label,
+.navButton:focus-visible .label {
+  color: var(--nav-gold);
+  transform: translateX(0);
+}
+
+/* --- Dostępność --------------------------------------------------------- */
+.navButton:focus-visible {
+  outline: 2px solid var(--nav-gold);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .label,
+  .blob {
+    transition-duration: 0.01ms;
+  }
+}
