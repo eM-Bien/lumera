@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { Cinzel } from "next/font/google";
 import styles from "./LumeraReveal.module.css";
 import LightsBackground from "../LightsBackground";
+import { skip } from "node:test";
 
 // Font tagline ładowany przez next/font — zero plików do hostowania.
 // subset latin-ext zawiera polskie znaki (m.in. Ł).
@@ -526,6 +527,8 @@ export interface LumeraRevealProps {
   onComplete?: () => void;
   /** Animacja wyjścia */
   exiting?: boolean;
+  /* intro tylko na start*/
+  skipIntro?: boolean;
 }
 
 export default function LumeraReveal({
@@ -544,6 +547,7 @@ export default function LumeraReveal({
   tagline = "Harmonia twarzy i ciała",
   onComplete,
   exiting = false,
+  skipIntro = false,
 }: LumeraRevealProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
@@ -581,6 +585,7 @@ export default function LumeraReveal({
       logoFrac, // <- ROZMIAR LOGO (większe / mniejsze)
       haloGlow, // <- 0 = drobinki znikają po złożeniu logo
       loop,
+      autoplay: !skipIntro,
       onLayout: layout, // logo i tagline trzymają się nad drobinkami
       onReplay: () => {
         img?.classList.remove(styles.show);
@@ -594,13 +599,20 @@ export default function LumeraReveal({
     });
     apiRef.current = reveal;
     reveal.ready
-      .then(() => layout(reveal.getBox()))
+      .then(() => {
+        layout(reveal.getBox());
+        if (skipIntro) {
+          img?.classList.add(styles.show);
+          tag?.classList.add(styles.show);
+          onComplete?.();
+        }
+      })
       .catch((e: unknown) => console.error("[LumeraReveal]", e));
 
     return () => reveal.destroy();
     // celowo bez onComplete w deps, by nie re-inicjalizować animacji
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [src, gather, stagger, maxParticles, logoFrac, haloGlow, loop]);
+  }, [src, gather, stagger, maxParticles, logoFrac, haloGlow, loop, skipIntro]);
 
   return (
     <div

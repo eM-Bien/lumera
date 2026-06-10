@@ -5,16 +5,29 @@ import LumeraReveal from "./components/LumeraReveal/LumeraReveal";
 import Nav from "./components/Nav/Nav";
 import InkBackground from "./components/InkBackground/InkBackground";
 import InkBlobFilter from "./components/InkBlobFilter/InkBlobFilter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ExitTransition from "./components/ExitTransition/ExitTransition";
 
+const INTRO_KEY = "lumera_intro_seen";
 const EXIT_MS = 850;
 
 export default function Home() {
   const [revealed, setRevealed] = useState(false);
   const [exiting, setExiting] = useState(false);
+  const [skipIntro, setSkipIntro] = useState<boolean | null>(null);
+
   const router = useRouter();
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setSkipIntro(sessionStorage.getItem(INTRO_KEY) === "true");
+  }, []);
+
+  const handleComplete = () => {
+    setRevealed(true);
+    sessionStorage.setItem(INTRO_KEY, "true");
+  };
 
   const handleNavigate = (href: string) => {
     if (exiting) return;
@@ -27,12 +40,15 @@ export default function Home() {
       <main className={styles.main}>
         <Nav show={revealed} onNavigate={handleNavigate} />
         <div className={styles.reveal}>
-          <LumeraReveal
-            tagline="Harmonia twarzy i ciała"
-            background="/magic-forest.png"
-            scrim={0.6}
-            onComplete={() => setRevealed(true)}
-          />
+          {skipIntro !== null && (
+            <LumeraReveal
+              tagline="Harmonia twarzy i ciała"
+              background="/magic-forest.png"
+              scrim={0.6}
+              skipIntro={skipIntro}
+              onComplete={handleComplete}
+            />
+          )}
         </div>
         <InkBackground
           zIndex={2} /* nad zdjęciem, pod nawigacją */

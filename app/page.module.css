@@ -1,5 +1,5 @@
 .page {
-  --background: #fafafa;
+  --background: #03020c;
   --foreground: #fff;
 
   --text-primary: #d8c1a0;
@@ -23,6 +23,7 @@
   width: 100dvw;
   height: 100dvh;
   overflow: hidden;
+  background-color: var(--background);
 }
 
 .reveal {
