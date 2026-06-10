@@ -1,0 +1,29 @@
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: var(--nav-arrow-gap, 1.5em);
+  padding-left: 0.4em;
+  color: var(--nav-gold, currentColor);
+
+  opacity: var(--nav-arrow-opacity, 0);
+  transform: translateX(var(--nav-arrow-x, -0.45em));
+
+  /* opóźnienie 0.2s zostaje na samej strzałce */
+  transition:
+    opacity 0.5s var(--nav-ease-out, ease) 0.2s,
+    transform 0.5s var(--nav-ease-out, ease) 0.2s;
+  will-change: opacity, transform;
+}
+
+.arrow svg {
+  width: 1em;
+  height: 1em;
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow {
+    transition-duration: 0.01ms;
+  }
+}
