@@ -1,8 +1,9 @@
 .nav {
   position: absolute;
   display: flex;
-  right: 20px;
-  gap: 16px;
-  padding: 16px;
+  top: 2vh;
+  right: 2vh;
+  gap: 2vh;
+  padding: 2vh;
   z-index: 3;
 }

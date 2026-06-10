@@ -25,8 +25,8 @@
   display: inline-flex;
   align-items: center;
   text-decoration: none;
-  font-size: 1rem;
-  letter-spacing: 0.14em;
+  font-size: 2vh;
+  /* letter-spacing: 0.14em; */
   text-transform: uppercase;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -43,8 +43,8 @@
   border-radius: 50%;
   background: radial-gradient(
     closest-side,
-    rgba(var(--nav-blob), 0.5),
-    rgba(var(--nav-blob), 0.22) 45%,
+    #587891,
+    rgb(40 51 68 / 50%) 45%,
     rgba(var(--nav-blob), 0) 72%
   );
   filter: blur(36px) url(#lumera-ink-blob);
@@ -62,6 +62,7 @@
 .label {
   display: inline-block;
   color: var(--nav-ink);
+  font-weight: 500;
   transform: translateX(calc(var(--nav-arrow-gap) / 2));
   transition:
     color 0.8s var(--nav-ease),
