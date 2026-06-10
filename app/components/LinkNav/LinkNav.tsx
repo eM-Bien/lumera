@@ -1,7 +1,6 @@
 import styles from "./LinkNav.module.css";
 import Link from "next/link";
 import Arrow from "../Arrow/Arrow";
-import { on } from "events";
 
 type LinkNavProps = {
   href: string;

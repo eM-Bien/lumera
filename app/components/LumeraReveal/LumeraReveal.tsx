@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import { Cinzel } from "next/font/google";
 import styles from "./LumeraReveal.module.css";
 import LightsBackground from "../LightsBackground";
-import { skip } from "node:test";
 
 // Font tagline ładowany przez next/font — zero plików do hostowania.
 // subset latin-ext zawiera polskie znaki (m.in. Ł).
