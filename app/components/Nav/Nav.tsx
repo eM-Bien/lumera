@@ -7,9 +7,9 @@ const links = [
   { href: "/kontakt", name: "Kontakt" },
 ];
 
-export default function Nav() {
+export default function Nav({ show = false }: { show?: boolean }) {
   return (
-    <nav className={styles.nav}>
+    <nav className={`${styles.nav} ${show ? styles.visible : ""}`}>
       {links.map(({ href, name }) => (
         <LinkNav key={href} href={href} name={name} />
       ))}

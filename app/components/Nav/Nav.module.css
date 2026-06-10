@@ -6,4 +6,16 @@
   gap: 2vh;
   padding: 2vh;
   z-index: 3;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition:
+    opacity 0.9s ease 0.6s,
+    transform 0.9s ease 0.6s;
+}
+
+.nav.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }

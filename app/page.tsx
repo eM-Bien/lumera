@@ -1,19 +1,24 @@
+"use client";
+
 import styles from "./page.module.css";
 import LumeraReveal from "./components/LumeraReveal/LumeraReveal";
 import Nav from "./components/Nav/Nav";
 import InkBackground from "./components/InkBackground/InkBackground";
 import InkBlobFilter from "./components/InkBlobFilter/InkBlobFilter";
+import { useState } from "react";
 
 export default function Home() {
+  const [revealed, setRevealed] = useState(false);
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <Nav />
+        <Nav show={revealed} />
         <div className={styles.reveal}>
           <LumeraReveal
             tagline="Harmonia twarzy i ciała"
             background="/magic-forest.png"
             scrim={0.6}
+            onComplete={() => setRevealed(true)}
           />
         </div>
         <InkBackground
