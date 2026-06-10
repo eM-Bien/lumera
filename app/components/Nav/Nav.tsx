@@ -10,7 +10,7 @@ export default function Nav() {
         <span className={styles.label}>O Lumera</span>
         <Arrow />
       </Link>
-      <Link href="/testaa" className={`${styles.navButton}`}>
+      <Link href="/test" className={`${styles.navButton}`}>
         <span className={styles.blob} aria-hidden="true" />
         <span className={styles.label}>Zabiegi</span>
         <Arrow />
