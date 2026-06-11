@@ -9,7 +9,7 @@
 
 .entered {
   opacity: 1;
-  filter: brightness(1);
+  filter: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

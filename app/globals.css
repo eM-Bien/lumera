@@ -50,3 +50,20 @@ a {
     color-scheme: dark;
   }
 }
+
+@keyframes sprigSway {
+  0%,
+  100% {
+    rotate: -2.5deg;
+  }
+  50% {
+    rotate: 2.5deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* zatrzymaj kołysanie */
+  [style*="sprigSway"] {
+    animation: none !important;
+  }
+}

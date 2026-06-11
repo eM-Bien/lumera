@@ -1,30 +1,60 @@
-import styles from "./page.module.css";
-import ScrollReveal from "./ScrollReveal";
+"use client";
 
-export default function About() {
+import { useEffect, useState } from "react";
+import { Cinzel } from "next/font/google";
+import WaterLetter, { LetterBox } from "../components/WaterLetter/WaterLetter";
+import Sprig from "../components/Sprig/Sprig";
+import LightsBackground from "../components/LightsBackground";
+import ScrollReveal from "./ScrollReveal";
+import styles from "./page.module.css";
+import LetterBackground from "../components/LetterBackground/LetterBackground";
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+});
+
+export default function AboutPage() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setReady(true), 1000);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <main className={styles.about}>
+      {ready && (
+        <LetterBackground
+          fontFamily={cinzel.style.fontFamily}
+          gold={[240, 235, 235]}
+          scale={1} // ← rozmiar całej kompozycji
+          letterFrac={0.45} // ← rozmiar samej litery
+        />
+      )}
+      <LightsBackground />
+
       <section className={styles.hero}>
         <ScrollReveal as="h1" className={styles.h1} text="O Lumera" />
       </section>
 
-      <section className={styles.block}>
+      <section className={`${styles.block}  ${styles.left}`}>
         <ScrollReveal
           as="h2"
           className={styles.h2}
-          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae ornare leo. Sed nisi odio, laoreet blandit efficitur nec, rhoncus eget mi. Sed ac nunc ac orci semper faucibus sed sed purus. Vestibulum fermentum mi neque, id auctor diam laoreet id. Integer molestie ut nibh eu semper. Integer consectetur massa sit amet diam volutpat, in consequat elit maximus. Ut eu mauris sit amet ex pulvinar posuere tempor eget orci. Aenean scelerisque a eros sit amet laoreet. Aliquam laoreet arcu id bibendum suscipit. Curabitur vel sapien tortor. Vivamus commodo dignissim turpis in fermentum. Curabitur faucibus lorem risus, feugiat placerat dolor tempus id. Sed et tempor mauris, eu venenatis diam. Aenean ut pulvinar nisi. Proin tincidunt nulla sit amet turpis mattis, sit amet ultrices eros finibus. Nam varius magna eget tortor tincidunt, a sagittis elit placerat."
+          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae ornare leo. Sed nisi odio, laoreet blandit efficitur nec, rhoncus eget mi. Sed ac nunc ac orci semper faucibus sed sed purus. Vestibulum fermentum mi neque, id auctor diam laoreet id. Integer molestie ut nibh eu semper. Integer consectetur massa sit amet diam volutpat, in consequat elit maximus."
         />
       </section>
 
-      <section className={styles.block}>
+      <section className={`${styles.block} ${styles.right}`}>
         <ScrollReveal
           as="h2"
           className={styles.h2}
-          text="Sed do eiusmod tempor incididunt ut labore et dolore magna"
+          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae ornare leo. Sed nisi odio, laoreet blandit efficitur nec, rhoncus eget mi. Sed ac nunc ac orci semper faucibus sed sed purus. Vestibulum fermentum mi neque, id auctor diam laoreet id. Integer molestie ut nibh eu semper. Integer consectetur massa sit amet diam volutpat, in consequat elit maximus."
         />
       </section>
 
-      <section className={styles.block}>
+      <section className={`${styles.block} ${styles.left}`}>
         <ScrollReveal
           as="h2"
           className={styles.h2}

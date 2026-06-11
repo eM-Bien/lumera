@@ -1,26 +1,45 @@
 .about {
-  background: var(--background);
+  background: radial-gradient(
+    ellipse at center,
+    #0a0720 0%,
+    #060414 45%,
+    #000000 100%
+  );
   color: #d8c1a0;
   min-height: 100dvh;
-  /* font-family: var(--font-cinzel), serif; */
   font-family: Arial, Helvetica, sans-serif, serif;
+}
+
+.letterWrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
 /* sekcja powitalna — pierwszy nagłówek widoczny od razu */
 .hero {
-  min-height: 50dvh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-top: 12vh;
+  /* min-height: 50dvh; */
   padding: 0 6vw;
+  font-family: Cinzel, serif;
 }
 
 /* kolejne bloki — każdy zajmuje sporo wysokości, żeby scroll je odsłaniał */
 .block {
-  min-height: 30vh;
+  min-height: 40vh;
   display: flex;
   align-items: center; /* dla krótkich; przy bardzo długich rozważ flex-start */
-  padding: 1vh 6vw; /* trochę oddechu w pionie */
+  padding: 0 6vw; /* trochę oddechu w pionie */
+}
+
+.left {
+  justify-content: flex-start;
+}
+.right {
+  justify-content: flex-end;
+  text-align: right;
 }
 
 .spacer {
@@ -37,14 +56,14 @@
 /* DUŻE nagłówki — rozmiar w vw, czyli skaluje się z szerokością okna.
    clamp() trzyma sensowne granice na bardzo małych i bardzo dużych ekranach. */
 .h1 {
-  font-size: clamp(3rem, 6vw, 12rem);
+  font-size: clamp(2rem, 4vw, 12rem);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
 .h2 {
-  font-size: clamp(2rem, 2vw, 8rem);
-  max-width: 50%; /* łamie długie zdania na kilka wierszy — ładniejszy rytm */
+  font-size: clamp(1.5rem, 1vw, 4rem);
+  max-width: 42%; /* łamie długie zdania na kilka wierszy — ładniejszy rytm */
 }
 
 /* każde słowo: przygaszone, płynne dochodzenie krycia steruje JS przy scrollu */
