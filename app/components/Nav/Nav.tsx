@@ -1,9 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import LinkNav from "../LinkNav/LinkNav";
 import styles from "./Nav.module.css";
-import { useEffect, useState } from "react";
 
 const links = [
   { href: "/about", name: "O Lumera" },
@@ -11,19 +11,18 @@ const links = [
   { href: "/kontakt", name: "Kontakt" },
 ];
 
-const HOME_DELAY = 4200;
+const HOME_DELAY_MS = 4200;
 
 export default function Nav() {
   const pathname = usePathname();
   const isHome = pathname === "/";
-
   const [show, setShow] = useState(() => pathname !== "/");
+  const [open, setOpen] = useState(false); // hamburger na mobile
 
   useEffect(() => {
     if (!isHome) return;
     const seen = sessionStorage.getItem("lumera_intro_seen") === "true";
-    const delay = seen ? 0 : HOME_DELAY;
-    const t = setTimeout(() => setShow(true), delay);
+    const t = setTimeout(() => setShow(true), seen ? 0 : HOME_DELAY_MS);
     return () => clearTimeout(t);
   }, [isHome]);
 
@@ -31,10 +30,30 @@ export default function Nav() {
 
   return (
     <nav className={`${styles.nav} ${show ? styles.visible : ""}`}>
-      {visibleLinks.map(({ href, name }) => (
-        <LinkNav key={href} href={href} name={name} />
-      ))}
-      {!isHome && <LinkNav href="/" name="powrót" />}
+      <button
+        type="button"
+        className={`${styles.burger} ${open ? styles.burgerOpen : ""}`}
+        aria-label={open ? "Zamknij menu" : "Otwórz menu"}
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+      <div className={`${styles.links} ${open ? styles.linksOpen : ""}`}>
+        {visibleLinks.map(({ href, name }) => (
+          <LinkNav
+            key={href}
+            href={href}
+            name={name}
+            onClick={() => setOpen(false)}
+          />
+        ))}
+        {!isHome && (
+          <LinkNav href="/" name="Powrót" onClick={() => setOpen(false)} />
+        )}
+      </div>
     </nav>
   );
 }

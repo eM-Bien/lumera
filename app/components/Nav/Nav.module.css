@@ -1,21 +1,98 @@
 .nav {
   position: absolute;
-  display: flex;
   top: 2vh;
   right: 2vh;
-  gap: 2vh;
+  z-index: 50;
   padding: 2vh;
-  z-index: 46;
   opacity: 0;
-  transform: translateY(-8px);
   pointer-events: none;
-  transition:
-    opacity 0.9s ease 0.6s,
-    transform 0.9s ease 0.6s;
+  transition: opacity 0.9s ease 0.6s;
 }
 
 .nav.visible {
   opacity: 1;
-  transform: translateY(0);
   pointer-events: auto;
+}
+
+/* linki — desktop: rząd */
+.links {
+  display: flex;
+  gap: 2vh;
+}
+
+/* hamburger — domyślnie ukryty (desktop) */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 2; /* nad panelem linków */
+}
+
+.burger span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: #d8c1a0;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+/* krzyżyk po otwarciu */
+.burgerOpen span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.burgerOpen span:nth-child(2) {
+  opacity: 0;
+}
+.burgerOpen span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .burger {
+    display: flex; /* hamburger widoczny */
+    position: relative;
+    z-index: 2; /* nad drawerem, by dało się zamknąć krzyżykiem */
+  }
+
+  /* drawer — pełnoekranowy panel wysuwany z prawej */
+  .links {
+    position: fixed;
+    inset: 0; /* cała strona */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5vh;
+    padding: 10vh 6vw;
+    background: radial-gradient(
+      ellipse at center,
+      #0a0720 0%,
+      #060414 45%,
+      #000000 100%
+    );
+    backdrop-filter: blur(10px);
+
+    /* zamknięty: wysunięty w prawo poza ekran */
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.45s ease;
+  }
+
+  .links.linksOpen {
+    transform: translateX(0); /* wjeżdża na ekran */
+    opacity: 1;
+    pointer-events: auto;
+  }
 }

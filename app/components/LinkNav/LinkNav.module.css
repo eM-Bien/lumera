@@ -9,8 +9,8 @@
    ========================================================================= */
 
 .navButton {
-  --nav-ink: #ffffff; /* tekst w spoczynku                          */
-  --nav-gold: #131313; /* tekst + strzałka na hoverze                */
+  --nav-ink: #d8d8d8; /* tekst w spoczynku                          */
+  --nav-gold: #ffffff; /* tekst + strzałka na hoverze                */
   --nav-arrow-gap: 1.5em; /* szerokość strefy strzałki               */
   --nav-blob: 229, 205, 160; /* RGB plamy. Na jasnym tle daj ciemny  */
   --nav-blob-blend: screen; /* 'screen' rozjaśnia; na jasnym → 'multiply' */
@@ -26,8 +26,8 @@
   align-items: center;
   text-decoration: none;
   font-size: 2vh;
-  /* letter-spacing: 0.14em; */
-  text-transform: uppercase;
+  font-family: Cinzel, serif;
+  letter-spacing: 0.1em;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }

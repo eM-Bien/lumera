@@ -6,13 +6,15 @@ import Arrow from "../Arrow/Arrow";
 type LinkNavProps = {
   href: string;
   name: string;
+  onClick?: () => void;
 };
 
-export default function LinkNav({ href, name }: LinkNavProps) {
+export default function LinkNav({ href, name, onClick }: LinkNavProps) {
   const { navigate } = useTransition();
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    onClick?.();
     navigate(href);
   };
 
