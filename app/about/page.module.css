@@ -1,51 +1,54 @@
+/* =========================================================================
+   AboutPage — układ i typografia
+   Warstwy: LetterBackground (z-0, fixed) pod treścią; sekcje w normalnym flow.
+   ========================================================================= */
+
 .about {
+  min-height: 100dvh;
+  color: #d8c1a0;
   background: radial-gradient(
     ellipse at center,
     #0a0720 0%,
     #060414 45%,
     #000000 100%
   );
-  color: #d8c1a0;
-  min-height: 100dvh;
-  font-family: Arial, Helvetica, sans-serif, serif;
 }
 
-.letterWrapper {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
+/* --- Sekcje ------------------------------------------------------------- */
 
-/* sekcja powitalna — pierwszy nagłówek widoczny od razu */
+/* powitanie — pierwszy nagłówek (Cinzel), widoczny od razu */
 .hero {
   display: flex;
   margin-top: 12vh;
-  /* min-height: 50dvh; */
-  padding: 0 6vw;
-  font-family: Cinzel, serif;
+  padding: 4vh 6vw 2vh;
+  font-family: var(--font-cinzel), serif;
 }
 
-/* kolejne bloki — każdy zajmuje sporo wysokości, żeby scroll je odsłaniał */
+/* bloki tekstu — naprzemiennie lewa/prawa, wysokie by scroll je odsłaniał */
 .block {
-  min-height: 40vh;
   display: flex;
-  align-items: center; /* dla krótkich; przy bardzo długich rozważ flex-start */
-  padding: 0 6vw; /* trochę oddechu w pionie */
+  min-height: 40vh;
+  padding: 0 6vw;
+  font-family: var(--font-montserrat), sans-serif;
 }
 
 .left {
   justify-content: flex-start;
 }
+
 .right {
   justify-content: flex-end;
   text-align: right;
 }
 
+/* zapas na dole, by ostatni blok zdążył się odsłonić przy scrollu */
 .spacer {
-  height: 40vh; /* zapas na dole, by ostatni blok zdążył się odsłonić */
+  height: 30vh;
 }
 
+/* --- Typografia --------------------------------------------------------- */
+
+/* wspólne dla treści ScrollReveal (nagłówki i bloki) */
 .reveal {
   margin: 0;
   font-weight: 500;
@@ -53,37 +56,27 @@
   letter-spacing: 0.02em;
 }
 
-/* DUŻE nagłówki — rozmiar w vw, czyli skaluje się z szerokością okna.
-   clamp() trzyma sensowne granice na bardzo małych i bardzo dużych ekranach. */
+/* duży nagłówek powitania — skaluje się z szerokością okna */
 .h1 {
-  font-size: clamp(2rem, 4vw, 12rem);
-  text-transform: uppercase;
+  font-size: clamp(1.6rem, 4.5vw, 8rem);
+  line-height: 1.1;
   letter-spacing: 0.08em;
 }
 
-.h2 {
-  font-size: clamp(1.5rem, 1vw, 4rem);
-  max-width: 42%; /* łamie długie zdania na kilka wierszy — ładniejszy rytm */
+/* bloki tekstu — węższa kolumna, rozmiar skalowany z oknem */
+.p {
+  max-width: 35%;
+  font-size: clamp(1.1rem, 1.4vw, 1.4rem);
+  line-height: 1.4;
 }
 
-/* każde słowo: przygaszone, płynne dochodzenie krycia steruje JS przy scrollu */
+/* każde słowo: przygaszone; krycie i ruch steruje JS przy scrollu */
 .word {
   display: inline-block;
   opacity: 0.12;
   transform: translateY(0.25em);
-  /* wygładza skok między klatkami scrolla — krótkie, bo JS i tak steruje */
   transition:
     opacity 0.1s linear,
     transform 0.1s linear;
   will-change: opacity, transform;
-}
-
-/* blok tekstowy w stylu oryginału: serif, jasna kość, wąska kolumna */
-.body {
-  font-family: var(--font-cinzel), serif; /* lub EB Garamond do długich */
-  font-size: clamp(1.1rem, 1.7vw, 1.6rem);
-  line-height: 1.4;
-  color: #e8e8e8; /* zmierzone rgb(232,232,232) */
-  max-width: 34ch; /* wąska kolumna jak w oryginale */
-  letter-spacing: 0.01em;
 }
