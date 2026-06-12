@@ -1,45 +1,43 @@
 "use client";
 
 import { useEffect, useRef, type CSSProperties } from "react";
+import { usePathname } from "next/navigation";
 import { useTransitionPhase } from "../transition/TransitionProvider";
 
 type RGB = [number, number, number];
+type Variant = "light" | "dark";
 
 interface LightsBackgroundProps {
   /** Mniejsza liczba = WIĘCEJ stałych drobinek (px² na 1 drobinkę). Domyślnie 14000. */
   density?: number;
-  /**
-   * Ile razy więcej drobinek pojawia się w szczycie animacji.
-   * 1 = bez dodatkowych, 2.5 = w leju ~2,5× gęściej. Domyślnie 2.5.
-   */
+  /** Ile razy więcej drobinek w szczycie animacji. Domyślnie 2.5. */
   burstFactor?: number;
   /** Czy drobinki unoszą się w górę. Domyślnie true. */
   rise?: boolean;
-  /** Paleta kolorów jako tablice [r, g, b]. */
-  hues?: RGB[];
   className?: string;
   style?: CSSProperties;
 }
 
 interface Light {
-  x: number; // pozycja znormalizowana 0..1
+  x: number;
   y: number;
-  vx: number; // prędkość w px/s — napędza lej
+  vx: number;
   vy: number;
-  hx: number; // „dom" — miejsce, na które drobinka wraca po leju
+  hx: number;
   hy: number;
   depth: number;
-  hue: RGB;
+  hueIndex: number; // indeks w palecie — pozwala zmienić paletę bez respawnu
   rise: number;
   swA: number;
   swF: number;
   tw: number;
   ph: number;
   base: number;
-  dormant: boolean; // true = drobinka z dodatkowej puli (widoczna tylko w leju)
-  fade: number; // 0..1 — krycie dodatkowej drobinki (lerp)
+  dormant: boolean;
+  fade: number;
 }
 
+// paleta domyślna (ciemne strony) — chłodne światła
 const DEFAULT_HUES: RGB[] = [
   [80, 235, 235],
   [80, 160, 255],
@@ -48,30 +46,53 @@ const DEFAULT_HUES: RGB[] = [
   [200, 230, 255],
 ];
 
-// --- pokrętła leja (dostrój tutaj) ---
-const PULL_ACCEL = 1600; // px/s² — siła ssania (większa = gwałtowniejszy lej)
-const SWIRL = 1.2; // udział stycznej (0 = prosto do środka, >1 = mocno krąży)
-const RAMP = 4.5; // jak szybko narasta/opada ssanie
-const CENTER_CLAMP = 35; // mniejsze = ciaśniej zbite w środku
-const RETURN = 2.0; // jak szybko drobinki wracają na miejsce (mniej = delikatniej)
-const FADE_SPEED = 3.0; // jak szybko dodatkowe drobinki pojawiają się / znikają
+// paleta złota (strona /oferta, jasne tło) — odcienie #c2a36b
+const GOLD_HUES: RGB[] = [
+  [194, 163, 107],
+  [180, 150, 100],
+  [210, 185, 140],
+];
+
+// konfiguracja per trasa — TU dodajesz kolejne jasne/ciemne strony
+function configForPath(path: string): { variant: Variant; hues: RGB[] } {
+  if (path === "/oferta") return { variant: "light", hues: GOLD_HUES };
+  return { variant: "dark", hues: DEFAULT_HUES };
+}
+
+// --- pokrętła leja ---
+const PULL_ACCEL = 1600;
+const SWIRL = 1.2;
+const RAMP = 4.5;
+const CENTER_CLAMP = 35;
+const RETURN = 2.0;
+const FADE_SPEED = 3.0;
 
 export default function LightsBackground({
   density = 14000,
   burstFactor = 2.5,
   rise = true,
-  hues = DEFAULT_HUES,
   className,
   style,
 }: LightsBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // faza z kontekstu — czytana przez ref, NIE w deps efektu (zero reinitu)
+  // faza przejścia — przez ref (bez reinitu)
   const phase = useTransitionPhase();
   const phaseRef = useRef(phase);
   useEffect(() => {
     phaseRef.current = phase;
   }, [phase]);
+
+  // wariant + paleta zależne od trasy — też przez ref, by zmiana strony
+  // przerysowała kolor drobinek BEZ reinicjalizacji (ciągłość przejścia)
+  const pathname = usePathname();
+  const variantRef = useRef<Variant>(configForPath(pathname).variant);
+  const huesRef = useRef<RGB[]>(configForPath(pathname).hues);
+  useEffect(() => {
+    const c = configForPath(pathname);
+    variantRef.current = c.variant;
+    huesRef.current = c.hues;
+  }, [pathname]);
 
   useEffect(() => {
     const canvasEl = canvasRef.current;
@@ -90,8 +111,8 @@ export default function LightsBackground({
     let dpr = 1;
     let rafId: number | null = null;
     const lights: Light[] = [];
-    let pull = 0; // bieżąca siła ssania 0..1 (lerp do celu zależnego od fazy)
-    let prevPhase: string = "idle"; // do wykrycia startu leja
+    let pull = 0;
+    let prevPhase: string = "idle";
 
     const rand = (a: number, b: number): number => a + Math.random() * (b - a);
     const rgba = (c: RGB, a: number): string =>
@@ -108,7 +129,7 @@ export default function LightsBackground({
         hx: x,
         hy: y,
         depth: rand(0.3, 1),
-        hue: hues[(Math.random() * hues.length) | 0],
+        hueIndex: (Math.random() * 5) | 0, // modulo wg długości palety przy rysowaniu
         rise: rand(0.004, 0.02),
         swA: rand(0.004, 0.02),
         swF: rand(0.3, 1.0),
@@ -116,14 +137,14 @@ export default function LightsBackground({
         ph: rand(0, 6.28),
         base: rand(1.2, 3.2),
         dormant,
-        fade: dormant ? 0 : 1, // stałe widoczne od razu, pula uśpiona
+        fade: dormant ? 0 : 1,
       };
     }
 
     function initLights(): void {
       lights.length = 0;
-      const baseN = Math.round((W * H) / density); // stałe drobinki
-      const extraN = Math.round(baseN * Math.max(0, burstFactor - 1)); // pula
+      const baseN = Math.round((W * H) / density);
+      const extraN = Math.round(baseN * Math.max(0, burstFactor - 1));
       for (let i = 0; i < baseN; i++) lights.push(spawnLight(undefined, false));
       for (let i = 0; i < extraN; i++) lights.push(spawnLight(undefined, true));
     }
@@ -135,41 +156,50 @@ export default function LightsBackground({
       H = rect.height;
       const cw = Math.floor(W * dpr);
       const ch = Math.floor(H * dpr);
-
-      // przypisuj TYLKO gdy rozmiar realnie się zmienił — każde przypisanie
-      // canvas.width/height czyści canvas, co powodowało mignięcie drobinek
-      // przy nawigacji (ResizeObserver odpalał resize mimo tego samego okna)
       if (canvas.width !== cw || canvas.height !== ch) {
         canvas.width = cw;
         canvas.height = ch;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
-
       if (lights.length === 0) initLights();
     }
 
     function drawLight(m: Light, t: number): void {
       if (m.fade <= 0.001) return; // uśpiona i niewidoczna — pomiń
+
+      const palette = huesRef.current;
+      const hue = palette[m.hueIndex % palette.length];
+      const variant = variantRef.current;
+
       const sway = Math.sin(t * m.swF + m.ph) * m.swA * (1 - pull);
       const px = (m.x + sway) * W;
       const py = m.y * H;
       const tw = 0.45 + 0.55 * (0.5 + 0.5 * Math.sin(t * m.tw + m.ph));
-      // krycie × fade (pula płynnie wchodzi/wychodzi) × rozjaśnienie w leju
       const a = (0.25 + 0.75 * m.depth) * tw * m.fade * (1 + pull * 0.8);
       const r = m.base * (0.5 + m.depth);
+
+      // ciemne tło: addytywne smugi światła (lighter).
+      // jasne tło: złoto rysowane normalnie — ciemniejsze od kremu, więc
+      // skomponowane nad stroną daje delikatne, ciepłe punkty.
+      ctx.globalCompositeOperation =
+        variant === "light" ? "source-over" : "lighter";
+
       const g = ctx.createRadialGradient(px, py, 0, px, py, r * 4);
-      g.addColorStop(0, rgba(m.hue, a));
-      g.addColorStop(0.25, rgba(m.hue, a * 0.5));
-      g.addColorStop(1, rgba(m.hue, 0));
-      ctx.globalCompositeOperation = "lighter";
+      g.addColorStop(0, rgba(hue, a));
+      g.addColorStop(0.25, rgba(hue, a * 0.5));
+      g.addColorStop(1, rgba(hue, 0));
       ctx.fillStyle = g;
       ctx.beginPath();
       ctx.arc(px, py, r * 4, 0, 6.2832);
       ctx.fill();
-      ctx.fillStyle = rgba([255, 255, 255], a * 0.8);
-      ctx.beginPath();
-      ctx.arc(px, py, r * 0.5, 0, 6.2832);
-      ctx.fill();
+
+      // jasny rdzeń tylko na ciemnym tle (na jasnym by zniknął / rozjaśniał)
+      if (variant === "dark") {
+        ctx.fillStyle = rgba([255, 255, 255], a * 0.8);
+        ctx.beginPath();
+        ctx.arc(px, py, r * 0.5, 0, 6.2832);
+        ctx.fill();
+      }
     }
 
     let last = performance.now();
@@ -181,14 +211,11 @@ export default function LightsBackground({
 
       const ph = phaseRef.current;
 
-      // start leja: świeży, równomierny rozrzut po CAŁYM ekranie (dom).
-      // dotyczy też puli — żeby po fade-in wpojawiła się rozsiana, nie w punkcie.
       if (ph === "exiting" && prevPhase !== "exiting") {
         for (const m of lights) {
           m.hx = Math.random();
           m.hy = Math.random();
           if (m.dormant) {
-            // ustaw uśpioną na świeżej pozycji, by wjechała z całego ekranu
             m.x = Math.random();
             m.y = Math.random();
             m.vx = 0;
@@ -198,13 +225,11 @@ export default function LightsBackground({
       }
       prevPhase = ph;
 
-      // ssanie: pełne przy wyjściu, zero w spoczynku i przy uspokajaniu
       const target = ph === "exiting" ? 1 : 0;
       pull += (target - pull) * Math.min(1, dt * RAMP);
       const friction =
         ph === "exiting" ? 0.995 : ph === "settling" ? 0.8 : 0.86;
 
-      // dodatkowa pula: widoczna gdy trwa lej (exiting/settling), inaczej znika
       const dormantTarget = ph === "idle" ? 0 : 1;
 
       const cx = 0.5 * W;
@@ -213,12 +238,10 @@ export default function LightsBackground({
       ctx.clearRect(0, 0, W, H);
 
       for (const m of lights) {
-        // płynne pojawianie / znikanie dodatkowych drobinek
         if (m.dormant) {
           m.fade += (dormantTarget - m.fade) * Math.min(1, dt * FADE_SPEED);
         }
 
-        // --- lej: prędkość w px/s, siła do środka + styczna (wir) ---
         if (pull > 0.001) {
           const px = m.x * W;
           const py = m.y * H;
@@ -234,20 +257,17 @@ export default function LightsBackground({
           m.vy += (diry * accel + tany * accel * SWIRL) * dt;
         }
 
-        // tarcie + pęd
         m.vx *= friction;
         m.vy *= friction;
         m.x += (m.vx * dt) / W;
         m.y += (m.vy * dt) / H;
 
-        // uspokajanie: delikatny powrót na świeży rozrzut (homing)
         if (ph === "settling") {
           const k = Math.min(1, dt * RETURN);
           m.x += (m.hx - m.x) * k;
           m.y += (m.hy - m.y) * k;
         }
 
-        // unoszenie — tylko stałe drobinki w spoczynku
         if (rise && !reduce && ph === "idle" && !m.dormant) {
           m.y -= m.rise * dt;
           if (m.y < -0.04) {
@@ -263,7 +283,6 @@ export default function LightsBackground({
     }
 
     window.addEventListener("resize", resize);
-
     resize();
     rafId = requestAnimationFrame(frame);
 
@@ -271,7 +290,8 @@ export default function LightsBackground({
       if (rafId !== null) cancelAnimationFrame(rafId);
       window.removeEventListener("resize", resize);
     };
-  }, [density, burstFactor, rise, hues]);
+    // variant/hues/phase czytane przez ref — celowo poza deps, by nie reinitować
+  }, [density, burstFactor, rise]);
 
   return (
     <canvas

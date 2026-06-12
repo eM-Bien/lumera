@@ -1,0 +1,28 @@
+.offer {
+  position: relative;
+  min-height: 100dvh;
+  background:
+    radial-gradient(
+      120% 80% at 50% 0%,
+      rgba(194, 163, 107, 0.14) 0%,
+      transparent 55%
+    ),
+    linear-gradient(180deg, #f7f1e6 0%, #efe6d4 60%, #e8dcc6 100%);
+  color: #2a2620;
+}
+
+.offerTitle {
+  padding: 15vh 6vw 4vh;
+}
+
+.title {
+  font-size: 4vh;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+.description {
+  font-size: 6vh;
+  font-weight: 500;
+  font-family: WindSong, cursive;
+}

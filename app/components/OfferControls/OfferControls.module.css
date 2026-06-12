@@ -1,0 +1,65 @@
+/* =========================================================================
+   OfferControls — wyszukiwarka + filtry (paleta LUMERA, jasny wariant)
+   ========================================================================= */
+
+.controls {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 3vh 0 2.5vh;
+  background: linear-gradient(180deg, #f7f1e6 70%, rgba(247, 241, 230, 0));
+}
+
+.search {
+  width: 100%;
+  padding: 0.9rem 0.2rem;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1.05rem;
+  color: #2a2620;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(42, 38, 32, 0.14);
+  outline: none;
+  transition: border-color 0.25s ease;
+}
+.search::placeholder {
+  color: #6b6258;
+}
+.search:focus {
+  border-bottom-color: #c2a36b;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.chip {
+  padding: 0.4rem 1.1rem;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: #2a2620;
+  background: transparent;
+  border: 1px solid #c2a36b;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+.chip:hover {
+  background: rgba(194, 163, 107, 0.12);
+}
+.chipActive {
+  background: #c2a36b;
+  color: #fff;
+}
+.chip:focus-visible {
+  outline: 2px solid #c2a36b;
+  outline-offset: 2px;
+}

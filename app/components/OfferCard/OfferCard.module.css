@@ -1,0 +1,138 @@
+/* =========================================================================
+   OfferCard — pojedyncza oferta: zdjęcie + rozwijany opis
+   ========================================================================= */
+
+.card {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+/* co druga karta — zdjęcie po prawej */
+.cardRight {
+  flex-direction: row-reverse;
+}
+
+.media {
+  flex: 0 0 42%;
+}
+
+.img,
+.imgPlaceholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+.imgPlaceholder {
+  background: linear-gradient(135deg, #e8dcc6 0%, #d9c9aa 100%);
+}
+
+.content {
+  flex: 1;
+}
+.cardRight .content {
+  text-align: right;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #c2a36b;
+  margin-bottom: 0.6rem;
+}
+
+.cardTitle {
+  margin: 0 0 1rem;
+  font-family: var(--font-cinzel), serif;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: #2a2620;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  color: #c2a36b;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.cardRight .toggle {
+  flex-direction: row-reverse;
+}
+.toggle:focus-visible {
+  outline: 2px solid #c2a36b;
+  outline-offset: 3px;
+}
+
+.toggleIcon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.toggleIconOpen {
+  transform: rotate(180deg);
+}
+
+/* rozwijany opis — animacja przez grid-template-rows (0fr -> 1fr) */
+.descWrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s ease;
+}
+.descOpen {
+  grid-template-rows: 1fr;
+}
+.descInner {
+  overflow: hidden;
+}
+
+.desc {
+  margin: 1rem 0 0;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #6b6258;
+  max-width: 46ch;
+}
+.cardRight .desc {
+  margin-left: auto;
+}
+
+@media (max-width: 768px) {
+  .card,
+  .cardRight {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+  .media {
+    flex: none;
+  }
+  .content,
+  .cardRight .content {
+    text-align: left;
+  }
+  .cardRight .desc {
+    margin-left: 0;
+  }
+  .cardRight .toggle {
+    flex-direction: row;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .descWrap,
+  .toggleIcon {
+    transition: none;
+  }
+}
