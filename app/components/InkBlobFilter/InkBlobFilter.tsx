@@ -1,11 +1,3 @@
-/**
- * InkBlobFilter — definicja filtra SVG dla "atramentowego" brzegu plamy w NavButton.
- * Umieść JEDEN RAZ na stronie (np. w layout.tsx, tuż po <body>).
- * Filtr nic nie renderuje wizualnie — to tylko <defs> dla CSS `url(#lumera-ink-blob)`.
- *
- * feTurbulence generuje szum, feDisplacementMap zniekształca nim plamę,
- * a animacja baseFrequency sprawia, że brzeg powoli "faluje" jak rozlany atrament.
- */
 export default function InkBlobFilter() {
   return (
     <svg
@@ -30,14 +22,7 @@ export default function InkBlobFilter() {
             numOctaves={2}
             seed={7}
             result="noise"
-          >
-            <animate
-              attributeName="baseFrequency"
-              dur="16s"
-              values="0.014 0.02; 0.022 0.013; 0.014 0.02"
-              repeatCount="indefinite"
-            />
-          </feTurbulence>
+          ></feTurbulence>
           <feDisplacementMap
             in="SourceGraphic"
             in2="noise"

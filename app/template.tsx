@@ -15,7 +15,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
     const id = requestAnimationFrame(() => setEntered(true));
     return () => cancelAnimationFrame(id);
-  }, []);
+  }, [isHome]);
 
   return (
     <div className={`${styles.enter} ${entered ? styles.entered : ""}`}>
