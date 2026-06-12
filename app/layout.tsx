@@ -46,16 +46,18 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <TransitionProvider>
-          <LightsBackground
-            style={{ position: "fixed", zIndex: 45, pointerEvents: "none" }}
-            burstFactor={2.5}
-          />{" "}
-          <Nav />
-          <TransitionOverlay /> {/* przyciemnienie tła — czyta fazę */}
-          {children}
-        </TransitionProvider>
-        <SmoothScroll />
+        <div className="appWrapper">
+          <TransitionProvider>
+            <LightsBackground
+              style={{ position: "fixed", zIndex: 45, pointerEvents: "none" }}
+              burstFactor={2.5}
+            />{" "}
+            <Nav />
+            <TransitionOverlay /> {/* przyciemnienie tła — czyta fazę */}
+            {children}
+          </TransitionProvider>
+          <SmoothScroll />
+        </div>
       </body>
     </html>
   );

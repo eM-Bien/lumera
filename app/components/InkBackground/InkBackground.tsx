@@ -336,13 +336,14 @@ export default function InkBackground({
 
     function setCanvasSize() {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      const w = Math.floor(window.innerWidth * dpr);
-      const h = Math.floor(window.innerHeight * dpr);
+      const rect = canvas!.getBoundingClientRect();
+      const w = Math.floor(rect.width * dpr);
+      const h = Math.floor(rect.height * dpr);
       const changed = canvas!.width !== w || canvas!.height !== h;
       canvas!.width = w;
       canvas!.height = h;
-      canvas!.style.width = window.innerWidth + "px";
-      canvas!.style.height = window.innerHeight + "px";
+      // canvas!.style.width = window.innerWidth + "px";
+      // canvas!.style.height = window.innerHeight + "px";
       return changed;
     }
     function resize() {

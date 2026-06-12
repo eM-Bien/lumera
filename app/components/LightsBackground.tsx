@@ -130,8 +130,9 @@ export default function LightsBackground({
 
     function resize(): void {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
-      W = window.innerWidth;
-      H = window.innerHeight;
+      const rect = canvas.getBoundingClientRect();
+      W = rect.width;
+      H = rect.height;
       const cw = Math.floor(W * dpr);
       const ch = Math.floor(H * dpr);
 
@@ -141,8 +142,6 @@ export default function LightsBackground({
       if (canvas.width !== cw || canvas.height !== ch) {
         canvas.width = cw;
         canvas.height = ch;
-        canvas.style.width = W + "px";
-        canvas.style.height = H + "px";
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
 
