@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import styles from "./template.module.css";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 export default function Template({ children }: { children: React.ReactNode }) {
