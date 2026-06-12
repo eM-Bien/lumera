@@ -27,9 +27,11 @@ export default function Nav() {
     return () => clearTimeout(t);
   }, [isHome]);
 
+  const visibleLinks = links.filter((link) => link.href !== pathname);
+
   return (
     <nav className={`${styles.nav} ${show ? styles.visible : ""}`}>
-      {links.map(({ href, name }) => (
+      {visibleLinks.map(({ href, name }) => (
         <LinkNav key={href} href={href} name={name} />
       ))}
       {!isHome && <LinkNav href="/" name="powrót" />}
