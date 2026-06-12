@@ -12,7 +12,9 @@ export default function SmoothScroll() {
 
     const lenis = new Lenis({
       duration: 1.1, // im więcej, tym cięższy „wybieg" (oryginał ma ~1–1.2)
-      easing: (t) => 1 - Math.pow(1 - t, 3), // ease-out cubic — miękkie dojście
+      easing: (t) => 1 - Math.pow(1 - t, 3),
+      smoothWheel: true,
+      syncTouch: true,
     });
 
     let raf = 0;
