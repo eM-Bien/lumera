@@ -102,3 +102,9 @@
     transition-duration: 0.01ms;
   }
 }
+
+@media (max-width: 768px) {
+  .label {
+    font-size: 3.5vh; /* większy tekst linków w drawerze */
+  }
+}

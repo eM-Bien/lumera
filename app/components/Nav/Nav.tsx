@@ -42,16 +42,22 @@ export default function Nav() {
         <span />
       </button>
       <div className={`${styles.links} ${open ? styles.linksOpen : ""}`}>
-        {visibleLinks.map(({ href, name }) => (
-          <LinkNav
+        {visibleLinks.map(({ href, name }, i) => (
+          <span
             key={href}
-            href={href}
-            name={name}
-            onClick={() => setOpen(false)}
-          />
+            className={styles.linkItem}
+            style={{ "--i": i } as React.CSSProperties}
+          >
+            <LinkNav href={href} name={name} onClick={() => setOpen(false)} />
+          </span>
         ))}
         {!isHome && (
-          <LinkNav href="/" name="Powrót" onClick={() => setOpen(false)} />
+          <LinkNav
+            href="/"
+            name="Powrót"
+            onClick={() => setOpen(false)}
+            style={{ "--i": visibleLinks.length } as React.CSSProperties}
+          />
         )}
       </div>
     </nav>

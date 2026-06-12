@@ -59,40 +59,57 @@
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
   .burger {
-    display: flex; /* hamburger widoczny */
+    display: flex;
     position: relative;
-    z-index: 2; /* nad drawerem, by dało się zamknąć krzyżykiem */
+    z-index: 2; /* nad panelem */
   }
 
-  /* drawer — pełnoekranowy panel wysuwany z prawej */
   .links {
     position: fixed;
-    inset: 0; /* cała strona */
+    inset: 0;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 5vh;
     padding: 10vh 6vw;
-    background: radial-gradient(
-      ellipse at center,
-      #0a0720 0%,
-      #060414 45%,
-      #000000 100%
-    );
-    backdrop-filter: blur(10px);
+    background: rgba(5, 3, 15, 0.97);
 
-    /* zamknięty: wysunięty w prawo poza ekran */
-    transform: translateX(100%);
-    opacity: 0;
+    /* gładkie rozlewanie z punktu hamburgera */
+    clip-path: circle(0% at calc(100% - 6vw) 6vh);
     pointer-events: none;
+    transition: clip-path 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .links .linkItem {
+    opacity: 0;
+    transform: translateY(20px);
     transition:
-      transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 0.45s ease;
+      opacity 0.5s ease,
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .links.linksOpen .linkItem {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: calc(0.6s + var(--i) * 0.1s);
   }
 
   .links.linksOpen {
-    transform: translateX(0); /* wjeżdża na ekran */
-    opacity: 1;
+    clip-path: circle(150% at calc(100% - 6vw) 6vh);
     pointer-events: auto;
+  }
+
+  /* linki — każdy wpływa z opóźnieniem */
+  .links .navButton {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .links.linksOpen .navButton {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: calc(0.6s + var(--i) * 0.1s);
   }
 }

@@ -7,19 +7,23 @@ type LinkNavProps = {
   href: string;
   name: string;
   onClick?: () => void;
+  style?: React.CSSProperties;
 };
 
-export default function LinkNav({ href, name, onClick }: LinkNavProps) {
+export default function LinkNav({ href, name, onClick, style }: LinkNavProps) {
   const { navigate } = useTransition();
-
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     onClick?.();
     navigate(href);
   };
-
   return (
-    <Link href={href} className={`${styles.navButton}`} onClick={handleClick}>
+    <Link
+      href={href}
+      className={styles.navButton}
+      onClick={handleClick}
+      style={style}
+    >
       <span className={styles.blob} aria-hidden="true" />
       <span className={styles.label}>{name}</span>
       <Arrow />
