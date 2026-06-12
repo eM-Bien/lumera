@@ -1,18 +1,19 @@
 import styles from "./LinkNav.module.css";
 import Link from "next/link";
+import { useTransition } from "@/app/transition/TransitionProvider";
 import Arrow from "../Arrow/Arrow";
 
 type LinkNavProps = {
   href: string;
   name: string;
-  onNavigate?: (href: string) => void;
 };
 
-export default function LinkNav({ href, name, onNavigate }: LinkNavProps) {
+export default function LinkNav({ href, name }: LinkNavProps) {
+  const { navigate } = useTransition();
+
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (!onNavigate) return;
     e.preventDefault();
-    onNavigate(href);
+    navigate(href);
   };
 
   return (

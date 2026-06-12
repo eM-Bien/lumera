@@ -604,6 +604,7 @@ export default function LumeraReveal({
           img?.classList.add(styles.show);
           tag?.classList.add(styles.show);
           onComplete?.();
+          return;
         }
       })
       .catch((e: unknown) => console.error("[LumeraReveal]", e));

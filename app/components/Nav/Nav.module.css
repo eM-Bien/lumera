@@ -5,7 +5,7 @@
   right: 2vh;
   gap: 2vh;
   padding: 2vh;
-  z-index: 3;
+  z-index: 46;
   opacity: 0;
   transform: translateY(-8px);
   pointer-events: none;

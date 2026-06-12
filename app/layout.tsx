@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Cinzel } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "./components/SmoothScroll/SmoothScroll";
+import TransitionProvider from "./transition/TransitionProvider";
+import LightsBackground from "./components/LightsBackground";
+import TransitionOverlay from "./transition/TransitionOverlay";
+import Nav from "./components/Nav/Nav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,8 +46,16 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <TransitionProvider>
+          <LightsBackground
+            style={{ position: "fixed", zIndex: 45, pointerEvents: "none" }}
+            burstFactor={2.5}
+          />{" "}
+          <Nav />
+          <TransitionOverlay /> {/* przyciemnienie tła — czyta fazę */}
+          {children}
+        </TransitionProvider>
         <SmoothScroll />
-        {children}
       </body>
     </html>
   );

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Cinzel } from "next/font/google";
 import WaterLetter, { LetterBox } from "../components/WaterLetter/WaterLetter";
 import Sprig from "../components/Sprig/Sprig";
-import LightsBackground from "../components/LightsBackground";
+// import LightsBackground from "../components/LightsBackground";
 import ScrollReveal from "./ScrollReveal";
 import styles from "./page.module.css";
 import LetterBackground from "../components/LetterBackground/LetterBackground";
@@ -32,7 +32,7 @@ export default function AboutPage() {
           letterFrac={0.45} // ← rozmiar samej litery
         />
       )}
-      <LightsBackground />
+      {/* <LightsBackground /> */}
 
       <section className={styles.hero}>
         <ScrollReveal as="h1" className={styles.h1} text="O Lumera" />
