@@ -30,6 +30,7 @@ export default function OfferCard({
 
       <div className={styles.content}>
         <span className={styles.eyebrow}>{offer.category}</span>
+        <span className={styles.locations}>{offer.locations.join(" · ")}</span>
         <h3 className={styles.cardTitle}>{offer.title}</h3>
 
         <button

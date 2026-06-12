@@ -45,6 +45,14 @@
   margin-bottom: 0.6rem;
 }
 
+.locations {
+  display: block;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 0.8rem;
+  color: #6b6258;
+  margin-bottom: 0.4rem;
+}
+
 .cardTitle {
   margin: 0 0 1rem;
   font-family: var(--font-cinzel), serif;

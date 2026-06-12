@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { OFFERS, normalize, type Category } from "./offer-types";
+import { OFFERS, normalize, type Category, type Location } from "./offer-types";
 import OfferControls from "../OfferControls/OfferControls";
 import OfferCard from "../OfferCard/OfferCard";
 import styles from "./OfferExplorer.module.css";
@@ -10,6 +10,16 @@ export default function OfferExplorer() {
   const [query, setQuery] = useState("");
   const [active, setActive] = useState<Set<Category>>(new Set());
   const [openIds, setOpenIds] = useState<Set<string>>(new Set());
+  const [activeLoc, setActiveLoc] = useState<Set<Location>>(new Set());
+
+  const toggleLocation = (loc: Location) => {
+    setActiveLoc((prev) => {
+      const next = new Set(prev);
+      if (next.has(loc)) next.delete(loc);
+      else next.add(loc);
+      return next;
+    });
+  };
 
   const toggleFilter = (cat: Category) => {
     setActive((prev) => {
@@ -33,10 +43,13 @@ export default function OfferExplorer() {
     const q = normalize(query.trim());
     return OFFERS.filter((o) => {
       const matchesQuery = q === "" || normalize(o.title).includes(q);
-      const matchesFilter = active.size === 0 || active.has(o.category);
-      return matchesQuery && matchesFilter;
+      const matchesCategory = active.size === 0 || active.has(o.category);
+      // lokalizacja: zabieg pasuje, jeśli MA którąś z zaznaczonych lokalizacji
+      const matchesLocation =
+        activeLoc.size === 0 || o.locations.some((loc) => activeLoc.has(loc));
+      return matchesQuery && matchesCategory && matchesLocation;
     });
-  }, [query, active]);
+  }, [query, active, activeLoc]);
 
   return (
     <div className={styles.explorer}>
@@ -45,6 +58,8 @@ export default function OfferExplorer() {
         onQueryChange={setQuery}
         active={active}
         onToggleFilter={toggleFilter}
+        activeLoc={activeLoc}
+        onToggleLocation={toggleLocation}
       />
 
       {filtered.length === 0 ? (
