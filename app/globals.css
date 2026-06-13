@@ -3,7 +3,8 @@
 :root {
   --background: #03020c;
   --foreground: #171717;
-  --font-heading: var(--font-cinzel);
+  /* --font-heading: var(--font-cinzel); */
+  --font-heading: var(--font-playfair);
 }
 
 @media (prefers-color-scheme: dark) {

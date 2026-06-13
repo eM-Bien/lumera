@@ -1,11 +1,11 @@
 import styles from "./page.module.css";
-import { WindSong, Cinzel } from "next/font/google";
+import { Parisienne, Cinzel, Playfair_Display } from "next/font/google";
 import OfferExplorer from "../components/OfferExplorer/OfferExplorer";
 
-const windsong = WindSong({
+const parisienne = Parisienne({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-windsong",
+  weight: ["400"],
+  variable: "--font-parisienne",
 });
 
 const cinzel = Cinzel({
@@ -13,14 +13,20 @@ const cinzel = Cinzel({
   subsets: ["latin"],
 });
 
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-playfair",
+});
+
 export default function OfferPage() {
   return (
     <div className={styles.offer}>
       <header className={styles.offerTitle}>
-        <h1 className={`${styles.title} ${cinzel.className}`}>
+        <h1 className={`${styles.title} ${playfair.className}`}>
           Zabiegi i różności
         </h1>
-        <p className={`${styles.subtitle} ${windsong.className}`}>
+        <p className={`${styles.subtitle} ${parisienne.className}`}>
           Sprawdź co by pasowało do Ciebie
         </p>
         <p className={styles.description}>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Cinzel } from "next/font/google";
+import { Geist, Geist_Mono, Cinzel, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "./components/SmoothScroll/SmoothScroll";
 import TransitionProvider from "./transition/TransitionProvider";
@@ -15,6 +15,12 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-playfair",
 });
 
 const cinzel = Cinzel({
@@ -35,7 +41,7 @@ export default function RootLayout({
   return (
     <html
       lang="pl"
-      className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} ${playfair.variable}`}
     >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />

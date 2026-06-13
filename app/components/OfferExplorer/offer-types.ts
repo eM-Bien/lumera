@@ -1,4 +1,3 @@
-import { lowercase } from "./../../../node_modules/zod/src/v4/core/regexes";
 export type Category = "Twarz" | "Ciało" | "Dłonie i stopy" | "Relaks";
 
 export const CATEGORIES: Category[] = [
