@@ -10,23 +10,44 @@
   flex-direction: column;
   gap: 1.5rem;
   padding: 3vh 0 2.5vh;
-  background: linear-gradient(180deg, #f7f1e6 70%, rgba(247, 241, 230, 0));
 }
 
 .search {
   width: 100%;
-  padding: 0.9rem 0.2rem;
+  padding: 0.9rem 1.2rem;
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1.05rem;
   color: #2a2620;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(42, 38, 32, 0.14);
+
+  /* liquid glass */
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  /* podwójny cień: zewnętrzny dla głębi, wewnętrzny górny refleks */
+  box-shadow:
+    0 4px 20px rgba(42, 38, 32, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+
   outline: none;
-  transition: border-color 0.25s ease;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
 }
+
 .search::placeholder {
-  color: #6b6258;
+  color: rgba(42, 38, 32, 0.5);
+}
+
+.search:focus {
+  background: rgba(255, 255, 255, 0.4);
+  border-color: rgba(194, 163, 107, 0.6); /* złoty akcent na focusie */
+  box-shadow:
+    0 6px 28px rgba(42, 38, 32, 0.12),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    0 0 0 3px rgba(194, 163, 107, 0.15); /* miękka złota poświata */
 }
 .search:focus {
   border-bottom-color: #c2a36b;
@@ -39,29 +60,52 @@
 }
 
 .chip {
-  padding: 0.4rem 1.1rem;
+  padding: 0.45rem 1.2rem;
   font-family: var(--font-montserrat), sans-serif;
   font-size: 0.85rem;
   letter-spacing: 0.04em;
   color: #2a2620;
-  background: transparent;
-  border: 1px solid #c2a36b;
+
+  /* liquid glass — jak input */
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 999px;
+  box-shadow:
+    0 4px 16px rgba(42, 38, 32, 0.07),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+
   cursor: pointer;
   transition:
-    background-color 0.25s ease,
-    color 0.25s ease;
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
 }
+
 .chip:hover {
-  background: rgba(194, 163, 107, 0.12);
+  background: rgba(228, 202, 154, 0.92);
+  border-color: rgba(194, 163, 107, 0.5);
 }
+
+/* aktywna — wypełniona złotem, wychodzi ze szkła */
 .chipActive {
-  background: #c2a36b;
   color: #fff;
+  background: rgba(194, 163, 107, 0.92);
+  border-color: rgba(194, 163, 107, 0.9);
+  box-shadow:
+    0 6px 20px rgba(194, 163, 107, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
 }
+
 .chip:focus-visible {
-  outline: 2px solid #c2a36b;
-  outline-offset: 2px;
+  outline: none;
+  border-color: rgba(194, 163, 107, 0.7);
+  box-shadow:
+    0 4px 16px rgba(42, 38, 32, 0.07),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    0 0 0 3px rgba(194, 163, 107, 0.18); /* złota poświata jak na inpucie */
 }
 
 .filterRow {
