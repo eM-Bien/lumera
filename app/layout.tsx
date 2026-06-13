@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Cinzel, Playfair_Display } from "next/font/google";
+import { Playfair_Display, Montserrat, Parisienne } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "./components/SmoothScroll/SmoothScroll";
 import TransitionProvider from "./transition/TransitionProvider";
@@ -7,25 +7,22 @@ import LightsBackground from "./components/LightsBackground";
 import TransitionOverlay from "./transition/TransitionOverlay";
 import Nav from "./components/Nav/Nav";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 const playfair = Playfair_Display({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
-  variable: "--font-playfair",
+  variable: "--font-header",
 });
 
-const cinzel = Cinzel({
-  variable: "--font-cinzel",
+const montserrat = Montserrat({
   subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-basic",
+});
+
+const parisienne = Parisienne({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-decoration",
 });
 
 export const metadata: Metadata = {
@@ -41,7 +38,7 @@ export default function RootLayout({
   return (
     <html
       lang="pl"
-      className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} ${playfair.variable}`}
+      className={`${parisienne.variable} ${montserrat.variable} ${playfair.variable}`}
     >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -1,25 +1,25 @@
 "use client";
 
 import styles from "./page.module.css";
-import { Cinzel, Montserrat } from "next/font/google";
+// import { Cinzel, Montserrat } from "next/font/google";
 import ScrollReveal from "./ScrollReveal";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-montserrat",
-});
+// const montserrat = Montserrat({
+//   subsets: ["latin"],
+//   weight: ["400", "700"],
+//   variable: "--font-montserrat",
+// });
 
-const cinzel = Cinzel({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-cinzel",
-});
+// const cinzel = Cinzel({
+//   subsets: ["latin"],
+//   weight: ["400", "600"],
+//   variable: "--font-cinzel",
+// });
 
 export default function AboutPage() {
   return (
     <main
-      className={`${styles.about} ${cinzel.variable} ${montserrat.variable}`}
+      className={styles.about}
     >
       {/* tło — wideo na cały ekran (przyklejone przy scrollu) */}
       <video
@@ -28,10 +28,10 @@ export default function AboutPage() {
         muted
         loop
         playsInline
-        poster="/kontakt/poster.jpg"
+        poster="/about/poster.jpg"
         aria-hidden="true"
       >
-        <source src="/kontakt/tlo.mp4" type="video/mp4" />
+        <source src="/about/tlo.mp4" type="video/mp4" />
       </video>
       <div className={styles.vignette} />
       <div className={styles.scrim} aria-hidden="true" />

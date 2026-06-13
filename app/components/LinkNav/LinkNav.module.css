@@ -20,7 +20,7 @@
   align-items: center;
   text-decoration: none;
   font-size: 2vh;
-  font-family: var(--font-playfair), serif;
+  font-family: var(--font-header), serif;
   font-weight: 800;
   letter-spacing: 0.1em;
   cursor: pointer;

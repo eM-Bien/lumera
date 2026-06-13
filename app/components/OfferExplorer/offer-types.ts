@@ -26,7 +26,7 @@ export const OFFERS: Offer[] = [
     title: "Rytuał odmładzający twarzy",
     category: "Twarz",
     locations: ["Sierpc", "Łódź"],
-    image: "/oferta/eg-1.png",
+    image: "/offer/eg-1.png",
     description:
       "Wieloetapowy zabieg z masażem, peelingiem enzymatycznym i maską dopasowaną do potrzeb skóry. Wygładza, rozświetla i przywraca jędrność.",
   },
@@ -35,7 +35,7 @@ export const OFFERS: Offer[] = [
     title: "Modelowanie sylwetki",
     category: "Ciało",
     locations: ["Sierpc"],
-    image: "/oferta/eg-2.jpg",
+    image: "/offer/eg-2.jpg",
     description:
       "Intensywny masaż połączony z aktywnymi wyciągami roślinnymi. Ujędrnia skórę, poprawia jej napięcie i wspiera mikrokrążenie.",
   },
@@ -44,7 +44,7 @@ export const OFFERS: Offer[] = [
     title: "Manicure SPA",
     category: "Dłonie i stopy",
     locations: ["Łódź"],
-    image: "/oferta/eg-3.jpg",
+    image: "/offer/eg-3.jpg",
     description:
       "Pielęgnacja dłoni z peelingiem, kąpielą ziołową i odżywczą maską parafinową. Skóra staje się gładka i nawilżona.",
   },
@@ -53,7 +53,7 @@ export const OFFERS: Offer[] = [
     title: "Masaż relaksacyjny",
     category: "Relaks",
     locations: ["Sierpc", "Łódź"],
-    image: "/oferta/eg-2.jpg",
+    image: "/offer/eg-2.jpg",
     description:
       "Spokojny rytuał z ciepłymi olejkami, prowadzony w rytmie oddechu. Rozluźnia napięcia i wycisza po długim dniu.",
   },
@@ -62,7 +62,7 @@ export const OFFERS: Offer[] = [
     title: "Głębokie oczyszczanie",
     category: "Twarz",
     locations: ["Sierpc"],
-    image: "/oferta/eg-2.jpg",
+    image: "/offer/eg-2.jpg",
     description:
       "Zabieg dla skóry mieszanej i tłustej: oczyszczanie, regulacja sebum i kojąca maska. Cera oddycha i wygląda świeżo.",
   },
@@ -71,7 +71,7 @@ export const OFFERS: Offer[] = [
     title: "Peeling i odżywienie ciała",
     category: "Ciało",
     locations: ["Sierpc", "Łódź"],
-    image: "/oferta/eg-1.png",
+    image: "/offer/eg-1.png",
     description:
       "Złuszczanie martwego naskórka połączone z odżywczym masłem do ciała. Skóra zostaje aksamitna i wygładzona.",
   },
