@@ -45,7 +45,7 @@ export const OFFERS: Offer[] = [
     title: "Manicure SPA",
     category: "Dłonie i stopy",
     locations: ["Łódź"],
-    image: "/oferta/eg-1.png",
+    image: "/oferta/eg-3.jpg",
     description:
       "Pielęgnacja dłoni z peelingiem, kąpielą ziołową i odżywczą maską parafinową. Skóra staje się gładka i nawilżona.",
   },

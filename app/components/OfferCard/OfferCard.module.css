@@ -13,18 +13,33 @@
 }
 
 .media {
-  flex: 0 0 42%;
+  flex: 0 0 52%;
+  overflow: hidden; /* tnie nadmiar — kadr „płynie" w ramce */
+  border-radius: 4px;
+}
+
+.img {
+  width: 100%;
+  aspect-ratio: 3 / 45;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.2); /* większy niż ramka — zapas na przesuw */
+  will-change: transform; /* parallax na GPU */
 }
 
 .img,
 .imgPlaceholder {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
   border-radius: 4px;
   display: block;
 }
+
 .imgPlaceholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
   background: linear-gradient(135deg, #e8dcc6 0%, #d9c9aa 100%);
 }
 
