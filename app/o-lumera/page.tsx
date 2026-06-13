@@ -1,26 +1,11 @@
 "use client";
 
 import styles from "./page.module.css";
-// import { Cinzel, Montserrat } from "next/font/google";
 import ScrollReveal from "./ScrollReveal";
-
-// const montserrat = Montserrat({
-//   subsets: ["latin"],
-//   weight: ["400", "700"],
-//   variable: "--font-montserrat",
-// });
-
-// const cinzel = Cinzel({
-//   subsets: ["latin"],
-//   weight: ["400", "600"],
-//   variable: "--font-cinzel",
-// });
 
 export default function AboutPage() {
   return (
-    <main
-      className={styles.about}
-    >
+    <main className={styles.about}>
       {/* tło — wideo na cały ekran (przyklejone przy scrollu) */}
       <video
         className={styles.video}
