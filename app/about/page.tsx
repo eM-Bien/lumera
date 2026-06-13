@@ -1,12 +1,8 @@
 "use client";
 
 import styles from "./page.module.css";
-
-import { useEffect, useState } from "react";
-import { Cinzel } from "next/font/google";
-import { Montserrat } from "next/font/google";
+import { Cinzel, Montserrat } from "next/font/google";
 import ScrollReveal from "./ScrollReveal";
-import LetterBackground from "../components/LetterBackground/LetterBackground";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -21,25 +17,24 @@ const cinzel = Cinzel({
 });
 
 export default function AboutPage() {
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setReady(true), 1000);
-    return () => clearTimeout(t);
-  }, []);
-
   return (
     <main
       className={`${styles.about} ${cinzel.variable} ${montserrat.variable}`}
     >
-      {ready && (
-        <LetterBackground
-          fontFamily={cinzel.style.fontFamily}
-          gold={[240, 235, 235]}
-          scale={1} // ← rozmiar całej kompozycji
-          letterFrac={0.45} // ← rozmiar samej litery
-        />
-      )}
+      {/* tło — wideo na cały ekran (przyklejone przy scrollu) */}
+      <video
+        className={styles.video}
+        autoPlay
+        muted
+        loop
+        playsInline
+        poster="/kontakt/poster.jpg"
+        aria-hidden="true"
+      >
+        <source src="/kontakt/tlo.mp4" type="video/mp4" />
+      </video>
+      <div className={styles.vignette} />
+      <div className={styles.scrim} aria-hidden="true" />
 
       <section className={styles.hero}>
         <ScrollReveal as="h1" className={styles.h1} text="O Lumera" />
@@ -57,7 +52,7 @@ export default function AboutPage() {
         <ScrollReveal
           as="p"
           className={styles.p}
-          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae ornare leo. Sed nisi odio, laoreet blandit efficitur nec, rhoncus eget mi. Sed ac nunc ac orci semper faucibus sed sed purus. Vestibulum fermentum mi neque, id auctor diam laoreet id. Integer molestie ut nibh eu semper. Integer consectetur massa sit amet diam volutpat, in consequat elit maximus."
+          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae ornare leo. Sed nisi odio, laoreet blandit efficitur nec, rhoncus eget mi. Sed ac nunc ac orci semper faucibus sed sed purus."
         />
       </section>
 
@@ -65,7 +60,7 @@ export default function AboutPage() {
         <ScrollReveal
           as="p"
           className={styles.p}
-          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae ornare leo. Sed nisi odio, laoreet blandit efficitur nec, rhoncus eget mi. Sed ac nunc ac orci semper faucibus sed sed purus. Vestibulum fermentum mi neque, id auctor diam laoreet id. Integer molestie ut nibh eu semper. Integer consectetur massa sit amet diam volutpat, in consequat elit maximus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae ornare leo. Sed nisi odio, laoreet blandit efficitur nec, rhoncus eget mi. Sed ac nunc ac orci semper faucibus sed sed purus. Vestibulum fermentum mi neque, id auctor diam laoreet id. Integer molestie ut nibh eu semper. Integer consectetur massa sit amet diam volutpat, in consequat elit maximus."
+          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae ornare leo. Sed nisi odio, laoreet blandit efficitur nec, rhoncus eget mi. Sed ac nunc ac orci semper faucibus sed sed purus. Vestibulum fermentum mi neque, id auctor diam laoreet id."
         />
       </section>
 

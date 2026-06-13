@@ -1,4 +1,8 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Cinzel, Montserrat } from "next/font/google";
+import LetterBackground from "../components/LetterBackground/LetterBackground";
 import styles from "./page.module.css";
 
 const cinzel = Cinzel({
@@ -19,35 +23,31 @@ const PHONE_HREF = "+48600000000";
 const EMAIL = "kontakt@lumera.pl";
 
 const LOCATIONS = [
-  {
-    city: "Sierpc",
-    address: ["ul. Przykładowa 12", "09-200 Sierpc"],
-  },
-  {
-    city: "Łódź",
-    address: ["ul. Przykładowa 34", "90-001 Łódź"],
-  },
+  { city: "Sierpc", address: ["ul. Przykładowa 12", "09-200 Sierpc"] },
+  { city: "Łódź", address: ["ul. Przykładowa 34", "90-001 Łódź"] },
 ];
 
 export default function ContactPage() {
+  // opóźnione pojawienie LetterBackground (jak na about) — czeka na font
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setReady(true), 1000);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <main
       className={`${styles.kontakt} ${cinzel.variable} ${montserrat.variable}`}
     >
-      {/* tło — wideo na cały ekran */}
-      <video
-        className={styles.video}
-        autoPlay
-        muted
-        loop
-        playsInline
-        poster="/kontakt/poster.jpg"
-        aria-hidden="true"
-      >
-        {/* <source src="/kontakt/tlo.webm" type="video/webm" /> */}
-        <source src="/kontakt/tlo.mp4" type="video/mp4" />
-      </video>
-      <div className={styles.scrim} aria-hidden="true" />
+      {/* tło — litera odbita w wodzie + kwiaty */}
+      {ready && (
+        <LetterBackground
+          fontFamily={cinzel.style.fontFamily}
+          gold={[240, 235, 235]}
+          scale={1}
+          letterFrac={0.45}
+        />
+      )}
 
       <div className={styles.content}>
         <header className={styles.header}>
@@ -55,7 +55,6 @@ export default function ContactPage() {
           <p className={styles.subtitle}>Zapraszamy do naszych gabinetów</p>
         </header>
 
-        {/* dwie lokalizacje */}
         <div className={styles.locations}>
           {LOCATIONS.map((loc) => (
             <section key={loc.city} className={styles.location}>
@@ -69,7 +68,6 @@ export default function ContactPage() {
           ))}
         </div>
 
-        {/* wspólny telefon + email (te same dla obu lokali) */}
         <div className={styles.shared}>
           <a className={styles.contactLink} href={`tel:${PHONE_HREF}`}>
             {PHONE}

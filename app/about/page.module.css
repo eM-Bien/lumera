@@ -1,31 +1,57 @@
 /* =========================================================================
    AboutPage — układ i typografia
-   Warstwy: LetterBackground (z-0, fixed) pod treścią; sekcje w normalnym flow.
+   Tło: wideo (fixed, z-0) + scrim; sekcje w normalnym flow nad nim.
    ========================================================================= */
 
 .about {
   min-height: 100dvh;
   color: #d8c1a0;
-  background: radial-gradient(
-    ellipse at center,
-    #0a0720 0%,
-    #060414 45%,
-    #000000 100%
-  );
+  background: #05030f; /* dno — zanim wideo się doczyta */
 }
 
-/* --- Sekcje ------------------------------------------------------------- */
+/* --- Tło: wideo + przyciemnienie ---------------------------------------- */
 
-/* powitanie — pierwszy nagłówek (Cinzel), widoczny od razu */
+.video {
+  position: fixed; /* zostaje w tle przy scrollu */
+  top: 0;
+  left: 0;
+  width: 100vw; /* NIE 100% — na fixed liczy się względem treści, nie ekranu */
+  height: 100dvh;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.scrim {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      120% 90% at 50% 40%,
+      rgba(5, 3, 15, 0.3) 0%,
+      rgba(5, 3, 15, 0.78) 100%
+    ),
+    linear-gradient(180deg, rgba(5, 3, 15, 0.45) 0%, rgba(5, 3, 15, 0.7) 100%);
+}
+
+/* --- Sekcje (nad tłem) -------------------------------------------------- */
+
 .hero {
+  position: relative;
+  z-index: 2;
   display: flex;
   margin-top: 12vh;
   padding: 4vh 6vw 2vh;
   font-family: var(--font-cinzel), serif;
 }
 
-/* bloki tekstu — naprzemiennie lewa/prawa, wysokie by scroll je odsłaniał */
 .block {
+  position: relative;
+  z-index: 2;
   display: flex;
   min-height: 40vh;
   padding: 0 6vw;
@@ -41,14 +67,12 @@
   text-align: right;
 }
 
-/* zapas na dole, by ostatni blok zdążył się odsłonić przy scrollu */
 .spacer {
   height: 30vh;
 }
 
 /* --- Typografia --------------------------------------------------------- */
 
-/* wspólne dla treści ScrollReveal (nagłówki i bloki) */
 .reveal {
   margin: 0;
   font-weight: 500;
@@ -56,21 +80,18 @@
   letter-spacing: 0.02em;
 }
 
-/* duży nagłówek powitania — skaluje się z szerokością okna */
 .h1 {
   font-size: clamp(1.6rem, 4.5vw, 8rem);
   line-height: 1.1;
   letter-spacing: 0.08em;
 }
 
-/* bloki tekstu — węższa kolumna, rozmiar skalowany z oknem */
 .p {
   max-width: 35%;
   font-size: clamp(1.1rem, 1.4vw, 1.4rem);
   line-height: 1.4;
 }
 
-/* każde słowo: przygaszone; krycie i ruch steruje JS przy scrollu */
 .word {
   display: inline-block;
   opacity: 0.12;
@@ -79,4 +100,17 @@
     opacity 0.1s linear,
     transform 0.1s linear;
   will-change: opacity, transform;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0) 25%,
+    rgba(0, 0, 0, 0.45) 45%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
 }

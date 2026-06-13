@@ -1,10 +1,6 @@
 .enter {
   opacity: 0;
-  /* startuje z lekkiego przyciemnienia — wynurza się z ciemności po exit */
-  filter: brightness(0.4);
-  transition:
-    opacity 0.9s ease,
-    filter 0.9s ease;
+  transition: opacity 0.9s ease;
 }
 
 .entered {
