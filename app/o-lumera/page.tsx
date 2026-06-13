@@ -18,35 +18,52 @@ export default function AboutPage() {
       >
         <source src="/about/tlo.mp4" type="video/mp4" />
       </video>
-      <div className={styles.vignette} />
       <div className={styles.scrim} aria-hidden="true" />
 
       <section className={styles.hero}>
-        <ScrollReveal as="h1" className={styles.h1} text="O Lumera" />
+        <ScrollReveal as="h1" className={styles.h1} text="Witamy w Lumera" />
+      </section>
+
+      <section className={styles.subtitleWrapper}>
+        <p className={styles.subtitle}>
+          Lumera to miejsce stworzone z pasji do świadomej pielęgnacji oraz
+          holistycznego podejścia do zdrowia i piękna.
+        </p>
       </section>
 
       <section className={`${styles.block} ${styles.left}`}>
-        <ScrollReveal
-          as="p"
-          className={styles.p}
-          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae ornare leo. Sed nisi odio, laoreet blandit efficitur nec, rhoncus eget mi. Sed ac nunc ac orci semper faucibus sed sed purus. Vestibulum fermentum mi neque, id auctor diam laoreet id. Integer molestie ut nibh eu semper. Integer consectetur massa sit amet diam volutpat, in consequat elit maximus."
-        />
+        <div className={styles.column}>
+          <ScrollReveal
+            as="p"
+            className={styles.p}
+            text="Wierzymy, że prawdziwa harmonia zaczyna się od uważności na potrzeby własnego ciała i umysłu."
+          />
+          <ScrollReveal
+            as="p"
+            className={styles.p}
+            text="Powstaliśmy z potrzeby tworzenia przestrzeni, w której profesjonalna wiedza spotyka się z troską, a każda osoba może poczuć się wysłuchana, zaopiekowana i zrozumiana."
+          />
+        </div>
       </section>
 
       <section className={`${styles.block} ${styles.right}`}>
-        <ScrollReveal
-          as="p"
-          className={styles.p}
-          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae ornare leo. Sed nisi odio, laoreet blandit efficitur nec, rhoncus eget mi. Sed ac nunc ac orci semper faucibus sed sed purus."
-        />
-      </section>
-
-      <section className={`${styles.block} ${styles.left}`}>
-        <ScrollReveal
-          as="p"
-          className={styles.p}
-          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae ornare leo. Sed nisi odio, laoreet blandit efficitur nec, rhoncus eget mi. Sed ac nunc ac orci semper faucibus sed sed purus. Vestibulum fermentum mi neque, id auctor diam laoreet id."
-        />
+        <div className={styles.column}>
+          <ScrollReveal
+            as="p"
+            className={styles.p}
+            text="Naszą misją jest wspieranie w odzyskiwaniu równowagi oraz budowaniu zdrowych nawyków pielęgnacyjnych. Łączymy nowoczesne podejście kosmetologiczne i trychologiczne z indywidualnym spojrzeniem na potrzeby każdego człowieka."
+          />
+          <ScrollReveal
+            as="p"
+            className={styles.p}
+            text="W Lumera nie wierzymy w uniwersalne rozwiązania. Każda skóra, każda skóra głowy i każda historia są wyjątkowe. Dlatego stawiamy na konsultację, edukację i pielęgnację dopasowaną do Ciebie."
+          />
+          <ScrollReveal
+            as="p"
+            className={styles.p}
+            text="Tworzymy miejsce, w którym możesz zwolnić, odetchnąć i oddać się rytuałom opartym na wiedzy, doświadczeniu i autentycznej trosce."
+          />
+        </div>
       </section>
 
       <div className={styles.spacer} />

@@ -19,7 +19,7 @@ export default function ScrollReveal({
   const wordsRef = useRef<HTMLSpanElement[]>([]);
   const linesRef = useRef<HTMLSpanElement[][]>([]); // słowa pogrupowane w linie
   const maxRef = useRef<number[]>([]); // zatrzask krycia per linia
-  const words = text.split(" ");
+  const words = text.replace(/\s+/g, " ").trim().split(" ");
 
   // przelicz grupy linii po layoutcie i przy resize
   const groupLines = () => {
