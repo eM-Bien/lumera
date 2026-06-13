@@ -6,7 +6,7 @@ import LinkNav from "../LinkNav/LinkNav";
 import styles from "./Nav.module.css";
 
 const links = [
-  { href: "/about", name: "O Lumera" },
+  { href: "/o-lumera", name: "O Lumera" },
   { href: "/oferta", name: "Oferta" },
   { href: "/kontakt", name: "Kontakt" },
 ];
