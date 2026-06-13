@@ -16,6 +16,7 @@ const HOME_DELAY_MS = 4200;
 export default function Nav() {
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const isLight = pathname === "/oferta";
   const [show, setShow] = useState(() => pathname !== "/");
   const [open, setOpen] = useState(false); // hamburger na mobile
 
@@ -29,7 +30,9 @@ export default function Nav() {
   const visibleLinks = links.filter((link) => link.href !== pathname);
 
   return (
-    <nav className={`${styles.nav} ${show ? styles.visible : ""}`}>
+    <nav
+      className={`${styles.nav} ${show ? styles.visible : ""} ${isLight ? styles.light : ""}`}
+    >
       <button
         type="button"
         className={`${styles.burger} ${open ? styles.burgerOpen : ""}`}

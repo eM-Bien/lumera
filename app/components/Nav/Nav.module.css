@@ -39,7 +39,7 @@
   display: block;
   height: 2px;
   width: 100%;
-  background: #d8c1a0;
+  background: var(--nav-text, #d8c1a0);
   transition:
     transform 0.3s ease,
     opacity 0.3s ease;
@@ -111,5 +111,15 @@
     opacity: 1;
     transform: translateY(0);
     transition-delay: calc(0.6s + var(--i) * 0.1s);
+  }
+}
+
+@media (min-width: 769px) {
+  .nav.light {
+    --nav-text: #2a2620;
+    --nav-text-hover: #2a2620;
+    --nav-blob: rgba(184, 118, 19, 0.4);
+    --nav-blob-blend: multiply;
+    color: #2a2620;
   }
 }

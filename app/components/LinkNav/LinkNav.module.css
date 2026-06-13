@@ -1,23 +1,17 @@
 /* =========================================================================
-   NavButton — efekt hover (odwzorowanie immersive-g.com, paleta LUMERA)
+   NavButton — efekt hover (paleta LUMERA)
 
-   Strojenie przez zmienne:
-   --nav-ink        kolor tekstu w spoczynku
-   --nav-gold       kolor tekstu + strzałki na hoverze
-   --nav-arrow-gap  ile miejsca rezerwujemy na strzałkę (steruje przesunięciem)
-   --nav-blob       RGB plamy; --nav-blob-blend tryb mieszania
+   Kolory sterowane zmiennymi (ustawianymi wyżej, np. w .nav / .nav.light):
+   --nav-text        kolor tekstu w spoczynku
+   --nav-text-hover  kolor tekstu + strzałki na hoverze
+   --nav-blob        kolor plamy (gotowy kolor, nie składowe!)
+   --nav-blob-blend  tryb mieszania plamy (screen na ciemnym, multiply na jasnym)
    ========================================================================= */
 
 .navButton {
-  --nav-ink: #d8d8d8; /* tekst w spoczynku                          */
-  --nav-gold: #ffffff; /* tekst + strzałka na hoverze                */
-  --nav-arrow-gap: 1.5em; /* szerokość strefy strzałki               */
-  --nav-blob: 229, 205, 160; /* RGB plamy. Na jasnym tle daj ciemny  */
-  --nav-blob-blend: screen; /* 'screen' rozjaśnia; na jasnym → 'multiply' */
-
-  --nav-ease: cubic-bezier(0.445, 0.05, 0.55, 0.95); /* ease-in-out */
-  --nav-ease-out: cubic-bezier(0.39, 0.575, 0.565, 1); /* ease-out  */
-
+  --nav-arrow-gap: 1.5em; /* szerokość strefy strzałki */
+  --nav-ease: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  --nav-ease-out: cubic-bezier(0.39, 0.575, 0.565, 1);
   --nav-arrow-opacity: 0;
   --nav-arrow-x: -0.45em;
 
@@ -26,9 +20,11 @@
   align-items: center;
   text-decoration: none;
   font-size: 2vh;
-  font-family: Cinzel, serif;
+  font-family: var(--font-playfair), serif;
+  font-weight: 800;
   letter-spacing: 0.1em;
   cursor: pointer;
+  color: var(--nav-text, #d8d8d8); /* baza dla <a> i strzałki (currentColor) */
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -37,18 +33,17 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 55em; /* duży rozlew daleko poza tekst */
-  height: 36em;
+  width: 35em;
+  height: 26em;
   transform: translate(-50%, -50%) scale(0.2);
   border-radius: 50%;
   background: radial-gradient(
     closest-side,
-    #587891,
-    rgb(40 51 68 / 50%) 45%,
-    rgba(var(--nav-blob), 0) 72%
+    var(--nav-blob, #ccb283),
+    transparent
   );
   filter: blur(36px) url(#lumera-ink-blob);
-  mix-blend-mode: var(--nav-blob-blend);
+  mix-blend-mode: var(--nav-blob-blend, screen);
   opacity: 0;
   z-index: -1;
   pointer-events: none;
@@ -61,8 +56,8 @@
 /* --- Tekst -------------------------------------------------------------- */
 .label {
   display: inline-block;
-  color: var(--nav-ink);
-  font-weight: 500;
+  color: var(--nav-text, #d8d8d8);
+  font-weight: 700;
   transform: translateX(calc(var(--nav-arrow-gap) / 2));
   transition:
     color 0.8s var(--nav-ease),
@@ -70,28 +65,29 @@
   will-change: color, transform;
 }
 
-/* --- Stan hover / focus ------------------------------------------------- */
-.navButton:hover,
+/* --- Hover / focus: TYLKO na urządzeniach z kursorem (desktop) ----------
+   Na dotyku reguły nie istnieją, więc mobile zostaje bez zmian.            */
+@media (hover: hover) {
+  .navButton:hover,
+  .navButton:focus-visible {
+    --nav-arrow-opacity: 1;
+    --nav-arrow-x: 0;
+  }
+  .navButton:hover .blob,
+  .navButton:focus-visible .blob {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .navButton:hover .label,
+  .navButton:focus-visible .label {
+    color: var(--nav-text-hover, #ffffff);
+    transform: translateX(0);
+  }
+}
+
+/* obrys focusa zostaje zawsze — dostępność z klawiatury */
 .navButton:focus-visible {
-  --nav-arrow-opacity: 1;
-  --nav-arrow-x: 0;
-}
-
-.navButton:hover .blob,
-.navButton:focus-visible .blob {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.navButton:hover .label,
-.navButton:focus-visible .label {
-  color: var(--nav-gold);
-  transform: translateX(0);
-}
-
-/* --- Dostępność --------------------------------------------------------- */
-.navButton:focus-visible {
-  outline: 2px solid var(--nav-gold);
+  outline: 2px solid var(--nav-text-hover, #ffffff);
   outline-offset: 4px;
   border-radius: 2px;
 }
@@ -105,6 +101,6 @@
 
 @media (max-width: 768px) {
   .label {
-    font-size: 3.5vh; /* większy tekst linków w drawerze */
+    font-size: 3.5vh; /* większy tekst linków w drawerze — bez zmian */
   }
 }

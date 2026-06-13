@@ -3,7 +3,6 @@
 :root {
   --background: #03020c;
   --foreground: #171717;
-  /* --font-heading: var(--font-cinzel); */
   --font-heading: var(--font-playfair);
 }
 
@@ -21,8 +20,6 @@ html {
 html,
 body {
   max-width: 100%;
-  overflow-x: hidden;
-  overflow: hidden;
 }
 
 body {

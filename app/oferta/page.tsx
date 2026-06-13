@@ -1,5 +1,5 @@
 import styles from "./page.module.css";
-import { Parisienne, Cinzel, Playfair_Display } from "next/font/google";
+import { Parisienne } from "next/font/google";
 import OfferExplorer from "../components/OfferExplorer/OfferExplorer";
 
 const parisienne = Parisienne({
@@ -8,24 +8,11 @@ const parisienne = Parisienne({
   variable: "--font-parisienne",
 });
 
-const cinzel = Cinzel({
-  variable: "--font-cinzel",
-  subsets: ["latin"],
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-playfair",
-});
-
 export default function OfferPage() {
   return (
     <div className={styles.offer}>
       <header className={styles.offerTitle}>
-        <h1 className={`${styles.title} ${playfair.className}`}>
-          Zabiegi i różności
-        </h1>
+        <h1 className={styles.title}>Zabiegi i różności</h1>
         <p className={`${styles.subtitle} ${parisienne.className}`}>
           Sprawdź co by pasowało do Ciebie
         </p>
