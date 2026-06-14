@@ -1,6 +1,9 @@
 export const intro =
   "Lumera to miejsce stworzone z pasji do świadomej pielęgnacji oraz holistycznego podejścia do zdrowia i piękna.";
 
+export const summary =
+  "Zapraszamy Cię do świata Lumera - miejsca stworzonego z pasji, wiedzy i serca";
+
 export const story = {
   left: [
     "Wierzymy, że prawdziwa harmonia zaczyna się od uważności na potrzeby własnego ciała i umysłu.",
@@ -22,4 +25,19 @@ export const values = [
     label: "Wiedza",
     text: "Nieustannie rozwijamy swoje kompetencje, aby oferować rozwiązania oparte na aktualnej wiedzy z zakresu kosmetologii i trychologii.",
   },
+  {
+    label: "Indywidualne podejście",
+    text: "Słuchamy, obserwujemy i dobieramy pielęgnację zgodnie z rzeczywistymi potrzebami naszych klientów",
+  },
+  {
+    label: "Troska",
+    text: "Tworzymy atmosferę bezpieczeństwa, zaufania i uważności, ponieważ wiemy, jak ważne jest poczucie zaopiekowania.",
+  },
 ];
+
+export const philosophy = {
+  right: [
+    "W Lumera wierzymy, że pielęgnacja to coś więcej niż zabieg. To świadomy rytuał troski o siebie, który wpływa nie tylko na wygląd, ale również na pewność siebie i jakość życia.",
+    "Dlatego pomagamy odnaleźć harmonię skóry głowy, twarzy i ciała – z szacunkiem dla naturalnych potrzeb organizmu oraz zrozumieniem dla indywidualnej drogi każdego człowieka.",
+  ],
+};

@@ -11,3 +11,8 @@
   line-height: 1.1;
   letter-spacing: 0.08em;
 }
+
+.right {
+  text-align: right;
+  justify-content: flex-end;
+}

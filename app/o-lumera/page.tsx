@@ -5,7 +5,13 @@ import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 import VideoBackground from "../components/AboutSection/VideoBackground/VideoBackground";
 import Subtitle from "../components/AboutSection/Subtitle/Subtitle";
 import TextColumn from "../components/AboutSection/TextColumn/TextColumn";
-import { intro, story, values } from "../components/AboutSection/about.content";
+import {
+  intro,
+  philosophy,
+  story,
+  summary,
+  values,
+} from "../components/AboutSection/about.content";
 import SectionHeading from "../components/AboutSection/SectionHeading/SectionHeading";
 
 export default function AboutPage() {
@@ -31,7 +37,12 @@ export default function AboutPage() {
         </div>
       ))}
 
+      <SectionHeading text="Nasza filozofia" align="right" />
+      <TextColumn align="right" paragraphs={philosophy.right} />
+
       <div className={styles.spacer} />
+
+      <Subtitle>{summary}</Subtitle>
     </main>
   );
 }
