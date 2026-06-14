@@ -13,6 +13,7 @@ import {
   values,
 } from "../components/AboutSection/about.content";
 import SectionHeading from "../components/AboutSection/SectionHeading/SectionHeading";
+import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 
 export default function AboutPage() {
   return (
@@ -43,6 +44,7 @@ export default function AboutPage() {
       <div className={styles.spacer} />
 
       <Subtitle>{summary}</Subtitle>
+      <ScrollToTop />
     </main>
   );
 }
