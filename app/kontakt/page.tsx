@@ -44,8 +44,11 @@ export default function ContactPage() {
 
       <div className={styles.content}>
         <header className={styles.header}>
-          <h1 className={styles.title}>Kontakt</h1>
-          <p className={styles.subtitle}>Elo elo trzy dwa zero</p>
+          <h1 className={styles.title}>Do zobaczenia w Lumera</h1>
+          <p className={styles.subtitle}>
+            Sierpc albo Łódź — wybierz bliżej i zarezerwuj chwilę tylko dla
+            siebie
+          </p>
         </header>
 
         {/* telefon + email — wyróżnione */}

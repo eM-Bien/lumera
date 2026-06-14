@@ -32,10 +32,10 @@
 /* --- Nagłówek (lewa strona) --------------------------------------------- */
 
 .title {
-  margin: 5vh 0 0;
+  margin: 5vh 0 3vh;
   font-family: var(--font-header);
   font-weight: 600;
-  font-size: clamp(2.4rem, 3vw, 3rem);
+  font-size: clamp(2.4rem, 2vw, 2rem);
   letter-spacing: 0.08em;
   color: #f0e6d2;
 }
@@ -44,7 +44,7 @@
   margin: 1rem 0 0;
   font-family: var(--font-decoration);
   font-size: clamp(0.95rem, 4.4vw, 3.25rem);
-  color: #c2a36b;
+  color: #d8c1a0;
 }
 
 /* --- Telefon + email — wyróżniona „pigułka" ----------------------------- */
