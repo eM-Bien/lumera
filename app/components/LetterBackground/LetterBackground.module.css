@@ -10,6 +10,8 @@
   /* wartości domyślne zanim JS ustawi swoje */
   --p: 0; /* postęp scrolla 0..1 (ustawia JS) */
   --base-scale: 1; /* skala bazowa z propa (ustawia JS) */
+  --shift-y: 0px;
+  --shift-x: 0px;
 }
 
 @keyframes letterFadeIn {
@@ -27,10 +29,10 @@
   position: absolute;
   inset: 0;
   transform-origin: center center;
-  /* skala bazowa × kurczenie podczas scrolla (do 0.65 przy końcu) */
-  transform: scale(calc(var(--base-scale) * (1 - var(--p) * 0.35)));
-  opacity: calc(1 - var(--p)); /* znika całkowicie */
-  filter: brightness(calc(1 - var(--p) * 0.85)); /* zaciemnia się */
+  transform: translate(var(--shift-x, 0px), var(--shift-y, 0px))
+    scale(calc(var(--base-scale) * (1 - var(--p) * 0.35)));
+  opacity: calc(1 - var(--p));
+  filter: brightness(calc(1 - var(--p) * 0.85));
   will-change: transform, opacity, filter;
 }
 

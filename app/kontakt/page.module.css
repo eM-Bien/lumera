@@ -1,41 +1,38 @@
 /* =========================================================================
-   Kontakt — ciemny motyw, tło: LetterBackground (litera + woda + kwiaty)
-   LetterBackground jest fixed (z-0) i sam zarządza swoimi warstwami;
-   treść kładziemy nad nim.
+   Kontakt — ciemny motyw, tło: LetterBackground (litera + woda + kwiaty).
+   Desktop: litera po PRAWEJ, treść po lewej; lokalizacje obok siebie
+   rozdzielone kropką; gradient jaśniejszy po prawej-dole (pod literą).
    ========================================================================= */
 
 .contact {
   position: relative;
   min-height: 100dvh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
   color: #d8c1a0;
-  background: radial-gradient(
-    ellipse at center,
-    #0a0720 0%,
-    #060414 45%,
-    #000000 100%
-  );
+  /* jaśniejsza poświata po prawej-dole (pod literą) + ciemna baza */
+  background:
+    radial-gradient(
+      69% 81% at 80% 68%,
+      #483e6999 0%,
+      #1e183740 50%,
+      #0a072000 95%
+    ),
+    radial-gradient(#0a0720 0%, #060414 45%, #000 100%);
 }
 
-/* --- Treść (nad tłem) --------------------------------------------------- */
-
+/* kontener treści — lewa połowa (litera zajmuje prawą) */
 .content {
   position: relative;
   z-index: 2; /* nad LetterBackground */
-  width: 100%;
-  /* max-width: 1000px; */
-  padding: 12vh 6vw;
+  min-height: 100dvh;
+  max-width: 56vw;
+  padding: 20vh 6vw 0;
 }
 
-.header {
-  margin-bottom: 8vh;
-}
+/* --- Nagłówek (lewa strona) --------------------------------------------- */
 
 .title {
-  margin: 0;
+  margin: 5vh 0 0;
   font-family: var(--font-header);
   font-weight: 600;
   font-size: clamp(2.4rem, 4vw, 4rem);
@@ -50,16 +47,58 @@
   color: #c2a36b;
 }
 
+/* --- Telefon + email — wyróżniona „pigułka" ----------------------------- */
+
+.shared {
+  display: flex;
+  gap: 1.5rem;
+  width: fit-content;
+  margin: 3.5vh 0 0;
+  padding: 0.9rem 2.2rem;
+  border: 1px solid rgba(194, 163, 107, 0.45);
+  border-radius: 999px;
+  background: rgba(194, 163, 107, 0.08);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.contactLink {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  letter-spacing: 0.06em;
+  color: #f0e6d2;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.contactLink:hover {
+  color: #fffaf0;
+}
+
+.divider {
+  color: #c2a36b;
+  opacity: 0.7;
+}
+
+/* --- Lokalizacje — obok siebie, rozdzielone kropką ---------------------- */
+
 .locations {
   display: flex;
-  /* justify-content: center; */
-  gap: clamp(2rem, 8vw, 8rem);
-  flex-wrap: wrap;
-  margin-bottom: 7vh;
+  flex-direction: row;
+  align-items: center; /* kropka i miasta wyrównane w pionie */
+  gap: 1.75rem;
+  margin-top: 7vh;
 }
 
 .location {
-  min-width: 220px;
+  text-align: left;
+}
+
+/* kropka rozdzielająca między lokalizacjami */
+.locDivider {
+  font-size: 2.2rem;
+  line-height: 1;
+  color: #c2a36b;
+  opacity: 0.7;
 }
 
 .city {
@@ -82,45 +121,42 @@
   color: #c9bfa8;
 }
 
-.shared {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.25rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding-top: 5vh;
-  border-top: 1px solid rgba(194, 163, 107, 0.25);
-}
-
-.contactLink {
-  font-family: var(--font-montserrat), sans-serif;
-  font-size: clamp(1rem, 1.6vw, 1.25rem);
-  letter-spacing: 0.04em;
-  color: #d8c1a0;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-.contactLink:hover {
-  color: #f0e6d2;
-}
-
-.divider {
-  color: #c2a36b;
-  opacity: 0.6;
-}
+/* --- Mobile: stos, pełna szerokość, litera jako tło --------------------- */
 
 @media (max-width: 768px) {
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5vh;
+    max-width: none;
+    padding: 10vh 6vw 12vh;
+    text-align: center;
+  }
+
+  .shared {
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 0;
+  }
+  .divider {
+    display: none;
+  }
+
   .locations {
     flex-direction: column;
     gap: 4vh;
     align-items: center;
+    width: 100%;
   }
-  .shared {
-    flex-direction: column;
-    gap: 0.75rem;
+  .location {
+    text-align: center;
   }
-  .divider {
+  .address {
+    align-items: center;
+  }
+  /* przy układzie pionowym kropka między lokalizacjami zbędna */
+  .locDivider {
     display: none;
   }
 }

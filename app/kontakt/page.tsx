@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Cinzel } from "next/font/google";
 import LetterBackground from "../components/LetterBackground/LetterBackground";
 import styles from "./page.module.css";
@@ -22,7 +22,7 @@ const LOCATIONS = [
 ];
 
 export default function ContactPage() {
-  // opóźnione pojawienie LetterBackground (jak na about) — czeka na font
+  // opóźnione pojawienie LetterBackground — czeka na font
   const [ready, setReady] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setReady(true), 1000);
@@ -31,13 +31,15 @@ export default function ContactPage() {
 
   return (
     <main className={styles.contact}>
-      {/* tło — litera odbita w wodzie + kwiaty */}
+      {/* tło — litera odbita w wodzie + kwiaty, przesunięta w prawo i niżej */}
       {ready && (
         <LetterBackground
           fontFamily={cinzel.style.fontFamily}
           gold={[240, 235, 235]}
           scale={1}
           letterFrac={0.45}
+          offsetX="24vw"
+          offsetY="10vh"
         />
       )}
 
@@ -47,28 +49,36 @@ export default function ContactPage() {
           <p className={styles.subtitle}>Elo elo trzy dwa zero</p>
         </header>
 
+        {/* telefon + email — wyróżnione */}
         <div className={styles.shared}>
-          <a className={styles.contactLink} href={`tel:${PHONE_HREF}`}>
-            {PHONE}
+          <a className={styles.contactLink} href={`mailto:${EMAIL}`}>
+            {EMAIL}
           </a>
-          <span className={styles.divider} aria-hidden="true">
-            ·
-          </span>
+        </div>
+        <div className={styles.shared}>
           <a className={styles.contactLink} href={`mailto:${EMAIL}`}>
             {EMAIL}
           </a>
         </div>
 
+        {/* lokalizacje — obok siebie, rozdzielone kropką */}
         <div className={styles.locations}>
-          {LOCATIONS.map((loc) => (
-            <section key={loc.city} className={styles.location}>
-              <h2 className={styles.city}>{loc.city}</h2>
-              <address className={styles.address}>
-                {loc.address.map((line) => (
-                  <span key={line}>{line}</span>
-                ))}
-              </address>
-            </section>
+          {LOCATIONS.map((loc, i) => (
+            <Fragment key={loc.city}>
+              {i > 0 && (
+                <span className={styles.locDivider} aria-hidden="true">
+                  ·
+                </span>
+              )}
+              <section className={styles.location}>
+                <h2 className={styles.city}>{loc.city}</h2>
+                <address className={styles.address}>
+                  {loc.address.map((line) => (
+                    <span key={line}>{line}</span>
+                  ))}
+                </address>
+              </section>
+            </Fragment>
           ))}
         </div>
       </div>

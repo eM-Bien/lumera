@@ -15,6 +15,8 @@ type LetterBackgroundProps = {
   letterFrac?: number;
   /** Skala całej kompozycji (litera + kwiaty). 1 = domyślna. */
   scale?: number;
+  offsetY?: string;
+  offsetX?: string;
   className?: string;
 };
 
@@ -28,6 +30,8 @@ export default function LetterBackground({
   gold = [240, 235, 235],
   letterFrac = 0.45,
   scale = 1,
+  offsetY = "0px",
+  offsetX = "0px",
   className = "",
 }: LetterBackgroundProps) {
   const [box, setBox] = useState<LetterBox | null>(null);
@@ -36,7 +40,9 @@ export default function LetterBackground({
   // skala bazowa jako zmienna CSS — bez stylu liniowego dla wyglądu
   useEffect(() => {
     stageRef.current?.style.setProperty("--base-scale", String(scale));
-  }, [scale]);
+    stageRef.current?.style.setProperty("--shift-y", offsetY);
+    stageRef.current?.style.setProperty("--shift-x", offsetX);
+  }, [scale, offsetY, offsetX]);
 
   // postęp scrolla 0..1 — pełne zaniknięcie po przewinięciu ~jednego ekranu
   useEffect(() => {
