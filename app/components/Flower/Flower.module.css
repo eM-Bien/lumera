@@ -1,0 +1,32 @@
+.flower {
+  position: absolute;
+  transform-origin: 50% 100%;
+  pointer-events: none;
+  animation: flowerSway var(--dur, 7s) ease-in-out var(--delay, 0s) infinite
+    alternate;
+  will-change: transform;
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 3px 14px rgba(0, 0, 0, 0.55));
+}
+
+@keyframes flowerSway {
+  from {
+    transform: rotate(calc(var(--rot) - var(--sway))) translateY(0);
+  }
+  to {
+    transform: rotate(calc(var(--rot) + var(--sway)))
+      translateY(calc(var(--bob) * -1));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flower {
+    animation: none;
+    transform: rotate(var(--rot));
+  }
+}

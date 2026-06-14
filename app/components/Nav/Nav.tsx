@@ -57,7 +57,7 @@ export default function Nav() {
         {!isHome && (
           <LinkNav
             href="/"
-            name="Powrót"
+            name="Strona główna"
             onClick={() => setOpen(false)}
             style={{ "--i": visibleLinks.length } as React.CSSProperties}
           />

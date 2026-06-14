@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Cinzel, Montserrat } from "next/font/google";
+import { Cinzel } from "next/font/google";
 import LetterBackground from "../components/LetterBackground/LetterBackground";
 import styles from "./page.module.css";
 
@@ -9,12 +9,6 @@ const cinzel = Cinzel({
   subsets: ["latin"],
   weight: ["400", "600"],
   variable: "--font-cinzel",
-});
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-montserrat",
 });
 
 // wspólne dane — te same w obu lokalizacjach
@@ -36,9 +30,7 @@ export default function ContactPage() {
   }, []);
 
   return (
-    <main
-      className={`${styles.kontakt} ${cinzel.variable} ${montserrat.variable}`}
-    >
+    <main className={styles.contact}>
       {/* tło — litera odbita w wodzie + kwiaty */}
       {ready && (
         <LetterBackground
@@ -52,8 +44,20 @@ export default function ContactPage() {
       <div className={styles.content}>
         <header className={styles.header}>
           <h1 className={styles.title}>Kontakt</h1>
-          <p className={styles.subtitle}>Zapraszamy do naszych gabinetów</p>
+          <p className={styles.subtitle}>Elo elo trzy dwa zero</p>
         </header>
+
+        <div className={styles.shared}>
+          <a className={styles.contactLink} href={`tel:${PHONE_HREF}`}>
+            {PHONE}
+          </a>
+          <span className={styles.divider} aria-hidden="true">
+            ·
+          </span>
+          <a className={styles.contactLink} href={`mailto:${EMAIL}`}>
+            {EMAIL}
+          </a>
+        </div>
 
         <div className={styles.locations}>
           {LOCATIONS.map((loc) => (
@@ -66,18 +70,6 @@ export default function ContactPage() {
               </address>
             </section>
           ))}
-        </div>
-
-        <div className={styles.shared}>
-          <a className={styles.contactLink} href={`tel:${PHONE_HREF}`}>
-            {PHONE}
-          </a>
-          <span className={styles.divider} aria-hidden="true">
-            ·
-          </span>
-          <a className={styles.contactLink} href={`mailto:${EMAIL}`}>
-            {EMAIL}
-          </a>
         </div>
       </div>
     </main>
