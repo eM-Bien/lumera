@@ -11,7 +11,6 @@ const cinzel = Cinzel({
   variable: "--font-cinzel",
 });
 
-// wspólne dane — te same w obu lokalizacjach
 const PHONE = "+48 600 000 000";
 const PHONE_HREF = "+48600000000";
 const EMAIL = "kontakt@lumera.pl";
@@ -51,8 +50,8 @@ export default function ContactPage() {
 
         {/* telefon + email — wyróżnione */}
         <div className={styles.shared}>
-          <a className={styles.contactLink} href={`mailto:${EMAIL}`}>
-            {EMAIL}
+          <a className={styles.contactLink} href={`tel:${PHONE_HREF}`}>
+            {PHONE}
           </a>
         </div>
         <div className={styles.shared}>

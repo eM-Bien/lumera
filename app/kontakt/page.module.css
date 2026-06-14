@@ -35,7 +35,7 @@
   margin: 5vh 0 0;
   font-family: var(--font-header);
   font-weight: 600;
-  font-size: clamp(2.4rem, 4vw, 4rem);
+  font-size: clamp(2.4rem, 3vw, 3rem);
   letter-spacing: 0.08em;
   color: #f0e6d2;
 }
