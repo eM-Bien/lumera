@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import type { ElementType } from "react";
-import styles from "./page.module.css";
+import styles from "./ScrollReveal.module.css";
 
 type ScrollRevealProps = {
   text: string;

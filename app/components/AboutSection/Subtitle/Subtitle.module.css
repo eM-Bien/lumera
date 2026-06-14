@@ -1,0 +1,11 @@
+.subtitleWrapper {
+  position: relative;
+  padding: 2vh 6vw 4vh;
+  max-width: 77%;
+  z-index: 2;
+}
+
+.subtitle {
+  font-size: clamp(1.6rem, 3vw, 6rem);
+  font-family: var(--font-decoration);
+}

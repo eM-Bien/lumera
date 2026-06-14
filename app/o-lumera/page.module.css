@@ -1,143 +1,32 @@
 /* =========================================================================
    AboutPage — układ i typografia
-   Tło: wideo (fixed, z-0) + scrim; sekcje w normalnym flow nad nim.
    ========================================================================= */
 
 .about {
   min-height: 100dvh;
   color: #d8c1a0;
-  background: #05030f; /* dno — zanim wideo się doczyta */
+  background: #05030f;
 }
-
-/* --- Tło: wideo + przyciemnienie ---------------------------------------- */
-
-.video {
-  position: fixed; /* zostaje w tle przy scrollu */
-  top: 0;
-  left: 0;
-  width: 100vw; /* NIE 100% — na fixed liczy się względem treści, nie ekranu */
-  height: 100dvh;
-  object-fit: cover;
-  z-index: 0;
-}
-
-.scrim {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100dvh;
-  z-index: 1;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      120% 90% at 50% 40%,
-      rgba(5, 3, 15, 0.3) 0%,
-      rgba(5, 3, 15, 0.78) 100%
-    ),
-    linear-gradient(180deg, rgba(5, 3, 15, 0.45) 0%, rgba(5, 3, 15, 0.7) 100%);
-}
-
-/* --- Sekcje (nad tłem) -------------------------------------------------- */
 
 .hero {
   position: relative;
-  z-index: 2;
   display: flex;
   margin-top: 12vh;
   padding: 4vh 6vw 2vh;
+  font-size: clamp(1.6rem, 2.5vw, 6rem);
+  line-height: 1.1;
+  letter-spacing: 0.08em;
   font-family: var(--font-header), serif;
-}
-
-.subtitleWrapper {
-  position: relative;
-  padding: 2vh 6vw 4vh;
-  max-width: 77%;
   z-index: 2;
-}
-
-/* --- Bloki tekstu: kolumna jako wąska kolumna, wyrównanie na .block ------ */
-
-.block {
-  position: relative;
-  z-index: 2;
-  display: flex; /* wiersz: dosuwa kolumnę w lewo/prawo */
-  min-height: 40vh;
-  padding: 0 6vw;
-  font-family: var(--font-basic), sans-serif;
-}
-
-/* wyrównanie poziome CAŁEJ kolumny — TYLKO na .block (flex-wiersz) */
-.left {
-  justify-content: flex-start;
-}
-.right {
-  justify-content: flex-end;
-}
-
-/* kolumna akapitów — to ONA ma max-width, więc jest wąska i da się dosunąć */
-.column {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  max-width: 48%; /* przeniesione z .p — kolumna jako całość */
-}
-
-/* w prawym bloku tekst też wyrównany do prawej krawędzi */
-.right .column {
-  text-align: right;
-}
-
-/* pojedynczy akapit — bez max-width (rządzi nim .column) */
-.p {
-  font-size: clamp(1.1rem, 1.4vw, 1.4rem);
-  line-height: 1.4;
 }
 
 .spacer {
   height: 30vh;
 }
 
-/* --- Typografia --------------------------------------------------------- */
-
-.reveal {
-  margin: 0;
-  font-weight: 500;
-  line-height: 1.15;
-  letter-spacing: 0.02em;
-}
-
-.h1 {
-  font-size: clamp(1.6rem, 4.5vw, 8rem);
-  line-height: 1.1;
-  letter-spacing: 0.08em;
-}
-
-.subtitle {
-  font-size: clamp(1.6rem, 3vw, 6rem);
-  font-family: var(--font-decoration);
-}
-/* 
-.p {
-  max-width: 48%;
-  font-size: clamp(1.1rem, 1.4vw, 1.4rem);
-  line-height: 1.4;
-} */
-
-.word {
-  display: inline-block;
-  opacity: 0.12;
-  transform: translateY(0.25em);
-  transition:
-    opacity 0.1s linear,
-    transform 0.1s linear;
-  will-change: opacity, transform;
-}
-
 .vignette {
   position: absolute;
   inset: 0;
-  z-index: 2;
   pointer-events: none;
   background: radial-gradient(
     ellipse at center,
@@ -145,4 +34,5 @@
     rgba(0, 0, 0, 0.45) 45%,
     rgba(0, 0, 0, 0.9) 100%
   );
+  z-index: 2;
 }

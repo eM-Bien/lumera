@@ -1,0 +1,31 @@
+.block {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  padding: 0 6vw 6vh;
+  font-family: var(--font-basic), sans-serif;
+}
+
+.left {
+  justify-content: flex-start;
+}
+
+.right {
+  justify-content: flex-end;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 48%;
+}
+
+.right .column {
+  text-align: right;
+}
+
+.p {
+  font-size: clamp(1.1rem, 1.4vw, 1.4rem);
+  line-height: 1.4;
+}

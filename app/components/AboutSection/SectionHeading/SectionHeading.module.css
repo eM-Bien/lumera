@@ -1,0 +1,13 @@
+.header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  padding: 4vh 6vw 2vh;
+  font-family: var(--font-header), serif;
+}
+
+.title {
+  font-size: clamp(1.6rem, 3.5vw, 8rem);
+  line-height: 1.1;
+  letter-spacing: 0.08em;
+}

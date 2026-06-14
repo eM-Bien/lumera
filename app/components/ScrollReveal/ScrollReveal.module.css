@@ -1,0 +1,16 @@
+.reveal {
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+}
+
+.word {
+  display: inline-block;
+  opacity: 0.12;
+  transform: translateY(0.25em);
+  transition:
+    opacity 0.1s linear,
+    transform 0.1s linear;
+  will-change: opacity, transform;
+}
