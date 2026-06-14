@@ -53,3 +53,10 @@
   inset: 0;
   z-index: 3;
 }
+
+@media (max-width: 768px) {
+  .inner {
+    transform: translate(0px, 26vh)
+      scale(calc(var(--base-scale) * (1 - var(--p) * 0.35))) !important;
+  }
+}
