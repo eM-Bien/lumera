@@ -1,6 +1,7 @@
 "use client";
 
 import { type Ebook, formatPrice } from "../ebook-types";
+import { useCart } from "../Cart/CartContext";
 import styles from "./EbookCard.module.css";
 
 type EbookCardProps = {
@@ -8,12 +9,7 @@ type EbookCardProps = {
 };
 
 export default function EbookCard({ ebook }: EbookCardProps) {
-  // placeholder — koszyk podłączymy później
-  const handleAddToCart = () => {
-    console.log("Dodaj do koszyka:", ebook.id);
-    // tymczasowo informacja dla użytkownika
-    alert(`„${ebook.title}" trafił(by) do koszyka.`);
-  };
+  const { addItem } = useCart();
 
   return (
     <article className={styles.card}>
@@ -56,7 +52,7 @@ export default function EbookCard({ ebook }: EbookCardProps) {
           <button
             type="button"
             className={styles.addBtn}
-            onClick={handleAddToCart}
+            onClick={() => addItem(ebook)}
           >
             Dodaj do koszyka
           </button>

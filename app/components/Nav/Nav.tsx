@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import LinkNav from "../LinkNav/LinkNav";
+import CartIcon from "../CartIcon/CartIcon";
 import styles from "./Nav.module.css";
 
 const links = [
@@ -29,6 +30,9 @@ export default function Nav() {
   }, [isHome]);
 
   const visibleLinks = links.filter((link) => link.href !== pathname);
+
+  // kolejny indeks animacji po linkach (i ewentualnym linku "Strona główna")
+  const cartIndex = visibleLinks.length + (isHome ? 0 : 1);
 
   return (
     <nav
@@ -63,6 +67,12 @@ export default function Nav() {
             style={{ "--i": visibleLinks.length } as React.CSSProperties}
           />
         )}
+        <span
+          className={styles.linkItem}
+          style={{ "--i": cartIndex } as React.CSSProperties}
+        >
+          <CartIcon onClick={() => setOpen(false)} />
+        </span>
       </div>
     </nav>
   );

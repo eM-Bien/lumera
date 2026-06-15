@@ -6,6 +6,8 @@ import TransitionProvider from "./transition/TransitionProvider";
 import LightsBackground from "./components/LightsBackground";
 import TransitionOverlay from "./transition/TransitionOverlay";
 import Nav from "./components/Nav/Nav";
+import { CartProvider } from "./components/Ebooks/Cart/CartContext";
+import CartDrawer from "./components/Ebooks/Cart/CartDrawer";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -49,18 +51,21 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <div className="appWrapper">
-          <TransitionProvider>
-            <LightsBackground
-              style={{ position: "fixed", zIndex: 45, pointerEvents: "none" }}
-              burstFactor={2.5}
-            />{" "}
-            <Nav />
-            <TransitionOverlay /> {/* przyciemnienie tła — czyta fazę */}
-            {children}
-          </TransitionProvider>
-          <SmoothScroll />
-        </div>
+        <CartProvider>
+          <div className="appWrapper">
+            <TransitionProvider>
+              <LightsBackground
+                style={{ position: "fixed", zIndex: 45, pointerEvents: "none" }}
+                burstFactor={2.5}
+              />{" "}
+              <Nav />
+              <TransitionOverlay /> {/* przyciemnienie tła — czyta fazę */}
+              {children}
+            </TransitionProvider>
+            <SmoothScroll />
+          </div>
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );
