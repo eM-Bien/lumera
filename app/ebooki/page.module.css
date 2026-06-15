@@ -1,0 +1,58 @@
+/* =========================================================================
+   Ebooki — jasny styl spójny z /oferta (krem, złoto, grafit).
+   ========================================================================= */
+
+.ebooks {
+  position: relative;
+  min-height: 100dvh;
+  color: #2a2620;
+  font-family: var(--font-basic);
+  background:
+    radial-gradient(
+      120% 80% at 50% 0%,
+      rgba(194, 163, 107, 0.14) 0%,
+      transparent 55%
+    ),
+    linear-gradient(180deg, #f7f1e6 0%, #efe6d4 60%, #e8dcc6 100%);
+}
+
+.head {
+  padding: 15vh 6vw 4vh;
+}
+
+.title {
+  font-family: var(--font-header);
+  font-size: 4vh;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+.subtitle {
+  font-size: 6vh;
+  font-weight: 500;
+  font-family: var(--font-decoration);
+  color: #c2a36b;
+}
+
+.description {
+  margin-top: 3vh;
+  max-width: 50%;
+  line-height: 1.7;
+}
+
+/* lista ebooków — kolejne wiersze grafika/opis, z delikatną linią między */
+.list {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 12vh;
+}
+
+.list > :not(:first-child) {
+  border-top: 1px solid rgba(42, 38, 32, 0.1);
+}
+
+@media (max-width: 768px) {
+  .description {
+    max-width: none;
+  }
+}
