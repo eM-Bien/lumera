@@ -1,15 +1,8 @@
-/* =========================================================================
-   Kontakt — ciemny motyw, tło: LetterBackground (litera + woda + kwiaty).
-   Desktop: litera po PRAWEJ, treść po lewej; lokalizacje obok siebie
-   rozdzielone kropką; gradient jaśniejszy po prawej-dole (pod literą).
-   ========================================================================= */
-
 .contact {
   position: relative;
   min-height: 100dvh;
   overflow: hidden;
   color: #d8c1a0;
-  /* jaśniejsza poświata po prawej-dole (pod literą) + ciemna baza */
   background:
     radial-gradient(
       69% 81% at 80% 68%,
@@ -47,24 +40,15 @@
   color: #d8c1a0;
 }
 
-/* --- Telefon + email — wyróżniona „pigułka" ----------------------------- */
-
 .shared {
   display: flex;
   gap: 1.5rem;
-  width: fit-content;
-  margin: 3.5vh 0 0;
-  padding: 0.9rem 2.2rem;
-  border: 1px solid rgba(194, 163, 107, 0.45);
-  border-radius: 999px;
-  background: rgba(194, 163, 107, 0.08);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  margin: 3.8vh 0 0;
 }
 
 .contactLink {
   font-family: var(--font-montserrat), sans-serif;
-  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  font-size: clamp(1.6rem, 1.6vw, 1.3rem);
   letter-spacing: 0.06em;
   color: #f0e6d2;
   text-decoration: none;
@@ -85,7 +69,7 @@
 .locations {
   display: flex;
   flex-direction: row;
-  align-items: center; /* kropka i miasta wyrównane w pionie */
+  align-items: center;
   gap: 1.75rem;
   margin-top: 7vh;
 }
@@ -96,7 +80,7 @@
 
 /* kropka rozdzielająca między lokalizacjami */
 .locDivider {
-  font-size: 2.2rem;
+  font-size: 3.2rem;
   line-height: 1;
   color: #c2a36b;
   opacity: 0.7;
@@ -122,8 +106,6 @@
   color: #c9bfa8;
 }
 
-/* --- Mobile: stos, pełna szerokość, litera jako tło --------------------- */
-
 @media (max-width: 768px) {
   .content {
     display: flex;
@@ -148,17 +130,11 @@
 
   .locations {
     flex-direction: column;
+    align-items: flex-start;
     gap: 4vh;
-    align-items: center;
     width: 100%;
   }
-  .location {
-    text-align: center;
-  }
-  .address {
-    align-items: center;
-  }
-  /* przy układzie pionowym kropka między lokalizacjami zbędna */
+
   .locDivider {
     display: none;
   }

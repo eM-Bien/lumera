@@ -46,8 +46,7 @@ export default function ContactPage() {
         <header className={styles.header}>
           <h1 className={styles.title}>Do zobaczenia w Lumera</h1>
           <p className={styles.subtitle}>
-            Sierpc albo Łódź — wybierz bliżej i zarezerwuj chwilę tylko dla
-            siebie
+            Wybierz lokalizację i zarezerwuj chwilę tylko dla siebie
           </p>
         </header>
 
