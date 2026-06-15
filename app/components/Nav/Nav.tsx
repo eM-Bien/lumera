@@ -17,7 +17,7 @@ const HOME_DELAY_MS = 4200;
 export default function Nav() {
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const isLight = pathname === "/oferta" || pathname === "/ebooki";
+  const isLight = pathname === "/oferta";
   const [show, setShow] = useState(() => pathname !== "/");
   const [open, setOpen] = useState(false); // hamburger na mobile
 

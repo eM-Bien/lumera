@@ -1,19 +1,20 @@
 /* =========================================================================
-   Ebooki — jasny styl spójny z /oferta (krem, złoto, grafit).
+   Ebooki — ciemny styl (spójny z /kontakt), rozjaśnienie wyśrodkowane.
    ========================================================================= */
 
 .ebooks {
   position: relative;
   min-height: 100dvh;
-  color: #2a2620;
+  color: #d8c1a0;
   font-family: var(--font-basic);
   background:
     radial-gradient(
-      120% 80% at 50% 0%,
-      rgba(194, 163, 107, 0.14) 0%,
-      transparent 55%
+      69% 81% at 50% 50%,
+      #483e6999 0%,
+      #1e183740 50%,
+      #0a072000 95%
     ),
-    linear-gradient(180deg, #f7f1e6 0%, #efe6d4 60%, #e8dcc6 100%);
+    radial-gradient(#0a0720 0%, #060414 45%, #000 100%);
 }
 
 .head {
@@ -25,6 +26,7 @@
   font-size: 4vh;
   font-weight: 700;
   margin-bottom: 0.5em;
+  color: #f0e6d2;
 }
 
 .subtitle {
@@ -38,6 +40,7 @@
   margin-top: 3vh;
   max-width: 50%;
   line-height: 1.7;
+  color: #c9bfa8;
 }
 
 /* lista ebooków — kolejne wiersze grafika/opis, z delikatną linią między */
@@ -48,7 +51,7 @@
 }
 
 .list > :not(:first-child) {
-  border-top: 1px solid rgba(42, 38, 32, 0.1);
+  border-top: 1px solid rgba(194, 163, 107, 0.18);
 }
 
 @media (max-width: 768px) {

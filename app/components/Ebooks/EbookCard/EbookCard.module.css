@@ -1,5 +1,5 @@
 /* =========================================================================
-   EbookCard — jasny styl (jak oferta): krem, złoto, grafit.
+   EbookCard — ciemny styl (spójny z /kontakt): głębokie tło, złoto, krem.
    Układ: grafika po lewej, opis po prawej (na mobile: jedna kolumna).
    ========================================================================= */
 
@@ -16,17 +16,17 @@
 
 .media {
   flex: 0 0 45%;
-  display: flex;
+  align-self: center;
 }
 
 .cover {
   width: 100%;
   height: auto;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 6px;
   box-shadow:
-    0 18px 40px rgba(42, 38, 32, 0.18),
-    0 2px 8px rgba(42, 38, 32, 0.1);
+    0 20px 50px rgba(0, 0, 0, 0.55),
+    0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
 /* --- Opis (prawa) ------------------------------------------------------- */
@@ -42,7 +42,7 @@
   font-size: clamp(1.8rem, 3vw, 2.6rem);
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: #2a2620;
+  color: #f0e6d2;
 }
 
 .tagline {
@@ -52,12 +52,21 @@
   color: #c2a36b;
 }
 
+.price {
+  display: block;
+  margin: 1rem 0 0;
+  font-family: var(--font-header);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: #d8c1a0;
+}
+
 .desc {
   margin: 1.5rem 0 0;
   font-family: var(--font-basic), sans-serif;
   font-size: 1.05rem;
   line-height: 1.7;
-  color: #4a443c;
+  color: #c9bfa8;
 }
 
 /* --- Dla kogo ----------------------------------------------------------- */
@@ -91,7 +100,7 @@
   font-family: var(--font-basic), sans-serif;
   font-size: 1rem;
   line-height: 1.5;
-  color: #4a443c;
+  color: #c9bfa8;
 }
 
 /* złoty znacznik zamiast standardowej kropki */
@@ -114,7 +123,7 @@
   gap: 2rem;
   margin: 2rem 0 0;
   padding: 1.2rem 0 0;
-  border-top: 1px solid rgba(42, 38, 32, 0.12);
+  border-top: 1px solid rgba(194, 163, 107, 0.2);
   list-style: none;
 }
 
@@ -124,7 +133,7 @@
   gap: 0.2rem;
   font-family: var(--font-basic), sans-serif;
   font-size: 1rem;
-  color: #2a2620;
+  color: #e6dcc8;
 }
 
 .metaKey {
@@ -141,22 +150,13 @@
   margin: 2.5rem 0 0;
 }
 
-.price {
-  display: block;
-  margin: 1rem 0 0;
-  font-family: var(--font-header);
-  font-size: clamp(1.8rem, 3vw, 2.4rem);
-  font-weight: 700;
-  color: #c2a36b;
-}
-
 .addBtn {
   font-family: var(--font-basic), sans-serif;
   font-size: 1rem;
   letter-spacing: 0.04em;
-  color: #fff;
-  background: rgba(194, 163, 107, 0.95);
-  border: 1px solid rgba(194, 163, 107, 1);
+  color: #2a2620;
+  background: rgba(216, 193, 160, 0.95);
+  border: 1px solid rgba(216, 193, 160, 1);
   border-radius: 999px;
   padding: 0.85rem 2.2rem;
   cursor: pointer;
@@ -164,12 +164,12 @@
     background-color 0.3s ease,
     box-shadow 0.3s ease,
     transform 0.15s ease;
-  box-shadow: 0 6px 18px rgba(194, 163, 107, 0.3);
+  box-shadow: 0 8px 24px rgba(194, 163, 107, 0.25);
 }
 
 .addBtn:hover {
-  background: rgba(176, 145, 90, 1);
-  box-shadow: 0 8px 22px rgba(194, 163, 107, 0.42);
+  background: rgba(240, 230, 210, 1);
+  box-shadow: 0 10px 30px rgba(194, 163, 107, 0.4);
 }
 .addBtn:active {
   transform: translateY(1px);

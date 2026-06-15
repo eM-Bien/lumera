@@ -19,7 +19,7 @@ export const EBOOKS: Ebook[] = [
   {
     id: "ebook-1",
     cover: "/ebooks/poznaj-swoja-skore-ebook.png",
-    title: "Tytuł ebooka",
+    title: "Poznaj swoją skórę",
     tagline: "Krótkie zdanie, które mówi, co z tego będziesz mieć.",
     description:
       "Tu opis ebooka — o czym jest, co znajdziesz w środku i dlaczego warto. Kilka zdań, które rozwijają tagline i budują wartość.",
