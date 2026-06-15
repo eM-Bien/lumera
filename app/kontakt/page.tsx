@@ -20,6 +20,21 @@ const LOCATIONS = [
   { city: "Łódź", address: ["ul. Przykładowa 34", "90-001 Łódź"] },
 ];
 
+const SOCIALS = [
+  {
+    name: "Instagram",
+    href: "https://instagram.com/lumera.studio",
+    icon: "/icons/insta.svg",
+    label: "@lumera.studio",
+  },
+  {
+    name: "Facebook",
+    href: "https://facebook.com/lumera.studio",
+    icon: "/icons/facebook.svg",
+    label: "/lumera.studio",
+  },
+];
+
 export default function ContactPage() {
   // opóźnione pojawienie LetterBackground — czeka na font
   const [ready, setReady] = useState(false);
@@ -82,6 +97,23 @@ export default function ContactPage() {
             </Fragment>
           ))}
         </div>
+
+        <footer className={styles.social}>
+          {SOCIALS.map((s) => (
+            <a
+              key={s.name}
+              className={styles.socialLink}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.name}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className={styles.socialIcon} src={s.icon} alt="" />
+              <span className={styles.socialLabel}>{s.label}</span>
+            </a>
+          ))}
+        </footer>
       </div>
     </main>
   );

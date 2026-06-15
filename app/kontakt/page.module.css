@@ -106,6 +106,46 @@
   color: #c9bfa8;
 }
 
+/* media */
+.social {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 8vh;
+}
+
+.socialLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: #d8c1a0;
+}
+
+.socialIcon {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
+}
+
+/* adres — domyślnie schowany (zwinięty); rozwija się przy hoverze na desktopie */
+.socialLabel {
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  color: #c9bfa8;
+  transition:
+    max-width 0.45s ease,
+    opacity 0.4s ease;
+}
+
 @media (max-width: 768px) {
   .content {
     display: flex;
@@ -137,5 +177,17 @@
 
   .locDivider {
     display: none;
+  }
+}
+
+@media (hover: hover) {
+  .socialLink:hover .socialLabel,
+  .socialLink:focus-visible .socialLabel {
+    max-width: 240px;
+    opacity: 1;
+  }
+  .socialLink:hover .socialIcon {
+    transform: translateY(-1px);
+    filter: brightness(1.2);
   }
 }
