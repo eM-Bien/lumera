@@ -1,0 +1,334 @@
+/* =========================================================================
+   /koszyk — ciemny styl spójny z /ebooki i /kontakt.
+   Desktop: lista pozycji (lewa) + sticky podsumowanie (prawa).
+   Mobile: jedna kolumna, podsumowanie pod listą.
+   ========================================================================= */
+
+.cart {
+  position: relative;
+  min-height: 100dvh;
+  color: #d8c1a0;
+  font-family: var(--font-basic);
+  background:
+    radial-gradient(
+      69% 81% at 50% 50%,
+      #483e6999 0%,
+      #1e183740 50%,
+      #0a072000 95%
+    ),
+    radial-gradient(#0a0720 0%, #060414 45%, #000 100%);
+}
+
+.head {
+  padding: 15vh 6vw 4vh;
+}
+
+.title {
+  font-family: var(--font-header);
+  font-size: 4vh;
+  font-weight: 700;
+  margin-bottom: 0.3em;
+  color: #f0e6d2;
+}
+
+.subtitle {
+  font-size: 6vh;
+  font-weight: 500;
+  font-family: var(--font-decoration);
+  color: #c2a36b;
+}
+
+/* --- Stany pomocnicze --------------------------------------------------- */
+
+.loading {
+  padding: 4vh 6vw 14vh;
+  color: #9a8c6f;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 4vh 6vw 16vh;
+  max-width: 520px;
+}
+
+.emptyTitle {
+  margin: 0;
+  font-family: var(--font-header), serif;
+  font-size: 1.6rem;
+  color: #f0e6d2;
+}
+
+.emptyText {
+  margin: 0;
+  line-height: 1.7;
+  color: #c9bfa8;
+}
+
+.empty .primary {
+  margin-top: 1rem;
+  width: auto;
+}
+
+/* --- Układ treści ------------------------------------------------------- */
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2vh 6vw 14vh;
+}
+
+/* --- Lista pozycji ------------------------------------------------------ */
+
+.items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2.5vw, 2rem);
+  padding: 2rem 0;
+}
+
+.item:not(:first-child) {
+  border-top: 1px solid rgba(194, 163, 107, 0.18);
+}
+
+.cover {
+  flex: 0 0 auto;
+  width: 84px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: contain;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+.itemBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.itemTitle {
+  margin: 0;
+  font-family: var(--font-header), serif;
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 700;
+  color: #f0e6d2;
+}
+
+.itemMeta {
+  margin: 0.4rem 0 0;
+  font-size: 0.9rem;
+  color: #9a8c6f;
+}
+
+.itemQty {
+  margin: 0.3rem 0 0;
+  font-size: 0.9rem;
+  color: #c9bfa8;
+}
+
+.itemRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.6rem;
+  flex: 0 0 auto;
+}
+
+.itemPrice {
+  font-family: var(--font-header), serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #d8c1a0;
+  white-space: nowrap;
+}
+
+.remove {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-basic), sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: #9a8c6f;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.remove:hover {
+  color: #d88c8c; /* delikatna czerwień — akcja destrukcyjna */
+}
+
+/* --- Podsumowanie (aside) ----------------------------------------------- */
+
+.aside {
+  position: sticky;
+  top: 14vh;
+}
+
+.summary {
+  padding: 1.8rem;
+  border: 1px solid rgba(194, 163, 107, 0.22);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.summaryTitle {
+  margin: 0 0 1.3rem;
+  font-family: var(--font-header), serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #f0e6d2;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.95rem;
+  color: #c9bfa8;
+  margin-bottom: 0.8rem;
+}
+
+.rowTotal {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(194, 163, 107, 0.2);
+  font-family: var(--font-header), serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f0e6d2;
+}
+
+.vatNote {
+  margin: 0.5rem 0 1.5rem;
+  font-size: 0.78rem;
+  color: #9a8c6f;
+}
+
+/* --- Przyciski ---------------------------------------------------------- */
+
+.primary,
+.secondary {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-basic), sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.9rem 1.5rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.15s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.primary {
+  color: #0e1022;
+  border: 1px solid rgba(240, 230, 200, 0.65);
+  background: linear-gradient(
+    135deg,
+    rgba(216, 193, 160, 0.95) 0%,
+    rgba(194, 163, 107, 0.9) 55%,
+    rgba(176, 145, 90, 0.95) 100%
+  );
+  box-shadow:
+    0 8px 26px rgba(140, 110, 50, 0.35),
+    inset 0 1px 1px rgba(255, 250, 235, 0.7);
+}
+
+.primary:hover {
+  border-color: rgba(255, 245, 220, 0.85);
+  box-shadow:
+    0 10px 32px rgba(160, 125, 55, 0.45),
+    inset 0 1px 1px rgba(255, 250, 235, 0.85);
+}
+
+.secondary {
+  margin-top: 0.75rem;
+  color: #d8c1a0;
+  background: transparent;
+  border: 1px solid rgba(194, 163, 107, 0.4);
+}
+
+.secondary:hover {
+  border-color: rgba(194, 163, 107, 0.75);
+  background: rgba(194, 163, 107, 0.08);
+}
+
+.primary:active,
+.secondary:active {
+  transform: translateY(1px);
+}
+
+/* --- Korzyści ----------------------------------------------------------- */
+
+.perks {
+  list-style: none;
+  margin: 1.8rem 0 0;
+  padding: 1.4rem 0 0;
+  border-top: 1px solid rgba(194, 163, 107, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.perks li {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #c9bfa8;
+}
+
+.perks li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c2a36b;
+}
+
+/* --- Mobile ------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+  .aside {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .item {
+    gap: 1rem;
+  }
+  .cover {
+    width: 64px;
+  }
+}
