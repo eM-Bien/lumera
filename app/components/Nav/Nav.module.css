@@ -17,7 +17,13 @@
 /* linki — desktop: rząd */
 .links {
   display: flex;
+  align-items: center;
   gap: 2vh;
+}
+
+/* koszyk: domyślnie (desktop) widoczny w rzędzie, mobilny wariant ukryty */
+.cartMobile {
+  display: none;
 }
 
 /* hamburger — domyślnie ukryty (desktop) */
@@ -58,6 +64,31 @@
 
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
+  /* nav staje się rzędem: [koszyk][hamburger] przy prawej krawędzi */
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 1.6vh;
+  }
+
+  /* koszyk zawsze widoczny obok hamburgera, nad panelem menu */
+  .cartMobile {
+    display: inline-grid;
+    place-items: center;
+    position: relative;
+    z-index: 2;
+    order: 2; /* koszyk po hamburgerze (przy prawej krawędzi) */
+  }
+
+  .burger {
+    order: 1; /* hamburger pierwszy, od lewej */
+  }
+
+  /* desktopowy koszyk (w rzędzie linków) znika z menu */
+  .cartDesktop {
+    display: none;
+  }
+
   .burger {
     display: flex;
     position: relative;

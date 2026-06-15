@@ -11,12 +11,15 @@ type CartIconProps = {
 
 export default function CartIcon({ onClick, style }: CartIconProps) {
   const { navigate } = useTransition();
-  const { totalCount } = useCart();
+  const { totalCount, hydrated } = useCart();
 
   const handleClick = () => {
     onClick?.(); // np. zamknięcie menu na mobile
     navigate("/koszyk");
   };
+
+  // licznik dopiero po hydratacji — inaczej SSR(0) vs client(N) = mismatch
+  const showBadge = hydrated && totalCount > 0;
 
   return (
     <button
@@ -24,10 +27,10 @@ export default function CartIcon({ onClick, style }: CartIconProps) {
       className={styles.btn}
       onClick={handleClick}
       style={style}
-      aria-label={`Koszyk${totalCount > 0 ? `, ${totalCount} w środku` : ""}`}
+      aria-label={`Koszyk${showBadge ? `, ${totalCount} w środku` : ""}`}
     >
       <span className={styles.icon} aria-hidden="true" />
-      {totalCount > 0 && (
+      {showBadge && (
         <span className={styles.badge} aria-hidden="true">
           {totalCount}
         </span>

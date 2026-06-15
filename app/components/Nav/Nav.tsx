@@ -31,13 +31,15 @@ export default function Nav() {
 
   const visibleLinks = links.filter((link) => link.href !== pathname);
 
-  // kolejny indeks animacji po linkach (i ewentualnym linku "Strona główna")
-  const cartIndex = visibleLinks.length + (isHome ? 0 : 1);
-
   return (
     <nav
       className={`${styles.nav} ${show ? styles.visible : ""} ${isLight ? styles.light : ""}`}
     >
+      {/* koszyk zawsze widoczny obok hamburgera — tylko mobile */}
+      <span className={styles.cartMobile}>
+        <CartIcon onClick={() => setOpen(false)} />
+      </span>
+
       <button
         type="button"
         className={`${styles.burger} ${open ? styles.burgerOpen : ""}`}
@@ -49,6 +51,7 @@ export default function Nav() {
         <span />
         <span />
       </button>
+
       <div className={`${styles.links} ${open ? styles.linksOpen : ""}`}>
         {visibleLinks.map(({ href, name }, i) => (
           <span
@@ -67,10 +70,8 @@ export default function Nav() {
             style={{ "--i": visibleLinks.length } as React.CSSProperties}
           />
         )}
-        <span
-          className={styles.linkItem}
-          style={{ "--i": cartIndex } as React.CSSProperties}
-        >
+        {/* koszyk na końcu rzędu linków — tylko desktop */}
+        <span className={`${styles.linkItem} ${styles.cartDesktop}`}>
           <CartIcon onClick={() => setOpen(false)} />
         </span>
       </div>
