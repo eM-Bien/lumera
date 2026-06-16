@@ -15,12 +15,12 @@ function pluralProdukt(n: number): string {
 
 export default function CartPage() {
   const { navigate } = useTransition();
-  const { items, totalCount, totalPrice, removeItem, hydrated } = useCart();
+  const { items, totalCount, totalPrice, removeItem, updateQty, hydrated } =
+    useCart();
 
   const isEmpty = hydrated && items.length === 0;
 
   const handleCheckout = () => {
-    // TODO: podłączyć bramkę płatności (np. Przelewy24 / Stripe)
     navigate("/platnosc");
   };
 
@@ -31,7 +31,6 @@ export default function CartPage() {
         <p className={styles.subtitle}>Jeszcze tylko krok</p>
       </header>
 
-      {/* przed hydratacją — żeby nie mignął pusty stan */}
       {!hydrated && (
         <div className={styles.loading}>
           <p>Wczytywanie koszyka…</p>
@@ -69,26 +68,44 @@ export default function CartPage() {
 
                 <div className={styles.itemBody}>
                   <h2 className={styles.itemTitle}>{item.title}</h2>
-                  <p className={styles.itemMeta}>
-                    Format PDF · dostęp dożywotni
-                  </p>
-                  {item.qty > 1 && (
-                    <p className={styles.itemQty}>Ilość: {item.qty}</p>
-                  )}
-                </div>
-
-                <div className={styles.itemRight}>
                   <span className={styles.itemPrice}>
                     {formatPrice(item.price * item.qty)}
                   </span>
-                  <button
-                    type="button"
-                    className={styles.remove}
-                    onClick={() => removeItem(item.id)}
-                    aria-label={`Usuń „${item.title}" z koszyka`}
-                  >
-                    Usuń
-                  </button>
+                  <p className={styles.itemMeta}>
+                    Format PDF · dostęp dożywotni
+                  </p>
+
+                  <div className={styles.controls}>
+                    <div className={styles.qty}>
+                      <button
+                        type="button"
+                        className={styles.qtyBtn}
+                        onClick={() => updateQty(item.id, item.qty - 1)}
+                        disabled={item.qty <= 1}
+                        aria-label="Zmniejsz ilość"
+                      >
+                        −
+                      </button>
+                      <span className={styles.qtyValue}>{item.qty}</span>
+                      <button
+                        type="button"
+                        className={styles.qtyBtn}
+                        onClick={() => updateQty(item.id, item.qty + 1)}
+                        aria-label="Zwiększ ilość"
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <button
+                      type="button"
+                      className={styles.remove}
+                      onClick={() => removeItem(item.id)}
+                      aria-label={`Usuń „${item.title}" z koszyka`}
+                    >
+                      <span className={styles.trashIcon} aria-hidden="true" />
+                    </button>
+                  </div>
                 </div>
               </li>
             ))}

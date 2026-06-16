@@ -1,7 +1,7 @@
 // app/api/checkout/route.ts — tworzy Stripe Checkout Session.
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
-import { stripe } from "@/lib/stripe";
+import { getStripe } from "@/lib/stripe";
 import { getEntry } from "@/lib/server-catalog";
 
 type IncomingItem = { id: string; qty: number };
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
 
     const base = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
       mode: "payment",
       locale: "pl",
       line_items,
@@ -48,7 +48,7 @@ export async function POST(request: Request) {
       billing_address_collection: "required",
       tax_id_collection: { enabled: true },
 
-      // automatyczna faktura Stripe (do polskiego obiegu i tak pewnie własny system)
+      // automatyczna faktura Stripe
       invoice_creation: { enabled: true },
 
       // do dostarczenia pliku w webhooku

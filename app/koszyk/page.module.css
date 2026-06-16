@@ -1,7 +1,6 @@
 /* =========================================================================
    /koszyk — ciemny styl spójny z /ebooki i /kontakt.
    Desktop: lista pozycji (lewa) + sticky podsumowanie (prawa).
-   Mobile: jedna kolumna, podsumowanie pod listą.
    ========================================================================= */
 
 .cart {
@@ -96,72 +95,117 @@
 
 .item {
   display: flex;
-  align-items: center;
-  gap: clamp(1rem, 2.5vw, 2rem);
-  padding: 2rem 0;
+  align-items: flex-start;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  padding: 2.5rem 0;
 }
 
 .item:not(:first-child) {
   border-top: 1px solid rgba(194, 163, 107, 0.18);
 }
 
+/* większa okładka */
 .cover {
   flex: 0 0 auto;
-  width: 84px;
+  width: clamp(120px, 18vw, 170px);
   height: auto;
-  border-radius: 8px;
+  border-radius: 10px;
   object-fit: contain;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
 }
 
 .itemBody {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .itemTitle {
   margin: 0;
   font-family: var(--font-header), serif;
-  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
   font-weight: 700;
   color: #f0e6d2;
 }
 
+/* cena pod tytułem */
+.itemPrice {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-header), serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #d8c1a0;
+}
+
 .itemMeta {
-  margin: 0.4rem 0 0;
+  margin: 0.5rem 0 0;
   font-size: 0.9rem;
   color: #9a8c6f;
 }
 
-.itemQty {
-  margin: 0.3rem 0 0;
-  font-size: 0.9rem;
-  color: #c9bfa8;
-}
-
-.itemRight {
+/* rząd: stepper + kosz */
+.controls {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.6rem;
-  flex: 0 0 auto;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
-.itemPrice {
-  font-family: var(--font-header), serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #d8c1a0;
-  white-space: nowrap;
+/* --- Stepper ilości ----------------------------------------------------- */
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(194, 163, 107, 0.4);
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
 }
 
-.remove {
+.qtyBtn {
+  width: 2.4rem;
+  height: 2.4rem;
+  display: grid;
+  place-items: center;
   background: none;
   border: none;
+  font-size: 1.2rem;
+  line-height: 1;
+  color: #d8c1a0;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.qtyBtn:hover:not(:disabled) {
+  background: rgba(194, 163, 107, 0.12);
+  color: #f0e6d2;
+}
+
+.qtyBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.qtyValue {
+  min-width: 2.2rem;
+  text-align: center;
+  font-size: 1rem;
+  color: #f0e6d2;
+}
+
+/* --- Usuwanie (ikona kosza) --------------------------------------------- */
+
+.remove {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
   padding: 0;
-  font-family: var(--font-basic), sans-serif;
-  font-size: 0.85rem;
-  letter-spacing: 0.04em;
+  background: none;
+  border: none;
   color: #9a8c6f;
   cursor: pointer;
   transition: color 0.2s ease;
@@ -169,6 +213,16 @@
 
 .remove:hover {
   color: #d88c8c; /* delikatna czerwień — akcja destrukcyjna */
+}
+
+/* svg z public/icons/trash.svg jako maska — kolor steruje currentColor */
+.trashIcon {
+  display: block;
+  width: 1.3rem;
+  height: 1.3rem;
+  background-color: currentColor;
+  -webkit-mask: url("/icons/trash.svg") center / contain no-repeat;
+  mask: url("/icons/trash.svg") center / contain no-repeat;
 }
 
 /* --- Podsumowanie (aside) ----------------------------------------------- */
@@ -326,9 +380,10 @@
 
 @media (max-width: 768px) {
   .item {
-    gap: 1rem;
+    gap: 1.2rem;
+    padding: 2rem 0;
   }
   .cover {
-    width: 64px;
+    width: clamp(90px, 28vw, 120px);
   }
 }

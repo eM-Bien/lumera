@@ -27,6 +27,7 @@ type CartContextValue = {
   hydrated: boolean;
   addItem: (ebook: Ebook) => void;
   removeItem: (id: string) => void;
+  updateQty: (id: string, qty: number) => void;
   clearCart: () => void;
   openCart: () => void;
   closeCart: () => void;
@@ -36,16 +37,15 @@ const CartContext = createContext<CartContextValue | null>(null);
 
 /* =========================================================================
    localStorage jako external store (źródło prawdy koszyka).
-   Czytane przez useSyncExternalStore — bez setState w efekcie.
    ========================================================================= */
 
 const STORAGE_KEY = "lumera_cart";
 const EMPTY: CartItem[] = [];
-const INVALID = "\u0000"; // sentinel wymuszający ponowny parse (np. zmiana w innej karcie)
+const INVALID = "\u0000"; // sentinel wymuszający ponowny parse (zmiana w innej karcie)
 
 const listeners = new Set<() => void>();
-let cache: CartItem[] = EMPTY; // ostatni snapshot — stabilna referencja dla Reacta
-let cacheRaw: string | null = null; // surowy string odpowiadający cache
+let cache: CartItem[] = EMPTY;
+let cacheRaw: string | null = null;
 
 function emit() {
   for (const l of listeners) l();
@@ -61,8 +61,7 @@ function read(): CartItem[] {
     raw = null;
   }
 
-  // nic się nie zmieniło → zwróć tę samą referencję (warunek useSyncExternalStore)
-  if (raw === cacheRaw) return cache;
+  if (raw === cacheRaw) return cache; // bez zmian → ta sama referencja
 
   cacheRaw = raw;
   if (!raw) {
@@ -84,7 +83,7 @@ function write(next: CartItem[]) {
     cacheRaw = JSON.stringify(next);
     localStorage.setItem(STORAGE_KEY, cacheRaw);
   } catch {
-    // tryb prywatny / brak miejsca — trzymamy stan przynajmniej w pamięci
+    // tryb prywatny / brak miejsca
   }
   emit();
 }
@@ -94,7 +93,7 @@ function subscribe(cb: () => void): () => void {
 
   const onStorage = (e: StorageEvent) => {
     if (e.key === STORAGE_KEY || e.key === null) {
-      cacheRaw = INVALID; // wymuś reparse przy najbliższym getSnapshot
+      cacheRaw = INVALID;
       emit();
     }
   };
@@ -108,8 +107,6 @@ function subscribe(cb: () => void): () => void {
 
 const getSnapshot = () => read();
 const getServerSnapshot = () => EMPTY;
-
-// mały hook „czy już po hydratacji" — też bez setState w efekcie
 const noopSubscribe = () => () => {};
 
 export function CartProvider({ children }: { children: ReactNode }) {
@@ -120,7 +117,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     () => false,
   );
 
-  // UI drawera — to nie jest stan trwały, więc zwykły useState
   const [isOpen, setIsOpen] = useState(false);
   const [lastAdded, setLastAdded] = useState<CartItem | null>(null);
 
@@ -148,6 +144,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     write(read().filter((i) => i.id !== id));
   }, []);
 
+  const updateQty = useCallback((id: string, qty: number) => {
+    const q = Math.max(1, Math.floor(qty)); // minimum 1 — usuwanie jest osobno
+    write(read().map((i) => (i.id === id ? { ...i, qty: q } : i)));
+  }, []);
+
   const clearCart = useCallback(() => write(EMPTY), []);
 
   const openCart = useCallback(() => setIsOpen(true), []);
@@ -167,6 +168,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         hydrated,
         addItem,
         removeItem,
+        updateQty,
         clearCart,
         openCart,
         closeCart,

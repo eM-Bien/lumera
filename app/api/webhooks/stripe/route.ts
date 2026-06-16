@@ -1,10 +1,8 @@
 // app/api/webhooks/stripe/route.ts — odbiera potwierdzenia płatności od Stripe.
-// To JEDYNE wiarygodne źródło informacji "zapłacono" (success_url da się podrobić).
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
-import { stripe } from "@/lib/stripe";
+import { getStripe } from "@/lib/stripe";
 
-// webhook MUSI działać na runtime Node.js (potrzebny surowy body + crypto)
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
@@ -17,7 +15,7 @@ export async function POST(request: Request) {
 
   let event: Stripe.Event;
   try {
-    event = stripe.webhooks.constructEvent(
+    event = getStripe().webhooks.constructEvent(
       body,
       signature,
       process.env.STRIPE_WEBHOOK_SECRET,
@@ -34,25 +32,19 @@ export async function POST(request: Request) {
     case "checkout.session.completed": {
       const session = event.data.object as Stripe.Checkout.Session;
 
-      // dopuść tylko realnie opłacone sesje
       if (session.payment_status === "paid") {
         const email = session.customer_details?.email;
         const itemIds = (session.metadata?.itemIds ?? "").split(",");
 
-        // TODO: DOSTARCZENIE PRODUKTU
-        // 1) wygeneruj signed URL do pliku w prywatnym storage (S3/R2/Supabase)
-        // 2) wyślij mail (Resend/Postmark) z linkiem na `email`
-        // 3) ewentualnie zapisz zamówienie w bazie
+        // TODO: DOSTARCZENIE PRODUKTU (signed URL + mail)
         console.log("Opłacono:", { email, itemIds });
       }
       break;
     }
 
     default:
-      // pozostałe eventy ignorujemy
       break;
   }
 
-  // 200 = potwierdzenie odbioru. Inaczej Stripe ponawia wysyłkę.
   return NextResponse.json({ received: true });
 }
