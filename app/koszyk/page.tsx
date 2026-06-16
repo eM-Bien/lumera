@@ -5,14 +5,6 @@ import { useCart } from "@/app/components/Ebooks/Cart/CartContext";
 import { formatPrice } from "@/app/components/Ebooks/ebook-types";
 import styles from "./page.module.css";
 
-function pluralProdukt(n: number): string {
-  if (n === 1) return "produkt";
-  const ones = n % 10;
-  const tens = n % 100;
-  if (ones >= 2 && ones <= 4 && (tens < 10 || tens >= 20)) return "produkty";
-  return "produktów";
-}
-
 export default function CartPage() {
   const { navigate } = useTransition();
   const { items, totalCount, totalPrice, removeItem, updateQty, hydrated } =
@@ -117,14 +109,22 @@ export default function CartPage() {
               <h2 className={styles.summaryTitle}>Podsumowanie</h2>
 
               <div className={styles.row}>
-                <span>
-                  Produkty ({totalCount} {pluralProdukt(totalCount)})
-                </span>
+                <span>Ilość produktów:</span>
+                <span>{totalCount}</span>
+              </div>
+
+              <div className={styles.row}>
+                <span>Razem:</span>
                 <span>{formatPrice(totalPrice)}</span>
               </div>
 
+              <div className={styles.row}>
+                <span>Koszt dostawy:</span>
+                <span>{formatPrice(0)}</span>
+              </div>
+
               <div className={styles.rowTotal}>
-                <span>Razem do zapłaty</span>
+                <span>Do zapłaty:</span>
                 <span>{formatPrice(totalPrice)}</span>
               </div>
 
