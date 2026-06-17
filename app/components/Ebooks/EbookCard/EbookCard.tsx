@@ -50,7 +50,10 @@ export default function EbookCard({ ebook }: EbookCardProps) {
         </ul>
 
         <div className={styles.buy}>
-          <PrimaryButton onClick={() => addItem(ebook)}>
+          <PrimaryButton
+            className={styles.buyBtn}
+            onClick={() => addItem(ebook)}
+          >
             Dodaj do koszyka
           </PrimaryButton>
         </div>

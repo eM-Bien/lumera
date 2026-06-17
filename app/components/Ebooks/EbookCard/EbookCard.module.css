@@ -175,4 +175,13 @@
     max-width: 320px;
     margin: 0 auto;
   }
+
+  .buy {
+    position: sticky;
+    bottom: 3vh;
+    z-index: 5;
+  }
+  .buyBtn {
+    width: 100%;
+  }
 }

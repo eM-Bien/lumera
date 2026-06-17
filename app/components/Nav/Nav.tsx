@@ -31,14 +31,12 @@ export default function Nav() {
 
   const visibleLinks = links.filter((link) => link.href !== pathname);
 
-  // "Strona główna" (gdy widoczna) zajmuje indeks 0, reszta przesuwa się o 1
   const offset = isHome ? 0 : 1;
 
   return (
     <nav
       className={`${styles.nav} ${show ? styles.visible : ""} ${isLight ? styles.light : ""}`}
     >
-      {/* koszyk zawsze widoczny obok hamburgera — tylko mobile */}
       <span className={styles.cartMobile}>
         <CartIcon onClick={() => setOpen(false)} />
       </span>
