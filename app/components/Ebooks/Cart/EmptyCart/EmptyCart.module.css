@@ -1,0 +1,93 @@
+.empty {
+  position: relative;
+  min-height: 100dvh;
+  padding: 15vh 6vw 12vh;
+  overflow: hidden;
+}
+
+/* wrapper = pozycjonowanie (środek ekranu) */
+.bgWrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(60vmin, 520px);
+  height: min(60vmin, 520px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bgIcon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: rgba(218, 200, 169, 0.815);
+  animation: floatY 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes floatY {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-16px);
+  }
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 480px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-header), serif;
+  font-size: 4vh;
+  font-weight: 700;
+  color: #f0e6d2;
+}
+
+.subtitle {
+  margin: 2rem 0 0;
+  font-family: var(--font-decoration), cursive;
+  font-size: clamp(2.2rem, 5vh, 3.2rem);
+  font-weight: 500;
+  color: #c2a36b;
+  line-height: 1.1;
+}
+
+.text {
+  margin: 1.8rem 0 0;
+  line-height: 1.7;
+  color: #c9bfa8;
+}
+
+.cta {
+  margin-top: 2.5rem;
+}
+
+/* --- Mobile: grafika dyskretniejsza, bo leży pod tekstem --- */
+@media (max-width: 768px) {
+  .empty {
+    padding: 14vh 6vw 12vh;
+  }
+  .bgWrap {
+    width: min(86vmin, 460px);
+    height: min(86vmin, 460px);
+  }
+  .bgIcon {
+    color: rgba(194, 163, 107, 0.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bgIcon {
+    animation: none;
+  }
+}
