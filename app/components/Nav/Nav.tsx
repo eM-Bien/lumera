@@ -7,8 +7,8 @@ import CartIcon from "../CartIcon/CartIcon";
 import styles from "./Nav.module.css";
 
 const links = [
-  { href: "/o-lumera", name: "O Lumera" },
-  { href: "/oferta", name: "Oferta" },
+  { href: "/o-lumera", name: "Kim jesteśmy?" },
+  { href: "/oferta", name: "Zabiegi" },
   { href: "/ebooki", name: "Ebooki" },
   { href: "/kontakt", name: "Kontakt" },
 ];
@@ -30,6 +30,9 @@ export default function Nav() {
   }, [isHome]);
 
   const visibleLinks = links.filter((link) => link.href !== pathname);
+
+  // "Strona główna" (gdy widoczna) zajmuje indeks 0, reszta przesuwa się o 1
+  const offset = isHome ? 0 : 1;
 
   return (
     <nav
@@ -53,23 +56,30 @@ export default function Nav() {
       </button>
 
       <div className={`${styles.links} ${open ? styles.linksOpen : ""}`}>
+        {/* Strona główna zawsze pierwsza (jeśli nie jesteśmy na niej) */}
+        {!isHome && (
+          <span
+            className={styles.linkItem}
+            style={{ "--i": 0 } as React.CSSProperties}
+          >
+            <LinkNav
+              href="/"
+              name="Strona główna"
+              onClick={() => setOpen(false)}
+            />
+          </span>
+        )}
+
         {visibleLinks.map(({ href, name }, i) => (
           <span
             key={href}
             className={styles.linkItem}
-            style={{ "--i": i } as React.CSSProperties}
+            style={{ "--i": i + offset } as React.CSSProperties}
           >
             <LinkNav href={href} name={name} onClick={() => setOpen(false)} />
           </span>
         ))}
-        {!isHome && (
-          <LinkNav
-            href="/"
-            name="Strona główna"
-            onClick={() => setOpen(false)}
-            style={{ "--i": visibleLinks.length } as React.CSSProperties}
-          />
-        )}
+
         {/* koszyk na końcu rzędu linków — tylko desktop */}
         <span className={`${styles.linkItem} ${styles.cartDesktop}`}>
           <CartIcon onClick={() => setOpen(false)} />
