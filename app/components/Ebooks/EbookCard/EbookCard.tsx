@@ -3,6 +3,7 @@
 import { type Ebook, formatPrice } from "../ebook-types";
 import { useCart } from "../Cart/CartContext";
 import styles from "./EbookCard.module.css";
+import PrimaryButton from "../../Buttons/PrimaryButton/PrimaryButton";
 
 type EbookCardProps = {
   ebook: Ebook;
@@ -49,13 +50,9 @@ export default function EbookCard({ ebook }: EbookCardProps) {
         </ul>
 
         <div className={styles.buy}>
-          <button
-            type="button"
-            className={styles.addBtn}
-            onClick={() => addItem(ebook)}
-          >
+          <PrimaryButton onClick={() => addItem(ebook)}>
             Dodaj do koszyka
-          </button>
+          </PrimaryButton>
         </div>
 
         <p className={styles.note}>

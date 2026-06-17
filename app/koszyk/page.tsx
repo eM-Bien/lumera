@@ -5,6 +5,7 @@ import { useCart } from "@/app/components/Ebooks/Cart/CartContext";
 import { formatPrice } from "@/app/components/Ebooks/ebook-types";
 import CheckoutSteps from "@/app/components/CheckoutSteps/CheckoutSteps";
 import styles from "./page.module.css";
+import PrimaryButton from "../components/Buttons/PrimaryButton/PrimaryButton";
 
 export default function CartPage() {
   const { navigate } = useTransition();
@@ -21,7 +22,7 @@ export default function CartPage() {
     <div className={styles.cart}>
       <CheckoutSteps current={1} />
       <header className={styles.head}>
-        <p className={styles.subtitle}>Jeszcze tylko krok</p>
+        <p className={styles.subtitle}>Gotowe do zakupu</p>
       </header>
 
       {!hydrated && (
@@ -36,13 +37,9 @@ export default function CartPage() {
           <p className={styles.emptyText}>
             Zajrzyj do ebooków — może coś dla Ciebie tam czeka.
           </p>
-          <button
-            type="button"
-            className={styles.primary}
-            onClick={() => navigate("/ebooki")}
-          >
+          <PrimaryButton onClick={() => navigate("/ebooki")}>
             Przeglądaj ebooki
-          </button>
+          </PrimaryButton>
         </div>
       )}
 
@@ -131,13 +128,9 @@ export default function CartPage() {
 
               <p className={styles.vatNote}>Cena zawiera podatek VAT</p>
 
-              <button
-                type="button"
-                className={styles.primary}
-                onClick={handleCheckout}
-              >
+              <PrimaryButton fullWidth onClick={handleCheckout}>
                 Przejdź do płatności
-              </button>
+              </PrimaryButton>
 
               <button
                 type="button"
@@ -150,7 +143,7 @@ export default function CartPage() {
               <ul className={styles.perks}>
                 <li>Bezpieczna płatność elektroniczna</li>
                 <li>Dostęp do plików od razu po zakupie</li>
-                <li>Dożywotni dostęp — czytaj, kiedy chcesz</li>
+                <li>Dożywotni dostęp</li>
               </ul>
             </div>
           </aside>

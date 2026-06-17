@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useTransition } from "@/app/transition/TransitionProvider";
 import { useCart } from "@/app/components/Ebooks/Cart/CartContext";
 import CheckoutSteps from "@/app/components/CheckoutSteps/CheckoutSteps";
+import PrimaryButton from "@/app/components/Buttons/PrimaryButton/PrimaryButton";
 import styles from "../page.module.css";
 
 export default function PaymentSuccessPage() {
@@ -31,13 +32,9 @@ export default function PaymentSuccessPage() {
           Link do pobrania plików wysłaliśmy na podany adres e-mail. Jeśli
           wiadomość nie dotarła w ciągu kilku minut, sprawdź folder spam.
         </p>
-        <button
-          type="button"
-          className={styles.primary}
-          onClick={() => navigate("/ebooki")}
-        >
+        <PrimaryButton fullWidth onClick={() => navigate("/ebooki")}>
           Wróć do ebooków
-        </button>
+        </PrimaryButton>
       </div>
     </div>
   );

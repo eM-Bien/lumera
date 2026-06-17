@@ -1,14 +1,8 @@
-/* =========================================================================
-   CheckoutSteps — wskaźnik kroku zamówienia (motyw LUMERA).
-   Wariant "title": aktywny krok = duży nagłówek (Playfair), reszta mała.
-   Wariant "compact": równy, mały pasek (np. na stronie potwierdzenia).
-   ========================================================================= */
-
 .steps {
   display: flex;
   flex-wrap: wrap;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto 2vh;
   padding: 11vh 6vw 0;
   font-family: var(--font-basic), sans-serif;
 }

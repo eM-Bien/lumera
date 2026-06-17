@@ -5,6 +5,7 @@ import { useTransition } from "@/app/transition/TransitionProvider";
 import { useCart } from "@/app/components/Ebooks/Cart/CartContext";
 import { formatPrice } from "@/app/components/Ebooks/ebook-types";
 import CheckoutSteps from "@/app/components/CheckoutSteps/CheckoutSteps";
+import PrimaryButton from "@/app/components/Buttons/PrimaryButton/PrimaryButton";
 import styles from "./page.module.css";
 
 export default function PaymentPage() {
@@ -49,13 +50,9 @@ export default function PaymentPage() {
           <p className={styles.subtitle}>Koszyk jest pusty</p>
         </header>
         <div className={styles.empty}>
-          <button
-            type="button"
-            className={styles.primary}
-            onClick={() => navigate("/ebooki")}
-          >
+          <PrimaryButton onClick={() => navigate("/ebooki")}>
             Wróć do ebooków
-          </button>
+          </PrimaryButton>
         </div>
       </div>
     );
@@ -129,14 +126,14 @@ export default function PaymentPage() {
 
         {error && <p className={styles.error}>{error}</p>}
 
-        <button
-          type="button"
-          className={styles.primary}
+        <PrimaryButton
+          fullWidth
+          className={styles.payBtn}
           onClick={handlePay}
           disabled={!canPay}
         >
           {loading ? "Przekierowanie…" : "Zapłać i pobierz"}
-        </button>
+        </PrimaryButton>
 
         <button
           type="button"
