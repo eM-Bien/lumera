@@ -18,7 +18,9 @@
 }
 
 .head {
-  padding: 15vh 6vw 4vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1vh 6vw 4vh;
 }
 
 .title {

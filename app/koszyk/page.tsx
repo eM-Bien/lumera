@@ -3,6 +3,7 @@
 import { useTransition } from "@/app/transition/TransitionProvider";
 import { useCart } from "@/app/components/Ebooks/Cart/CartContext";
 import { formatPrice } from "@/app/components/Ebooks/ebook-types";
+import CheckoutSteps from "@/app/components/CheckoutSteps/CheckoutSteps";
 import styles from "./page.module.css";
 
 export default function CartPage() {
@@ -18,8 +19,8 @@ export default function CartPage() {
 
   return (
     <div className={styles.cart}>
+      <CheckoutSteps current={1} />
       <header className={styles.head}>
-        <h1 className={styles.title}>Koszyk</h1>
         <p className={styles.subtitle}>Jeszcze tylko krok</p>
       </header>
 

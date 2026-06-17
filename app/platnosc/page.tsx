@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTransition } from "@/app/transition/TransitionProvider";
 import { useCart } from "@/app/components/Ebooks/Cart/CartContext";
 import { formatPrice } from "@/app/components/Ebooks/ebook-types";
+import CheckoutSteps from "@/app/components/CheckoutSteps/CheckoutSteps";
 import styles from "./page.module.css";
 
 export default function PaymentPage() {
@@ -43,8 +44,8 @@ export default function PaymentPage() {
   if (hydrated && items.length === 0) {
     return (
       <div className={styles.pay}>
+        <CheckoutSteps current={2} />
         <header className={styles.head}>
-          <h1 className={styles.title}>Płatność</h1>
           <p className={styles.subtitle}>Koszyk jest pusty</p>
         </header>
         <div className={styles.empty}>
@@ -62,8 +63,8 @@ export default function PaymentPage() {
 
   return (
     <div className={styles.pay}>
+      <CheckoutSteps current={2} />
       <header className={styles.head}>
-        <h1 className={styles.title}>Płatność</h1>
         <p className={styles.subtitle}>Ostatni krok</p>
       </header>
 

@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useTransition } from "@/app/transition/TransitionProvider";
 import { useCart } from "@/app/components/Ebooks/Cart/CartContext";
+import CheckoutSteps from "@/app/components/CheckoutSteps/CheckoutSteps";
 import styles from "../page.module.css";
 
 export default function PaymentSuccessPage() {
@@ -20,6 +21,7 @@ export default function PaymentSuccessPage() {
 
   return (
     <div className={styles.pay}>
+      <CheckoutSteps current={3} size="compact" />
       <header className={styles.head}>
         <h1 className={styles.title}>Dziękujemy!</h1>
         <p className={styles.subtitle}>Płatność przyjęta</p>
