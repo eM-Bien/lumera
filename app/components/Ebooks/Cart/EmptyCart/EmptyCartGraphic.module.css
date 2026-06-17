@@ -1,0 +1,52 @@
+/* =========================================================================
+   EmptyCartGraphic — przełączanie min (faceA <-> faceB) w pętli.
+   ========================================================================= */
+
+.faceA {
+  animation: swapA 5s ease-in-out infinite;
+}
+
+.faceB {
+  animation: swapB 5s ease-in-out infinite;
+}
+
+@keyframes swapA {
+  0%,
+  40% {
+    opacity: 1;
+  }
+  50%,
+  90% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes swapB {
+  0%,
+  40% {
+    opacity: 0;
+  }
+  50%,
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faceA,
+  .faceB {
+    animation: none;
+  }
+  .faceA {
+    opacity: 1;
+  }
+  .faceB {
+    opacity: 0;
+  }
+}
