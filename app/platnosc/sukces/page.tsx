@@ -5,7 +5,6 @@ import { useTransition } from "@/app/transition/TransitionProvider";
 import { useCart } from "@/app/components/Ebooks/Cart/CartContext";
 import CheckoutSteps from "@/app/components/CheckoutSteps/CheckoutSteps";
 import PrimaryButton from "@/app/components/Buttons/PrimaryButton/PrimaryButton";
-import SuccessGraphic from "./SuccessGraphic";
 import styles from "./page.module.css";
 
 export default function PaymentSuccessPage() {
@@ -29,7 +28,7 @@ export default function PaymentSuccessPage() {
   return (
     <section className={styles.success}>
       <span className={styles.bgWrap} aria-hidden="true">
-        <SuccessGraphic className={styles.bgIcon} />
+        <span className={styles.bgIcon} />
       </span>
 
       <div className={styles.stepsWrap}>
