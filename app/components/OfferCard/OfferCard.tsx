@@ -28,18 +28,16 @@ export default function OfferCard({
     const reduce = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    if (reduce) return; // bez parallaxu przy ograniczonym ruchu
+    if (reduce) return;
 
     let raf = 0;
     const update = () => {
       raf = 0;
       const rect = media.getBoundingClientRect();
       const vh = window.innerHeight;
-      // postęp -1..1: -1 gdy ramka tuż nad ekranem, 1 gdy tuż pod
       const progress =
         (rect.top + rect.height / 2 - vh / 2) / (vh / 2 + rect.height / 2);
-      // obraz jest 20% wyższy (skala w CSS), więc ma 10% zapasu w każdą stronę
-      const shift = Math.max(-1, Math.min(1, progress)) * 12; // ±10%
+      const shift = Math.max(-1, Math.min(1, progress)) * 12;
       img.style.transform = `translateY(${shift}%) scale(1.25)`;
     };
 
@@ -96,6 +94,17 @@ export default function OfferCard({
         <div className={`${styles.descWrap} ${open ? styles.descOpen : ""}`}>
           <div className={styles.descInner}>
             <p className={styles.desc}>{offer.description}</p>
+
+            {offer.effects.length > 0 && (
+              <div className={styles.effects}>
+                <span className={styles.effectsTitle}>Efekty zabiegu</span>
+                <ul className={styles.effectsList}>
+                  {offer.effects.map((e) => (
+                    <li key={e}>{e}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -5,15 +5,12 @@ export default function OfferPage() {
   return (
     <div className={styles.offer}>
       <header className={styles.offerTitle}>
-        <h1 className={styles.title}>Zabiegi i różności</h1>
-        <p className={styles.subtitle}>Sprawdź co by pasowało do Ciebie</p>
+        <h1 className={styles.title}>Zabiegi</h1>
+        <p className={styles.subtitle}>Sprawdź, co pasuje do Ciebie</p>
         <p className={styles.description}>
-          Tu jakieś info może że różne rzeczy są w różnych lokalizacjach i
-          blablabla.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Pellentesque et efficitur ante. Suspendisse aliquam semper lorem nec
-          iaculis. Duis fermentum neque in feugiat suscipit. Nullam rhoncus
-          sagittis ultricies. Quisque at nibh vitae justo semper pellentesque.
-          Proin placerat et lacus vel tempus.
+          Zabiegi na twarz i ciało — od oczyszczania, przez nawilżenie, po
+          odmładzanie i modelowanie. Wybierz kategorię lub lokalizację, żeby
+          szybciej znaleźć coś dla siebie.
         </p>
       </header>
 
