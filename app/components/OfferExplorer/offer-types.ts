@@ -22,6 +22,7 @@ export const OFFERS: Offer[] = [
     title: "Oczyszczanie wodorowe",
     category: "Twarz",
     locations: ["Sierpc", "Łódź"],
+    image: "/offer/wodorowe.jpg",
     description:
       "Zaawansowany zabieg, który usuwa nadmiar sebum i zanieczyszczenia oraz neutralizuje wolne rodniki odpowiedzialne za przedwczesne starzenie skóry. Doskonały dla cery tłustej, mieszanej i problematycznej, a także dla każdego, kto chce przywrócić skórze świeżość i naturalny blask.",
     effects: [
@@ -37,6 +38,7 @@ export const OFFERS: Offer[] = [
     title: "Infuzja tlenowa",
     category: "Twarz",
     locations: ["Sierpc", "Łódź"],
+    image: "/offer/infuzja.jpg",
     description:
       "Zabieg wykorzystujący czysty tlen pod ciśnieniem do wtłaczania składników aktywnych w głąb skóry. Zapewnia natychmiastowe odżywienie i regenerację — bez bólu i okresu rekonwalescencji. Idealny dla zmęczonej, odwodnionej i pozbawionej blasku cery.",
     effects: [
