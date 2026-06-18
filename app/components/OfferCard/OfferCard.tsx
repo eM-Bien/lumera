@@ -58,7 +58,7 @@ export default function OfferCard({
           }
         }
       },
-      { threshold: 0.3 },
+      { threshold: 0.8 },
     );
 
     io.observe(el);
