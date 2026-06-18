@@ -17,9 +17,55 @@ export default function OfferCard({
   open,
   onToggle,
 }: OfferCardProps) {
+  const cardRef = useRef<HTMLLIElement | null>(null);
   const mediaRef = useRef<HTMLDivElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
 
+  // aktualne wartości dostępne w callbacku observera (bez stale closure)
+  const openRef = useRef(open);
+  useEffect(() => {
+    openRef.current = open;
+  }, [open]);
+
+  const onToggleRef = useRef(onToggle);
+  useEffect(() => {
+    onToggleRef.current = onToggle;
+  });
+
+  // czy użytkownik kliknął przycisk — wtedy auto-rozwijanie go nie dotyczy
+  const userToggledRef = useRef(false);
+
+  const handleToggle = () => {
+    userToggledRef.current = true;
+    onToggle();
+  };
+
+  // auto-rozwijanie opisu, gdy karta wjedzie w widok
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (
+            entry.isIntersecting &&
+            !openRef.current &&
+            !userToggledRef.current
+          ) {
+            onToggleRef.current(); // rozwiń (zostaje otwarte)
+            io.unobserve(el); // jednorazowo
+          }
+        }
+      },
+      { threshold: 0.3 },
+    );
+
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // parallax na zdjęciu
   useEffect(() => {
     const media = mediaRef.current;
     const img = imgRef.current;
@@ -56,7 +102,10 @@ export default function OfferCard({
   }, []);
 
   return (
-    <li className={`${styles.card} ${reversed ? styles.cardRight : ""}`}>
+    <li
+      ref={cardRef}
+      className={`${styles.card} ${reversed ? styles.cardRight : ""}`}
+    >
       <div className={styles.media} ref={mediaRef}>
         {offer.image ? (
           /* eslint-disable-next-line @next/next/no-img-element */
@@ -80,7 +129,7 @@ export default function OfferCard({
           type="button"
           className={styles.toggle}
           aria-expanded={open}
-          onClick={onToggle}
+          onClick={handleToggle}
         >
           {open ? "Zwiń opis" : "Pokaż opis"}
           <span
