@@ -1,11 +1,11 @@
 "use client";
 
+import styles from "./page.module.css";
 import { useTransition } from "@/app/transition/TransitionProvider";
 import { useCart } from "@/app/components/Ebooks/Cart/CartContext";
 import { formatPrice } from "@/app/components/Ebooks/ebook-types";
 import CheckoutSteps from "@/app/components/CheckoutSteps/CheckoutSteps";
-import EmptyCart from "@/app/components/Ebooks/Cart/EmptyCart/EmptyCart";
-import styles from "./page.module.css";
+import EmptyCart from "../components/Ebooks/Cart/EmptyCart/EmptyCart";
 import PrimaryButton from "../components/Buttons/PrimaryButton/PrimaryButton";
 
 export default function CartPage() {

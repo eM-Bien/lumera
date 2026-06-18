@@ -5,7 +5,8 @@ import { useTransition } from "@/app/transition/TransitionProvider";
 import { useCart } from "@/app/components/Ebooks/Cart/CartContext";
 import CheckoutSteps from "@/app/components/CheckoutSteps/CheckoutSteps";
 import PrimaryButton from "@/app/components/Buttons/PrimaryButton/PrimaryButton";
-import styles from "../page.module.css";
+import SuccessGraphic from "./SuccessGraphic";
+import styles from "./page.module.css";
 
 export default function PaymentSuccessPage() {
   const { navigate } = useTransition();
@@ -20,22 +21,49 @@ export default function PaymentSuccessPage() {
     }
   }, [clearCart]);
 
+  const goContact = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    navigate("/kontakt");
+  };
+
   return (
-    <div className={styles.pay}>
-      <CheckoutSteps current={3} size="compact" />
-      <header className={styles.head}>
+    <section className={styles.success}>
+      <span className={styles.bgWrap} aria-hidden="true">
+        <SuccessGraphic className={styles.bgIcon} />
+      </span>
+
+      <div className={styles.stepsWrap}>
+        <CheckoutSteps current={3} size="compact" />
+      </div>
+
+      <div className={styles.inner}>
         <h1 className={styles.title}>Dziękujemy!</h1>
         <p className={styles.subtitle}>Płatność przyjęta</p>
-      </header>
-      <div className={styles.content}>
-        <p className={styles.note} style={{ textAlign: "left" }}>
+        <p className={styles.text}>
           Link do pobrania plików wysłaliśmy na podany adres e-mail. Jeśli
           wiadomość nie dotarła w ciągu kilku minut, sprawdź folder spam.
         </p>
-        <PrimaryButton fullWidth onClick={() => navigate("/ebooki")}>
-          Wróć do ebooków
-        </PrimaryButton>
+
+        <p className={styles.contact}>
+          Coś poszło nie tak?{" "}
+          <a href="/kontakt" className={styles.link} onClick={goContact}>
+            Skontaktuj się z nami
+          </a>
+        </p>
+
+        <div className={styles.actions}>
+          <PrimaryButton onClick={() => navigate("/")}>
+            Strona główna
+          </PrimaryButton>
+          <button
+            type="button"
+            className={styles.secondaryBtn}
+            onClick={() => navigate("/ebooki")}
+          >
+            Przeglądaj ebooki
+          </button>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
