@@ -16,7 +16,7 @@ export default function EmptyCart() {
 
       <div className={styles.inner}>
         <h1 className={styles.title}>Pusty koszyk</h1>
-        <p className={styles.subtitle}>Czeka na pierwszy wybór</p>
+        <p className={styles.subtitle}>Wybierz coś dla siebie</p>
         <p className={styles.text}>
           Nie masz tu jeszcze żadnych ebooków. Zajrzyj do oferty — na pewno coś
           dla siebie znajdziesz!
