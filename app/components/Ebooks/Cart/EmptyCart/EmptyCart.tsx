@@ -15,7 +15,7 @@ export default function EmptyCart() {
       </span>
 
       <div className={styles.inner}>
-        <h1 className={styles.title}>Pusty koszyk</h1>
+        <h1 className={styles.title}>Twój koszyk jest pusty</h1>
         <p className={styles.subtitle}>Wybierz coś dla siebie</p>
         <p className={styles.text}>
           Nie masz tu jeszcze żadnych ebooków. Zajrzyj do oferty — na pewno coś
