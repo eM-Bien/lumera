@@ -11,7 +11,6 @@ const INTRO_KEY = "lumera_intro_seen";
 export default function Home() {
   const [skipIntro, setSkipIntro] = useState<boolean | null>(null);
 
-
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSkipIntro(sessionStorage.getItem(INTRO_KEY) === "true");
@@ -27,7 +26,7 @@ export default function Home() {
         <div className={styles.reveal}>
           {skipIntro !== null && (
             <LumeraReveal
-              tagline="Harmonia twarzy i ciała"
+              tagline="Harmonia skóry głowy, twarzy i ciała"
               background="/magic-forest.png"
               scrim={0.6}
               skipIntro={skipIntro}

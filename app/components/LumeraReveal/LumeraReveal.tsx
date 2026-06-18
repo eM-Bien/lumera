@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Cinzel } from "next/font/google";
 import styles from "./LumeraReveal.module.css";
 import LightsBackground from "../LightsBackground";
@@ -49,6 +49,8 @@ export interface LumeraOptions {
   maxParticles?: number;
   /** Szerokość logo jako ułamek min(W,H). */
   logoFrac?: number;
+  /** Proporcje logo (szerokość/wysokość). 1 = kwadrat. */
+  aspect?: number;
   /** Czas zlatywania [s]. */
   gather?: number;
   /** Rozrzut momentu startu drobinek [s]. */
@@ -145,6 +147,7 @@ export function createLumeraReveal(
     sampleStep: 3,
     maxParticles: 3000,
     logoFrac: 0.6,
+    aspect: 1,
     gather: 2.8,
     stagger: 1.4,
     settleGlow: 1.0,
@@ -231,7 +234,10 @@ export function createLumeraReveal(
     //  Wartość ustawiasz propem <LumeraReveal logoFrac={0.6} />.
     // ============================================================
     const size = Math.min(W, H) * cfg.logoFrac;
-    box = { x: (W - size) / 2, y: (H - size) / 2, w: size, h: size };
+    const a = cfg.aspect > 0 ? cfg.aspect : 1; // szerokość/wysokość
+    const w = a >= 1 ? size : size * a;
+    const h = a >= 1 ? size / a : size;
+    box = { x: (W - w) / 2, y: (H - h) / 2, w, h };
   }
   const TX = (n: number): number => box.x + n * box.w;
   const TY = (n: number): number => box.y + n * box.h;
@@ -553,6 +559,20 @@ export default function LumeraReveal({
   const tagRef = useRef<HTMLSpanElement | null>(null);
   const apiRef = useRef<LumeraRevealApi | null>(null);
 
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const sync = () => setIsMobile(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  // na mobile drobinki I ostre logo to TYLKO górna część (lumera-top)
+  const logoSrc = isMobile ? "/lumera-top.svg" : src;
+  // proporcje górnej części (przycięty viewBox 266.4 x 321.57); desktop = kwadrat
+  const logoAspect = isMobile ? 266.4 / 321.57 : 1;
+
   useEffect(() => {
     const canvas = canvasRef.current;
     const img = imgRef.current;
@@ -568,16 +588,28 @@ export default function LumeraReveal({
         img.style.height = `${box.h}px`;
       }
       if (tag) {
-        // tam, gdzie napis był w oryginale (≈0.805 wysokości logo), skala wg szerokości
-        tag.style.left = `${box.x}px`;
-        tag.style.width = `${box.w}px`;
-        tag.style.top = `${box.y + box.h * 0.85}px`;
-        tag.style.fontSize = `${box.w * 0.04}px`;
+        const cx = box.x + box.w / 2;
+        tag.style.left = `${cx}px`;
+        if (isMobile) {
+          // tuż POD górną częścią logo; kotwiczony górą, może się łamać
+          tag.style.top = `${box.y + box.h + box.h * 0.04}px`;
+          tag.style.whiteSpace = "normal";
+          tag.style.width = "min(80vw, 22rem)";
+          tag.style.fontSize = `${Math.max(box.w * 0.06, 15)}px`;
+          tag.dataset.anchor = "top";
+        } else {
+          tag.style.top = `${box.y + box.h * 0.85}px`;
+          tag.style.whiteSpace = "nowrap";
+          tag.style.width = "auto";
+          tag.style.fontSize = `${box.w * 0.04}px`;
+          tag.dataset.anchor = "center";
+        }
       }
     };
 
     const reveal = createLumeraReveal(canvas, {
-      src,
+      src: logoSrc,
+      aspect: logoAspect,
       gather,
       stagger,
       maxParticles,
@@ -612,7 +644,17 @@ export default function LumeraReveal({
     return () => reveal.destroy();
     // celowo bez onComplete w deps, by nie re-inicjalizować animacji
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [src, gather, stagger, maxParticles, logoFrac, haloGlow, loop, skipIntro]);
+  }, [
+    logoSrc,
+    logoAspect,
+    gather,
+    stagger,
+    maxParticles,
+    logoFrac,
+    haloGlow,
+    loop,
+    skipIntro,
+  ]);
 
   return (
     <div
@@ -638,7 +680,7 @@ export default function LumeraReveal({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         ref={imgRef}
-        src={src}
+        src={logoSrc}
         alt="LUMERA"
         className={styles.logo}
         aria-hidden="true"
