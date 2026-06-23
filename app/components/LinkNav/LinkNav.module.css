@@ -53,6 +53,41 @@
   will-change: opacity, transform;
 }
 
+/* --- Ikona per-link (zamiast strzałki) --------------------------------
+   Używa tych samych zmiennych co strzałka (--nav-arrow-opacity / -x),
+   więc pojawia się identycznie na hoverze. Kolor przez maskę + currentColor. */
+.icon {
+  flex: 0 0 auto;
+  width: 1.05em;
+  height: 1.05em;
+  margin-left: 0.4em;
+
+  background-color: var(--nav-text, #d8d8d8);
+  -webkit-mask: var(--icon-url) center / contain no-repeat;
+  mask: var(--icon-url) center / contain no-repeat;
+
+  opacity: var(--nav-arrow-opacity);
+  transform: translateX(var(--nav-arrow-x));
+  transition:
+    opacity 0.8s var(--nav-ease),
+    transform 0.8s var(--nav-ease),
+    background-color 0.8s var(--nav-ease);
+  will-change: opacity, transform;
+}
+
+@media (hover: hover) {
+  .navButton:hover .icon,
+  .navButton:focus-visible .icon {
+    background-color: var(--nav-text-hover, #ffffff);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon {
+    transition-duration: 0.01ms;
+  }
+}
+
 /* --- Tekst -------------------------------------------------------------- */
 .label {
   display: inline-block;

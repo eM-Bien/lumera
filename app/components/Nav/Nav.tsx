@@ -7,10 +7,10 @@ import CartIcon from "../CartIcon/CartIcon";
 import styles from "./Nav.module.css";
 
 const links = [
-  { href: "/o-lumera", name: "Kim jesteśmy?" },
-  { href: "/oferta", name: "Zabiegi" },
-  { href: "/ebooki", name: "Ebooki" },
-  { href: "/kontakt", name: "Kontakt" },
+  { href: "/o-lumera", name: "O Lumera", icon: "/icons/about.svg" },
+  { href: "/oferta", name: "Oferta", icon: "/icons/offer.svg" },
+  { href: "/ebooki", name: "Ebooki", icon: "/icons/ebook.svg" },
+  { href: "/kontakt", name: "Kontakt", icon: "/icons/contact.svg" },
 ];
 
 const HOME_DELAY_MS = 4200;
@@ -19,7 +19,7 @@ export default function Nav() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [show, setShow] = useState(() => pathname !== "/");
-  const [open, setOpen] = useState(false); // hamburger na mobile
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (!isHome) return;
@@ -34,6 +34,7 @@ export default function Nav() {
 
   return (
     <nav className={`${styles.nav} ${show ? styles.visible : ""}`}>
+      {/* koszyk zawsze widoczny obok hamburgera — tylko mobile */}
       <span className={styles.cartMobile}>
         <CartIcon onClick={() => setOpen(false)} />
       </span>
@@ -51,7 +52,6 @@ export default function Nav() {
       </button>
 
       <div className={`${styles.links} ${open ? styles.linksOpen : ""}`}>
-        {/* Strona główna zawsze pierwsza (jeśli nie jesteśmy na niej) */}
         {!isHome && (
           <span
             className={styles.linkItem}
@@ -60,18 +60,24 @@ export default function Nav() {
             <LinkNav
               href="/"
               name="Strona główna"
+              icon="/icons/home.svg"
               onClick={() => setOpen(false)}
             />
           </span>
         )}
 
-        {visibleLinks.map(({ href, name }, i) => (
+        {visibleLinks.map(({ href, name, icon }, i) => (
           <span
             key={href}
             className={styles.linkItem}
             style={{ "--i": i + offset } as React.CSSProperties}
           >
-            <LinkNav href={href} name={name} onClick={() => setOpen(false)} />
+            <LinkNav
+              href={href}
+              name={name}
+              icon={icon}
+              onClick={() => setOpen(false)}
+            />
           </span>
         ))}
 

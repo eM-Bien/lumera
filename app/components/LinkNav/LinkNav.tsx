@@ -8,9 +8,16 @@ type LinkNavProps = {
   name: string;
   onClick?: () => void;
   style?: React.CSSProperties;
+  icon?: string; // ścieżka do SVG w /public; brak = strzałka (Arrow)
 };
 
-export default function LinkNav({ href, name, onClick, style }: LinkNavProps) {
+export default function LinkNav({
+  href,
+  name,
+  onClick,
+  style,
+  icon,
+}: LinkNavProps) {
   const { navigate } = useTransition();
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -26,7 +33,15 @@ export default function LinkNav({ href, name, onClick, style }: LinkNavProps) {
     >
       <span className={styles.blob} aria-hidden="true" />
       <span className={styles.label}>{name}</span>
-      <Arrow />
+      {icon ? (
+        <span
+          className={styles.icon}
+          aria-hidden="true"
+          style={{ ["--icon-url" as string]: `url(${icon})` }}
+        />
+      ) : (
+        <Arrow />
+      )}
     </Link>
   );
 }
