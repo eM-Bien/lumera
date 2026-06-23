@@ -7,6 +7,7 @@ import { formatPrice } from "@/app/components/Ebooks/ebook-types";
 import CheckoutSteps from "@/app/components/CheckoutSteps/CheckoutSteps";
 import EmptyCart from "../components/Ebooks/Cart/EmptyCart/EmptyCart";
 import PrimaryButton from "../components/Buttons/PrimaryButton/PrimaryButton";
+import SecondaryButton from "../components/Buttons/SecondaryButton/SecondaryButton";
 
 export default function CartPage() {
   const { navigate } = useTransition();
@@ -124,13 +125,13 @@ export default function CartPage() {
                   Przejdź do płatności
                 </PrimaryButton>
 
-                <button
-                  type="button"
+                <SecondaryButton
                   className={styles.secondary}
                   onClick={() => navigate("/ebooki")}
+                  fullWidth
                 >
                   Kontynuuj zakupy
-                </button>
+                </SecondaryButton>
 
                 <ul className={styles.perks}>
                   <li>Bezpieczna płatność elektroniczna</li>

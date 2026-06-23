@@ -172,63 +172,6 @@
   margin: 1.75rem 0 0;
 }
 
-.primary,
-.secondary {
-  display: block;
-  width: 100%;
-  text-align: center;
-  font-family: var(--font-basic), sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  padding: 0.9rem 1.5rem;
-  border-radius: 999px;
-  cursor: pointer;
-  text-decoration: none;
-  transition:
-    box-shadow 0.3s ease,
-    transform 0.15s ease,
-    border-color 0.3s ease,
-    background 0.3s ease;
-}
-
-.primary {
-  color: #0e1022;
-  border: 1px solid rgba(240, 230, 200, 0.65);
-  background: linear-gradient(
-    135deg,
-    rgba(216, 193, 160, 0.95) 0%,
-    rgba(194, 163, 107, 0.9) 55%,
-    rgba(176, 145, 90, 0.95) 100%
-  );
-  box-shadow:
-    0 8px 26px rgba(140, 110, 50, 0.35),
-    inset 0 1px 1px rgba(255, 250, 235, 0.7);
-}
-
-.primary:hover {
-  border-color: rgba(255, 245, 220, 0.85);
-  box-shadow:
-    0 10px 32px rgba(160, 125, 55, 0.45),
-    inset 0 1px 1px rgba(255, 250, 235, 0.85);
-}
-
-.secondary {
-  color: #d8c1a0;
-  background: transparent;
-  border: 1px solid rgba(194, 163, 107, 0.4);
-}
-
-.secondary:hover {
-  border-color: rgba(194, 163, 107, 0.75);
-  background: rgba(194, 163, 107, 0.08);
-}
-
-.primary:active,
-.secondary:active {
-  transform: translateY(1px);
-}
-
 /* --- Notka -------------------------------------------------------------- */
 
 .note {

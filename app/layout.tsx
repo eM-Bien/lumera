@@ -61,10 +61,10 @@ export default function RootLayout({
               <Nav />
               <TransitionOverlay /> {/* przyciemnienie tła — czyta fazę */}
               {children}
+              <CartDrawer />
             </TransitionProvider>
             <SmoothScroll />
           </div>
-          <CartDrawer />
         </CartProvider>
       </body>
     </html>

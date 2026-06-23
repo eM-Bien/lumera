@@ -5,6 +5,9 @@ import Link from "next/link";
 import { useCart } from "./CartContext";
 import { formatPrice } from "../ebook-types";
 import styles from "./CartDrawer.module.css";
+import SecondaryButton from "../../Buttons/SecondaryButton/SecondaryButton";
+import PrimaryButton from "../../Buttons/PrimaryButton/PrimaryButton";
+import { useTransition } from "@/app/transition/TransitionProvider";
 
 // poprawna polska odmiana: 1 produkt / 2–4 produkty / 5+ produktów
 function pluralProdukt(n: number): string {
@@ -18,6 +21,7 @@ function pluralProdukt(n: number): string {
 export default function CartDrawer() {
   const { isOpen, lastAdded, totalCount, totalPrice, closeCart } = useCart();
   const panelRef = useRef<HTMLDivElement>(null);
+  const { navigate } = useTransition();
 
   // Escape zamyka
   useEffect(() => {
@@ -101,16 +105,22 @@ export default function CartDrawer() {
         </p>
 
         <div className={styles.actions}>
-          <Link href="/koszyk" className={styles.primary} onClick={closeCart}>
+          <PrimaryButton
+            onClick={() => {
+              closeCart();
+              navigate("/koszyk");
+            }}
+          >
             Przejdź do koszyka
-          </Link>
-          <button
-            type="button"
+          </PrimaryButton>
+
+          <SecondaryButton
             className={styles.secondary}
             onClick={closeCart}
+            fullWidth
           >
             Kontynuuj zakupy
-          </button>
+          </SecondaryButton>
         </div>
 
         <p className={styles.note}>
