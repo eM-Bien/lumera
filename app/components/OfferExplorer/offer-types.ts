@@ -1,7 +1,5 @@
 export type Category = "Twarz" | "Ciało";
 
-export const CATEGORIES: Category[] = ["Twarz", "Ciało"];
-
 export type Location = "Sierpc" | "Łódź";
 export const LOCATIONS: Location[] = ["Sierpc", "Łódź"];
 

@@ -9,8 +9,8 @@ export default function OfferPage() {
         <p className={styles.subtitle}>Sprawdź, co pasuje do Ciebie</p>
         <p className={styles.description}>
           Zabiegi na twarz i ciało — od oczyszczania, przez nawilżenie, po
-          odmładzanie i modelowanie. Wybierz kategorię lub lokalizację, żeby
-          szybciej znaleźć coś dla siebie.
+          odmładzanie i modelowanie. Wyszukaj po nazwie lub zawęź po
+          lokalizacji, żeby szybciej znaleźć coś dla siebie.
         </p>
       </header>
 

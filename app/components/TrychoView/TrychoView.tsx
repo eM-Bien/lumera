@@ -48,28 +48,22 @@ export default function TrychoView() {
           aria-label="Szukaj zabiegu trychologicznego po nazwie"
         />
 
-        <div className={styles.filterRow}>
-          <span className={styles.filterLabel}>Lokalizacja</span>
-          <div
-            className={styles.filters}
-            role="group"
-            aria-label="Filtruj lokalizacje"
-          >
-            {LOCATIONS.map((loc) => {
-              const on = activeLoc.has(loc);
-              return (
-                <button
-                  key={loc}
-                  type="button"
-                  className={`${styles.chip} ${on ? styles.chipActive : ""}`}
-                  aria-pressed={on}
-                  onClick={() => toggleLocation(loc)}
-                >
-                  {loc}
-                </button>
-              );
-            })}
-          </div>
+        <span className={styles.filterLabel}>Lokalizacja</span>
+        <div className={styles.filters} role="group" aria-label="Lokalizacja">
+          {LOCATIONS.map((loc) => {
+            const on = activeLoc.has(loc);
+            return (
+              <button
+                key={loc}
+                type="button"
+                className={`${styles.chip} ${on ? styles.chipActive : ""}`}
+                aria-pressed={on}
+                onClick={() => toggleLocation(loc)}
+              >
+                {loc}
+              </button>
+            );
+          })}
         </div>
       </div>
 
