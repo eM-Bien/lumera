@@ -3,9 +3,16 @@
 import { useState } from "react";
 import OfferExplorer from "../OfferExplorer/OfferExplorer";
 import TrychoView from "../TrychoView/TrychoView";
+import PrimaryButton from "../Buttons/PrimaryButton/PrimaryButton";
+import SecondaryButton from "../Buttons/SecondaryButton/SecondaryButton";
 import styles from "./OfferTabs.module.css";
 
 type Tab = "kosmetyczne" | "trychologiczne";
+
+const TABS: { id: Tab; label: string }[] = [
+  { id: "kosmetyczne", label: "Twarz i ciało" },
+  { id: "trychologiczne", label: "Trychologia" },
+];
 
 export default function OfferTabs() {
   const [tab, setTab] = useState<Tab>("kosmetyczne");
@@ -13,28 +20,22 @@ export default function OfferTabs() {
   return (
     <div className={styles.wrap}>
       <div className={styles.tabs} role="tablist" aria-label="Rodzaj zabiegów">
-        <button
-          type="button"
-          role="tab"
-          id="tab-kosmetyczne"
-          aria-selected={tab === "kosmetyczne"}
-          aria-controls="panel-kosmetyczne"
-          className={`${styles.tab} ${tab === "kosmetyczne" ? styles.tabActive : ""}`}
-          onClick={() => setTab("kosmetyczne")}
-        >
-          Twarz i ciało
-        </button>
-        <button
-          type="button"
-          role="tab"
-          id="tab-trychologiczne"
-          aria-selected={tab === "trychologiczne"}
-          aria-controls="panel-trychologiczne"
-          className={`${styles.tab} ${tab === "trychologiczne" ? styles.tabActive : ""}`}
-          onClick={() => setTab("trychologiczne")}
-        >
-          Trychologia
-        </button>
+        {TABS.map(({ id, label }) => {
+          const selected = tab === id;
+          const Btn = selected ? PrimaryButton : SecondaryButton;
+          return (
+            <Btn
+              key={id}
+              role="tab"
+              id={`tab-${id}`}
+              aria-selected={selected}
+              aria-controls={`panel-${id}`}
+              onClick={() => setTab(id)}
+            >
+              {label}
+            </Btn>
+          );
+        })}
       </div>
 
       {tab === "kosmetyczne" ? (
