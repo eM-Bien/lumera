@@ -1,12 +1,13 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, Suspense, useEffect, useState } from "react";
 import { Cinzel } from "next/font/google";
 import LetterBackground from "../components/LetterBackground/LetterBackground";
 import {
   PageHeading,
   DecorativeSubtitle,
 } from "../components/PageHeader/Typography";
+import ContactForm from "../components/ContactForm/ContactForm";
 import styles from "./page.module.css";
 
 const cinzel = Cinzel({
@@ -70,6 +71,12 @@ export default function ContactPage() {
             Wybierz lokalizację i zarezerwuj chwilę tylko dla siebie
           </DecorativeSubtitle>
         </header>
+
+        <div className={styles.formWrap}>
+          <Suspense fallback={null}>
+            <ContactForm />
+          </Suspense>
+        </div>
 
         {/* telefon + email — wyróżnione */}
         <div className={styles.shared}>

@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTransition } from "@/app/transition/TransitionProvider";
 import type { Offer } from "../OfferExplorer/offer-types";
+import PrimaryButton from "../Buttons/PrimaryButton/PrimaryButton";
 import styles from "./OfferCard.module.css";
 
 type OfferCardProps = {
@@ -17,6 +19,7 @@ export default function OfferCard({
   open,
   onToggle,
 }: OfferCardProps) {
+  const { navigate } = useTransition();
   const cardRef = useRef<HTMLLIElement | null>(null);
   const mediaRef = useRef<HTMLDivElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
@@ -155,6 +158,12 @@ export default function OfferCard({
               </div>
             )}
           </div>
+        </div>
+
+        <div className={styles.actions}>
+          <PrimaryButton onClick={() => navigate(`/kontakt?zabieg=${offer.id}`)}>
+            Umów
+          </PrimaryButton>
         </div>
       </div>
     </li>

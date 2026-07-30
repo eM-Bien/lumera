@@ -1,0 +1,206 @@
+/* =========================================================================
+   ContactForm — formularz rezerwacji (ciemny „liquid glass" LUMERA).
+   ========================================================================= */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  max-width: 620px;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(194, 163, 107, 0.25);
+  border-radius: 20px;
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.04);
+}
+
+.formTitle {
+  margin: 0;
+  font-family: var(--font-header), serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #f0e6d2;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.label {
+  font-family: var(--font-basic), sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9a8c6f;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+}
+
+@media (max-width: 560px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-family: var(--font-basic), sans-serif;
+  font-size: 1rem;
+  color: #f0e6d2;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(194, 163, 107, 0.25);
+  border-radius: 12px;
+  outline: none;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 6rem;
+}
+
+.select {
+  cursor: pointer;
+  appearance: none;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #9a8c6f;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: rgba(194, 163, 107, 0.6);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 0 3px rgba(194, 163, 107, 0.18);
+}
+
+/* opcje selecta czytelne w ciemnym motywie */
+.select option,
+.select optgroup {
+  color: #0e1022;
+  background: #efe6d4;
+}
+
+/* --- chipy lokalizacji --------------------------------------------------- */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.chip {
+  padding: 0.5rem 1.3rem;
+  font-family: var(--font-basic), sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  color: #d8c1a0;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(194, 163, 107, 0.3);
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.chip:hover {
+  border-color: rgba(194, 163, 107, 0.6);
+  background: rgba(194, 163, 107, 0.1);
+}
+
+.chipActive {
+  color: #0e1022;
+  background: linear-gradient(
+    135deg,
+    rgba(216, 193, 160, 0.95) 0%,
+    rgba(194, 163, 107, 0.9) 100%
+  );
+  border-color: rgba(240, 230, 200, 0.6);
+}
+
+/* --- zgoda / RODO -------------------------------------------------------- */
+
+.consent {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  font-family: var(--font-basic), sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #c9bfa8;
+  cursor: pointer;
+}
+
+.consent input {
+  margin-top: 0.15rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: #c2a36b;
+  flex: none;
+  cursor: pointer;
+}
+
+/* --- honeypot (ukryty) --------------------------------------------------- */
+
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* --- błąd / sukces ------------------------------------------------------- */
+
+.error {
+  margin: 0;
+  font-family: var(--font-basic), sans-serif;
+  font-size: 0.9rem;
+  color: #e0a0a0;
+}
+
+.success {
+  max-width: 620px;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(194, 163, 107, 0.25);
+  border-radius: 20px;
+}
+
+.successTitle {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-decoration), cursive;
+  font-size: 2rem;
+  color: #c2a36b;
+}
+
+.successText {
+  margin: 0;
+  font-family: var(--font-basic), sans-serif;
+  line-height: 1.7;
+  color: #c9bfa8;
+}

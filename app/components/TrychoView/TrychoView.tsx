@@ -1,11 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTransition } from "@/app/transition/TransitionProvider";
 import {
   LOCATIONS,
   normalize,
   type Location,
 } from "../OfferExplorer/offer-types";
+import PrimaryButton from "../Buttons/PrimaryButton/PrimaryButton";
 import {
   TRYCHO_TREATMENTS,
   TRYCHO_WSKAZANIA,
@@ -14,6 +16,7 @@ import {
 import styles from "./TrychoView.module.css";
 
 export default function TrychoView() {
+  const { navigate } = useTransition();
   const [query, setQuery] = useState("");
   const [activeLoc, setActiveLoc] = useState<Set<Location>>(new Set());
 
@@ -81,6 +84,13 @@ export default function TrychoView() {
               </span>
               <h3 className={styles.cardTitle}>{t.title}</h3>
               <p className={styles.desc}>{t.description}</p>
+              <div className={styles.actions}>
+                <PrimaryButton
+                  onClick={() => navigate(`/kontakt?zabieg=${t.id}`)}
+                >
+                  Umów
+                </PrimaryButton>
+              </div>
             </li>
           ))}
         </ul>

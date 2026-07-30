@@ -129,6 +129,14 @@
   color: #c9bfa8;
   max-width: 46ch;
 }
+
+.actions {
+  margin-top: 1.75rem;
+}
+.cardRight .actions {
+  display: flex;
+  justify-content: flex-end;
+}
 .cardRight .desc {
   margin-left: auto;
 }

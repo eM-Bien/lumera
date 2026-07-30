@@ -34,6 +34,10 @@
   margin: 1rem 0 0;
 }
 
+.formWrap {
+  margin: 5vh 0 2vh;
+}
+
 .shared {
   display: flex;
   gap: 1.5rem;
