@@ -66,8 +66,10 @@ export async function POST(request: Request) {
   }
 
   const zabiegNazwa = bookingTitle((body.zabieg ?? "").trim());
-  const from = process.env.CONTACT_FROM ?? "Lumera <onboarding@resend.dev>";
-  const to = process.env.CONTACT_TO ?? "kontakt@lumera.pl";
+  // Uwaga: `||`, nie `??` — puste CONTACT_FROM (="") też ma wpaść w domyślne.
+  const from =
+    process.env.CONTACT_FROM?.trim() || "Lumera <onboarding@resend.dev>";
+  const to = process.env.CONTACT_TO?.trim() || "kontakt@lumera.pl";
 
   const html = `
     <div style="font-family:Arial,sans-serif;background:#0a0720;padding:24px">
