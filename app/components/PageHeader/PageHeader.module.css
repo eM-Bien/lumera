@@ -1,0 +1,43 @@
+/* =========================================================================
+   PageHeader / Typografia nagłówków podstron.
+   Rozmiary, wagi i kolory czerpane z tokenów w globals.css — tu tylko
+   przypisanie do ról. Marginesy/układ specyficzne dla strony dokładaj
+   przez `className` na komponencie.
+   ========================================================================= */
+
+.header {
+  padding: 15vh 6vw 4vh;
+}
+
+.title {
+  font-family: var(--font-header), serif;
+  font-size: var(--page-title-size);
+  font-weight: var(--page-title-weight);
+  line-height: var(--page-title-line);
+  color: var(--page-title-color);
+  margin-bottom: 0.5em;
+}
+
+.subtitle {
+  font-family: var(--font-decoration), cursive;
+  font-size: var(--page-subtitle-size);
+  font-weight: var(--page-subtitle-weight);
+  line-height: var(--page-subtitle-line);
+  color: var(--page-subtitle-color);
+}
+
+.description {
+  font-family: var(--font-basic), sans-serif;
+  font-size: var(--page-desc-size);
+  font-weight: var(--page-desc-weight);
+  line-height: var(--page-desc-line);
+  color: var(--page-desc-color);
+  margin-top: 3vh;
+  max-width: 50%;
+}
+
+@media (max-width: 768px) {
+  .description {
+    max-width: none;
+  }
+}

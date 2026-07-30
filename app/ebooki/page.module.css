@@ -17,32 +17,6 @@
     radial-gradient(#0a0720 0%, #060414 45%, #000 100%);
 }
 
-.head {
-  padding: 15vh 6vw 4vh;
-}
-
-.title {
-  font-family: var(--font-header);
-  font-size: 4vh;
-  font-weight: 700;
-  margin-bottom: 0.5em;
-  color: #f0e6d2;
-}
-
-.subtitle {
-  font-size: 6vh;
-  font-weight: 500;
-  font-family: var(--font-decoration);
-  color: #c2a36b;
-}
-
-.description {
-  margin-top: 3vh;
-  max-width: 50%;
-  line-height: 1.7;
-  color: #c9bfa8;
-}
-
 /* lista ebooków — kolejne wiersze grafika/opis, z delikatną linią między */
 .list {
   display: flex;
@@ -52,10 +26,4 @@
 
 .list > :not(:first-child) {
   border-top: 1px solid rgba(194, 163, 107, 0.18);
-}
-
-@media (max-width: 768px) {
-  .description {
-    max-width: none;
-  }
 }

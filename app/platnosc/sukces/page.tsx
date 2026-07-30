@@ -5,6 +5,11 @@ import { useTransition } from "@/app/transition/TransitionProvider";
 import { useCart } from "@/app/components/Ebooks/Cart/CartContext";
 import CheckoutSteps from "@/app/components/CheckoutSteps/CheckoutSteps";
 import PrimaryButton from "@/app/components/Buttons/PrimaryButton/PrimaryButton";
+import {
+  PageHeading,
+  DecorativeSubtitle,
+  Description,
+} from "@/app/components/PageHeader/Typography";
 import styles from "./page.module.css";
 
 export default function PaymentSuccessPage() {
@@ -36,12 +41,14 @@ export default function PaymentSuccessPage() {
       </div>
 
       <div className={styles.inner}>
-        <h1 className={styles.title}>Dziękujemy!</h1>
-        <p className={styles.subtitle}>Płatność przyjęta</p>
-        <p className={styles.text}>
+        <PageHeading className={styles.title}>Dziękujemy!</PageHeading>
+        <DecorativeSubtitle className={styles.subtitle}>
+          Płatność przyjęta
+        </DecorativeSubtitle>
+        <Description className={styles.text}>
           Link do pobrania plików wysłaliśmy na podany adres e-mail. Jeśli
           wiadomość nie dotarła w ciągu kilku minut, sprawdź folder spam.
-        </p>
+        </Description>
 
         <p className={styles.contact}>
           Coś poszło nie tak?{" "}

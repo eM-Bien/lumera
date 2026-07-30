@@ -6,6 +6,7 @@ import { useCart } from "@/app/components/Ebooks/Cart/CartContext";
 import { formatPrice } from "@/app/components/Ebooks/ebook-types";
 import CheckoutSteps from "@/app/components/CheckoutSteps/CheckoutSteps";
 import PrimaryButton from "@/app/components/Buttons/PrimaryButton/PrimaryButton";
+import { DecorativeSubtitle } from "@/app/components/PageHeader/Typography";
 import styles from "./page.module.css";
 
 export default function PaymentPage() {
@@ -47,7 +48,7 @@ export default function PaymentPage() {
       <div className={styles.pay}>
         <CheckoutSteps current={2} />
         <header className={styles.head}>
-          <p className={styles.subtitle}>Koszyk jest pusty</p>
+          <DecorativeSubtitle>Koszyk jest pusty</DecorativeSubtitle>
         </header>
         <div className={styles.empty}>
           <PrimaryButton onClick={() => navigate("/ebooki")}>
@@ -62,7 +63,7 @@ export default function PaymentPage() {
     <div className={styles.pay}>
       <CheckoutSteps current={2} />
       <header className={styles.head}>
-        <p className={styles.subtitle}>Ostatni krok</p>
+        <DecorativeSubtitle>Ostatni krok</DecorativeSubtitle>
       </header>
 
       <div className={styles.content}>

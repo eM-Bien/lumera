@@ -112,28 +112,18 @@
   padding: 2vh 6vw 12vh;
 }
 
+/* tylko rozstawienie — typografia z komponentów PageHeader */
 .title {
   margin: 0;
-  font-family: var(--font-header), serif;
-  font-size: 4vh;
-  font-weight: 700;
-  color: #f0e6d2;
 }
 
 .subtitle {
   margin: 2rem 0 0;
-  font-family: var(--font-decoration), cursive;
-  font-size: clamp(2.2rem, 5vh, 3.2rem);
-  font-weight: 500;
-  color: #c2a36b;
-  line-height: 1.1;
 }
 
 .text {
   margin: 1.8rem 0 0;
   max-width: 460px;
-  line-height: 1.7;
-  color: #c9bfa8;
 }
 
 .contact {

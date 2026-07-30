@@ -6,6 +6,6 @@
 }
 
 .subtitle {
-  font-size: clamp(1.6rem, 3vw, 6rem);
+  font-size: var(--display-subtitle-size);
   font-family: var(--font-decoration);
 }

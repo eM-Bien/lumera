@@ -4,6 +4,39 @@
   --background: #03020c;
   --foreground: #171717;
   --font-heading: var(--font-playfair);
+
+  /* -----------------------------------------------------------------------
+     Typografia nagłówków podstron — jedno źródło prawdy.
+     Zmień tutaj, żeby przeskalować wszystkie tytuły/podtytuły/opisy naraz.
+     ----------------------------------------------------------------------- */
+  --page-title-size: clamp(2rem, 3.2vw, 2.6rem);
+  --page-title-weight: 700;
+  --page-title-color: #f0e6d2;
+  --page-title-line: 1.15;
+
+  --page-subtitle-size: clamp(2.4rem, 5vw, 3.6rem);
+  --page-subtitle-weight: 500;
+  --page-subtitle-color: #c2a36b;
+  --page-subtitle-line: 1.1;
+
+  --page-desc-size: 1.05rem;
+  --page-desc-weight: 400;
+  --page-desc-color: #c9bfa8;
+  --page-desc-line: 1.7;
+
+  /* -----------------------------------------------------------------------
+     Typografia „display" — wielka skala editorialowa (strona /o-lumera).
+     Hero i śródtytuły sekcji dzielą jeden rozmiar; podtytuł ozdobny i opis
+     osobno. Osobna warstwa niż nagłówki podstron powyżej.
+     ----------------------------------------------------------------------- */
+  --display-title-size: clamp(1.6rem, 2.2vw, 4rem);
+  --display-title-line: 1.1;
+  --display-title-spacing: 0.08em;
+
+  --display-subtitle-size: clamp(1.8rem, 3vw, 5rem);
+
+  --display-desc-size: clamp(1.1rem, 1.4vw, 1.4rem);
+  --display-desc-line: 1.4;
 }
 
 @media (prefers-color-scheme: dark) {

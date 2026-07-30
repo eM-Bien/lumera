@@ -24,21 +24,6 @@
   padding: 1vh 6vw 4vh;
 }
 
-.title {
-  font-family: var(--font-header);
-  font-size: 4vh;
-  font-weight: 700;
-  margin-bottom: 0.3em;
-  color: #f0e6d2;
-}
-
-.subtitle {
-  font-size: 6vh;
-  font-weight: 500;
-  font-family: var(--font-decoration);
-  color: #c2a36b;
-}
-
 /* --- Stany pomocnicze --------------------------------------------------- */
 
 .loading {

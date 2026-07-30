@@ -3,6 +3,10 @@
 import { Fragment, useEffect, useState } from "react";
 import { Cinzel } from "next/font/google";
 import LetterBackground from "../components/LetterBackground/LetterBackground";
+import {
+  PageHeading,
+  DecorativeSubtitle,
+} from "../components/PageHeader/Typography";
 import styles from "./page.module.css";
 
 const cinzel = Cinzel({
@@ -59,10 +63,12 @@ export default function ContactPage() {
 
       <div className={styles.content}>
         <header className={styles.header}>
-          <h1 className={styles.title}>Do zobaczenia w Lumera</h1>
-          <p className={styles.subtitle}>
+          <PageHeading className={styles.title}>
+            Do zobaczenia w Lumera
+          </PageHeading>
+          <DecorativeSubtitle className={styles.subtitle}>
             Wybierz lokalizację i zarezerwuj chwilę tylko dla siebie
-          </p>
+          </DecorativeSubtitle>
         </header>
 
         {/* telefon + email — wyróżnione */}

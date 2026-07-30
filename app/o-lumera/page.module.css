@@ -13,9 +13,9 @@
   display: flex;
   margin-top: 12vh;
   padding: 4vh 6vw 2vh;
-  font-size: clamp(1.6rem, 2.5vw, 6rem);
-  line-height: 1.1;
-  letter-spacing: 0.08em;
+  font-size: var(--display-title-size);
+  line-height: var(--display-title-line);
+  letter-spacing: var(--display-title-spacing);
   font-family: var(--font-header), serif;
   z-index: 2;
 }

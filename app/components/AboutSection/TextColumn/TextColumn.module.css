@@ -26,8 +26,8 @@
 }
 
 .p {
-  font-size: clamp(1.1rem, 1.4vw, 1.4rem);
-  line-height: 1.4;
+  font-size: var(--display-desc-size);
+  line-height: var(--display-desc-line);
 }
 
 @media (max-width: 786px) {

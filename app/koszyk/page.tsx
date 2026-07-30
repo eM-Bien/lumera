@@ -8,6 +8,7 @@ import CheckoutSteps from "@/app/components/CheckoutSteps/CheckoutSteps";
 import EmptyCart from "../components/Ebooks/Cart/EmptyCart/EmptyCart";
 import PrimaryButton from "../components/Buttons/PrimaryButton/PrimaryButton";
 import SecondaryButton from "../components/Buttons/SecondaryButton/SecondaryButton";
+import { DecorativeSubtitle } from "../components/PageHeader/Typography";
 
 export default function CartPage() {
   const { navigate } = useTransition();
@@ -34,7 +35,7 @@ export default function CartPage() {
         <>
           <CheckoutSteps current={1} />
           <header className={styles.head}>
-            <p className={styles.subtitle}>Gotowe do zakupu</p>
+            <DecorativeSubtitle>Gotowe do zakupu</DecorativeSubtitle>
           </header>
 
           <div className={styles.content}>
