@@ -1,5 +1,5 @@
 import styles from "./page.module.css";
-import OfferExplorer from "../components/OfferExplorer/OfferExplorer";
+import OfferTabs from "../components/OfferTabs/OfferTabs";
 
 export default function OfferPage() {
   return (
@@ -14,7 +14,7 @@ export default function OfferPage() {
         </p>
       </header>
 
-      <OfferExplorer />
+      <OfferTabs />
     </div>
   );
 }
