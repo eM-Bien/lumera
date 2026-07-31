@@ -12,6 +12,12 @@ import {
 import styles from "./ContactForm.module.css";
 
 type Status = "idle" | "sending" | "success" | "error";
+type Errors = Partial<
+  Record<"imie" | "email" | "telefon" | "lokalizacja" | "zgoda", string>
+>;
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+$/; // tekst @ tekst
+const PHONE_RE = /^\d{9}$/; // dokładnie 9 cyfr
 
 const PORA_OPTIONS = [
   "",
@@ -37,6 +43,7 @@ export default function ContactForm() {
 
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   // zabiegi pogrupowane do <optgroup>
   const groups = useMemo(() => {
@@ -49,9 +56,34 @@ export default function ContactForm() {
     return [...map.entries()];
   }, []);
 
+  const validate = (): Errors => {
+    const e: Errors = {};
+    if (!imie.trim()) e.imie = "Podaj imię.";
+    if (!EMAIL_RE.test(email.trim())) e.email = "Niepoprawny adres e-mail.";
+    if (!telefon.trim()) e.telefon = "Podaj numer telefonu.";
+    else if (!PHONE_RE.test(telefon.trim()))
+      e.telefon = "Niepoprawny numer telefonu.";
+    if (!lokalizacja) e.lokalizacja = "Wybierz lokalizację.";
+    if (!zgoda) e.zgoda = "Musisz wyrazić zgodę.";
+    return e;
+  };
+
+  // błędy liczone pochodnie — pokazujemy je dopiero po pierwszej próbie wysyłki
+  const errors: Errors = submitted ? validate() : {};
+
+  // telefon: wpuszczamy wyłącznie cyfry i maks. 9 znaków
+  const onTelefonChange = (value: string) => {
+    setTelefon(value.replace(/\D/g, "").slice(0, 9));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (status === "sending") return;
+
+    setSubmitted(true);
+    const found = validate();
+    if (Object.keys(found).length > 0) return;
+
     setStatus("sending");
     setErrorMsg("");
 
@@ -145,6 +177,9 @@ export default function ContactForm() {
             );
           })}
         </div>
+        {errors.lokalizacja && (
+          <span className={styles.errorText}>{errors.lokalizacja}</span>
+        )}
       </fieldset>
 
       <div className={styles.row}>
@@ -181,8 +216,9 @@ export default function ContactForm() {
           value={imie}
           onChange={(e) => setImie(e.target.value)}
           autoComplete="given-name"
-          required
+          aria-invalid={!!errors.imie}
         />
+        {errors.imie && <span className={styles.errorText}>{errors.imie}</span>}
       </label>
 
       <div className={styles.row}>
@@ -194,18 +230,27 @@ export default function ContactForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
-            required
+            aria-invalid={!!errors.email}
           />
+          {errors.email && (
+            <span className={styles.errorText}>{errors.email}</span>
+          )}
         </label>
         <label className={styles.field}>
-          <span className={styles.label}>Telefon</span>
+          <span className={styles.label}>Telefon *</span>
           <input
             type="tel"
+            inputMode="numeric"
+            maxLength={9}
             className={styles.input}
             value={telefon}
-            onChange={(e) => setTelefon(e.target.value)}
+            onChange={(e) => onTelefonChange(e.target.value)}
             autoComplete="tel"
+            aria-invalid={!!errors.telefon}
           />
+          {errors.telefon && (
+            <span className={styles.errorText}>{errors.telefon}</span>
+          )}
         </label>
       </div>
 
@@ -239,13 +284,14 @@ export default function ContactForm() {
           type="checkbox"
           checked={zgoda}
           onChange={(e) => setZgoda(e.target.checked)}
-          required
+          aria-invalid={!!errors.zgoda}
         />
         <span>
           Wyrażam zgodę na przetwarzanie moich danych w celu kontaktu i umówienia
           wizyty. *
         </span>
       </label>
+      {errors.zgoda && <span className={styles.errorText}>{errors.zgoda}</span>}
 
       {status === "error" && <p className={styles.error}>{errorMsg}</p>}
 

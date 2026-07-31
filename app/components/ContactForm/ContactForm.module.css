@@ -183,6 +183,19 @@
   color: #e0a0a0;
 }
 
+/* komunikat pod pojedynczym polem */
+.errorText {
+  font-family: var(--font-basic), sans-serif;
+  font-size: 0.8rem;
+  color: #e0a0a0;
+}
+
+/* podświetlenie pól z błędem */
+.input[aria-invalid="true"],
+.select[aria-invalid="true"] {
+  border-color: rgba(224, 160, 160, 0.7);
+}
+
 .success {
   max-width: 620px;
   padding: 2.5rem;

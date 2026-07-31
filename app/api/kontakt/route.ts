@@ -15,7 +15,8 @@ type Payload = {
   firma?: string; // honeypot — powinno zostać puste
 };
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+$/; // tekst @ tekst
+const PHONE_RE = /^\d{9}$/; // dokładnie 9 cyfr
 
 function escapeHtml(s: string): string {
   return s
@@ -47,11 +48,21 @@ export async function POST(request: Request) {
 
   const imie = (body.imie ?? "").trim();
   const email = (body.email ?? "").trim();
+  const telefon = (body.telefon ?? "").trim();
   const lokalizacja = (body.lokalizacja ?? "").trim();
 
-  if (!imie || !EMAIL_RE.test(email) || !lokalizacja || body.zgoda !== true) {
+  if (
+    !imie ||
+    !EMAIL_RE.test(email) ||
+    !PHONE_RE.test(telefon) ||
+    !lokalizacja ||
+    body.zgoda !== true
+  ) {
     return NextResponse.json(
-      { error: "Uzupełnij imię, poprawny e-mail, lokalizację i zgodę." },
+      {
+        error:
+          "Uzupełnij imię, poprawny e-mail, telefon (9 cyfr), lokalizację i zgodę.",
+      },
       { status: 400 },
     );
   }
@@ -80,7 +91,7 @@ export async function POST(request: Request) {
         ${row("Preferowany termin", [body.data, body.pora].filter(Boolean).join(", "))}
         ${row("Imię", imie)}
         ${row("E-mail", email)}
-        ${row("Telefon", (body.telefon ?? "").trim())}
+        ${row("Telefon", telefon)}
         ${row("Wiadomość", (body.wiadomosc ?? "").trim())}
       </table>
     </div>`;
@@ -92,7 +103,7 @@ export async function POST(request: Request) {
     `Termin: ${[body.data, body.pora].filter(Boolean).join(", ") || "—"}`,
     `Imię: ${imie}`,
     `E-mail: ${email}`,
-    `Telefon: ${(body.telefon ?? "").trim() || "—"}`,
+    `Telefon: ${telefon || "—"}`,
     `Wiadomość: ${(body.wiadomosc ?? "").trim() || "—"}`,
   ].join("\n");
 
