@@ -127,6 +127,7 @@ export default function OfferCard({
         <span className={styles.eyebrow}>{offer.category}</span>
         <span className={styles.locations}>{offer.locations.join(" · ")}</span>
         <h3 className={styles.cardTitle}>{offer.title}</h3>
+        <span className={styles.price}>{offer.price}</span>
 
         <button
           type="button"
@@ -161,7 +162,10 @@ export default function OfferCard({
         </div>
 
         <div className={styles.actions}>
-          <PrimaryButton onClick={() => navigate(`/kontakt?zabieg=${offer.id}`)}>
+          <PrimaryButton
+            className={styles.bookBtn}
+            onClick={() => navigate(`/kontakt?zabieg=${offer.id}`)}
+          >
             Umów
           </PrimaryButton>
         </div>

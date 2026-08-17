@@ -11,6 +11,7 @@ export type Offer = {
   image?: string; // ścieżka w /public; brak = placeholder gradientowy
   description: string;
   effects: string[]; // lista efektów zabiegu
+  price: string; // np. "150 zł" lub "od 150 zł"
 };
 
 // Dane zabiegów. Lokalizacje ustawione domyślnie na obie — dostosuj do realnej dostępności.
@@ -18,6 +19,7 @@ export const OFFERS: Offer[] = [
   {
     id: "oczyszczanie-wodorowe",
     title: "Oczyszczanie wodorowe",
+    price: "500 zł",
     category: "Twarz",
     locations: ["Sierpc", "Łódź"],
     image: "/offer/wodorowe.jpg",
@@ -34,6 +36,7 @@ export const OFFERS: Offer[] = [
   {
     id: "infuzja-tlenowa",
     title: "Infuzja tlenowa",
+    price: "500 zł",
     category: "Twarz",
     locations: ["Sierpc", "Łódź"],
     image: "/offer/infuzja.jpg",
@@ -50,6 +53,7 @@ export const OFFERS: Offer[] = [
   {
     id: "oczyszczanie-infuzja",
     title: "Oczyszczanie wodorowe + infuzja tlenowa",
+    price: "500 zł",
     category: "Twarz",
     locations: ["Sierpc", "Łódź"],
     description:
@@ -65,6 +69,7 @@ export const OFFERS: Offer[] = [
   {
     id: "zelazko-twarz",
     title: "Żelazko przeciwzmarszczkowe — twarz",
+    price: "500 zł",
     category: "Twarz",
     locations: ["Sierpc", "Łódź"],
     description:
@@ -80,6 +85,7 @@ export const OFFERS: Offer[] = [
   {
     id: "zelazko-cialo",
     title: "Żelazko antycellulitowe — ciało",
+    price: "500 zł",
     category: "Ciało",
     locations: ["Sierpc", "Łódź"],
     description:

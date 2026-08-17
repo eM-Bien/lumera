@@ -167,7 +167,16 @@
   font-size: 1.6rem;
   font-weight: 600;
   color: #f0e6d2;
+  margin-bottom: 0.5rem;
+}
+
+.price {
+  display: block;
   margin-bottom: 1rem;
+  font-family: var(--font-header), serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #c2a36b;
 }
 
 .desc {

@@ -5,6 +5,7 @@ import { type Location } from "./offer-types";
 export type TrychoTreatment = {
   id: string;
   title: string;
+  price: string; // np. "150 zł" lub "od 150 zł"
   description: string;
   locations: Location[];
 };
@@ -14,6 +15,7 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
   {
     id: "konsultacja-trychologiczna",
     title: "Konsultacja trychologiczna z badaniem skóry głowy",
+    price: "500 zł",
     locations: ["Sierpc", "Łódź"],
     description:
       "Obejmuje szczegółowy wywiad zdrowotny, ocenę stanu włosów i skóry głowy oraz badanie trichoskopowe. Pozwala rozpoznać przyczyny problemów takich jak nadmierne wypadanie włosów, łupież, świąd, przetłuszczanie czy stany zapalne. Po konsultacji przygotowywany jest indywidualny plan terapii i pielęgnacji.",
@@ -21,6 +23,7 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
   {
     id: "leczenie-lysienia",
     title: "Leczenie łysienia",
+    price: "500 zł",
     locations: ["Sierpc", "Łódź"],
     description:
       "Postępowanie dobierane jest indywidualnie w zależności od rodzaju łysienia (androgenowe, telogenowe, plackowate i inne). Terapia może obejmować zabiegi gabinetowe, preparaty trychologiczne, zalecenia pielęgnacyjne oraz współpracę z lekarzem w razie potrzeby. Celem jest ograniczenie wypadania włosów i pobudzenie ich odrostu.",
@@ -28,6 +31,7 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
   {
     id: "leczenie-azs-lupiezu",
     title: "Leczenie AZS, łupieżu i innych schorzeń skóry głowy",
+    price: "500 zł",
     locations: ["Sierpc", "Łódź"],
     description:
       "Pomoc w terapii atopowego zapalenia skóry (AZS), łupieżu suchego i tłustego, łojotokowego zapalenia skóry, nadmiernego przetłuszczania, przesuszenia, świądu, łuszczycy skóry głowy oraz podrażnień. Terapia obejmuje odpowiednio dobrane preparaty, zabiegi i zalecenia pielęgnacyjne.",
@@ -35,6 +39,7 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
   {
     id: "leczenie-wszawicy",
     title: "Leczenie wszawicy",
+    price: "500 zł",
     locations: ["Sierpc", "Łódź"],
     description:
       "Ocena stopnia nasilenia problemu, instruktaż prawidłowego postępowania, dobór preparatów oraz zalecenia dotyczące dezynfekcji otoczenia i profilaktyki nawrotów.",
@@ -42,6 +47,7 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
   {
     id: "infuzja-skora-glowy",
     title: "Infuzja na skórę głowy",
+    price: "500 zł",
     locations: ["Sierpc", "Łódź"],
     description:
       "Nowoczesny zabieg polegający na wtłaczaniu substancji aktywnych w skórę głowy przy użyciu technologii infuzji. Składniki odżywcze, nawilżające i stymulujące cebulki włosów wspierają regenerację skóry, poprawiają kondycję włosów, ograniczają ich wypadanie i wspomagają wzrost. Zabieg jest komfortowy i nieinwazyjny.",

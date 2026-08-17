@@ -42,12 +42,14 @@ export default function OfferExplorer() {
 
   return (
     <div className={styles.explorer}>
-      <OfferControls
-        query={query}
-        onQueryChange={setQuery}
-        activeLoc={activeLoc}
-        onToggleLocation={toggleLocation}
-      />
+      <div className={styles.controlsWrap}>
+        <OfferControls
+          query={query}
+          onQueryChange={setQuery}
+          activeLoc={activeLoc}
+          onToggleLocation={toggleLocation}
+        />
+      </div>
 
       {filtered.length === 0 ? (
         <p className={styles.empty}>

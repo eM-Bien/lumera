@@ -83,6 +83,7 @@ export default function TrychoView() {
                 {t.locations.join(" · ")}
               </span>
               <h3 className={styles.cardTitle}>{t.title}</h3>
+              <span className={styles.price}>{t.price}</span>
               <p className={styles.desc}>{t.description}</p>
               <div className={styles.actions}>
                 <PrimaryButton
