@@ -7,10 +7,10 @@ import CartIcon from "../CartIcon/CartIcon";
 import styles from "./Nav.module.css";
 
 const links = [
-  { href: "/o-lumera", name: "O Lumera", icon: "/icons/about.svg" },
-  { href: "/oferta", name: "Oferta", icon: "/icons/offer.svg" },
-  { href: "/ebooki", name: "Ebooki", icon: "/icons/ebook.svg" },
-  { href: "/kontakt", name: "Kontakt", icon: "/icons/contact.svg" },
+  { href: "/o-lumera", name: "O Lumera" },
+  { href: "/oferta", name: "Oferta" },
+  { href: "/ebooki", name: "Ebooki" },
+  { href: "/kontakt", name: "Kontakt" },
 ];
 
 const HOME_DELAY_MS = 4200;
@@ -60,13 +60,12 @@ export default function Nav() {
             <LinkNav
               href="/"
               name="Strona główna"
-              icon="/icons/home.svg"
               onClick={() => setOpen(false)}
             />
           </span>
         )}
 
-        {visibleLinks.map(({ href, name, icon }, i) => (
+        {visibleLinks.map(({ href, name }, i) => (
           <span
             key={href}
             className={styles.linkItem}
@@ -75,7 +74,6 @@ export default function Nav() {
             <LinkNav
               href={href}
               name={name}
-              icon={icon}
               onClick={() => setOpen(false)}
             />
           </span>
