@@ -16,10 +16,10 @@
   display: inline-flex;
   align-items: center;
   text-decoration: none;
-  font-size: 2vh;
-  font-family: var(--font-header), serif;
-  font-weight: 800;
-  letter-spacing: 0.1em;
+  font-size: 1.8vh;
+  font-family: var(--font-basic), sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.08em;
   cursor: pointer;
   color: var(--nav-text, #d8d8d8); /* baza dla <a> i strzałki (currentColor) */
   -webkit-tap-highlight-color: transparent;
@@ -30,8 +30,8 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 35em;
-  height: 26em;
+  width: 15em;
+  height: 16em;
   transform: translate(-50%, -50%) scale(0.2);
   border-radius: 50%;
   background: radial-gradient(
@@ -42,7 +42,7 @@
   filter: blur(36px) url(#lumera-ink-blob);
   mix-blend-mode: var(--nav-blob-blend, screen);
   opacity: 0;
-  z-index: -1;
+  z-index: -2; /* pod szklaną pastylką (.links::before ma -1) */
   pointer-events: none;
   transition:
     opacity 0.6s var(--nav-ease-out),
@@ -54,7 +54,6 @@
 .label {
   display: inline-block;
   color: var(--nav-text, #d8d8d8);
-  font-weight: 700;
   transition: color 0.8s var(--nav-ease);
   will-change: color;
 }
@@ -88,7 +87,8 @@
 }
 
 @media (max-width: 768px) {
+  /* drawer używa tego samego fontu co desktop (Montserrat) — tylko większy */
   .label {
-    font-size: 3.5vh; /* większy tekst linków w drawerze — bez zmian */
+    font-size: 3.5vh;
   }
 }

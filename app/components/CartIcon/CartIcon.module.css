@@ -31,6 +31,43 @@
   border-radius: 4px;
 }
 
+/* poświata na hover — jak przy linkach nawigacji */
+.btn::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 13vh;
+  height: 13vh;
+  transform: translate(-50%, -50%) scale(0.4);
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    var(--nav-blob, #ccb283),
+    transparent
+  );
+  filter: blur(20px);
+  mix-blend-mode: screen;
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+  transition:
+    opacity 0.5s ease,
+    transform 0.7s ease;
+}
+
+@media (hover: hover) {
+  .btn:hover::before {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.btn:focus-visible::before {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
 /* svg z public/icons/cart.svg jako maska — kolor steruje currentColor */
 .icon {
   width: 100%;

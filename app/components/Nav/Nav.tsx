@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { useTransition } from "@/app/transition/TransitionProvider";
 import LinkNav from "../LinkNav/LinkNav";
 import CartIcon from "../CartIcon/CartIcon";
 import styles from "./Nav.module.css";
@@ -17,9 +19,16 @@ const HOME_DELAY_MS = 4200;
 
 export default function Nav() {
   const pathname = usePathname();
+  const { navigate } = useTransition();
   const isHome = pathname === "/";
   const [show, setShow] = useState(() => pathname !== "/");
   const [open, setOpen] = useState(false);
+
+  const goHome = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setOpen(false);
+    navigate("/");
+  };
 
   useEffect(() => {
     if (!isHome) return;
@@ -34,6 +43,17 @@ export default function Nav() {
 
   return (
     <nav className={`${styles.nav} ${show ? styles.visible : ""}`}>
+      {/* księżyc z logo w lewym górnym rogu — link do strony głównej */}
+      <Link
+        href="/"
+        className={styles.homeMoon}
+        onClick={goHome}
+        aria-label="Strona główna"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/moon.svg" alt="Lumera — strona główna" />
+      </Link>
+
       {/* koszyk zawsze widoczny obok hamburgera — tylko mobile */}
       <span className={styles.cartMobile}>
         <CartIcon onClick={() => setOpen(false)} />
@@ -78,12 +98,12 @@ export default function Nav() {
             />
           </span>
         ))}
-
-        {/* koszyk na końcu rzędu linków — tylko desktop */}
-        <span className={`${styles.linkItem} ${styles.cartDesktop}`}>
-          <CartIcon onClick={() => setOpen(false)} />
-        </span>
       </div>
+
+      {/* koszyk — poza pastylką, przypięty do prawej; tylko desktop */}
+      <span className={`${styles.linkItem} ${styles.cartDesktop}`}>
+        <CartIcon onClick={() => setOpen(false)} />
+      </span>
     </nav>
   );
 }

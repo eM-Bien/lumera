@@ -1,9 +1,13 @@
 .nav {
   position: fixed;
-  top: 2vh;
-  right: 2vh;
+  top: 3.5vh;
+  left: 0;
+  right: 0;
   z-index: 50;
-  padding: 2vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.9s ease 0.6s;
@@ -14,11 +18,101 @@
   pointer-events: auto;
 }
 
-/* linki — desktop: rząd */
+/* linki — desktop: wyśrodkowana pastylka z delikatnym szkłem, bez ramki */
 .links {
-  display: flex;
+  position: relative;
+  z-index: 0; /* własny kontekst — warstwy poświata/szkło/tekst pod kontrolą */
+  overflow: hidden; /* poświata przycięta do kształtu pastylki */
+  display: inline-flex;
   align-items: center;
-  gap: 2vh;
+  gap: 5vw;
+
+  padding: 1.1vh 2.4vw;
+  border-radius: 999px;
+}
+
+/* szkło pastylki — NAD poświatą (blob z-index:-2), POD tekstem linków.
+   backdrop-filter rozmywa to, co za nim (poświatę), więc delikatnie przez nie prześwieca. */
+.links::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  z-index: -1;
+}
+
+/* koszyk (desktop) — przypięty do prawej krawędzi, poza pastylką */
+.cartDesktop {
+  position: absolute;
+  right: 3vw;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* księżyc z logo — lewy róg, wyrównany w pionie z koszykiem */
+.homeMoon {
+  position: absolute;
+  top: 50%;
+  left: 2.5vw;
+  transform: translateY(-50%);
+  display: block;
+  line-height: 0;
+  opacity: 0.9;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.homeMoon img {
+  display: block;
+  height: 3vh; /* równo z ikoną koszyka */
+  width: auto;
+}
+
+.homeMoon:hover,
+.homeMoon:focus-visible {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.06);
+}
+
+/* poświata na hover — jak przy linkach nawigacji i koszyku */
+.homeMoon::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 13vh;
+  height: 13vh;
+  transform: translate(-50%, -50%) scale(0.4);
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    var(--nav-blob, #ccb283),
+    transparent
+  );
+  filter: blur(20px);
+  mix-blend-mode: screen;
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+  transition:
+    opacity 0.5s ease,
+    transform 0.7s ease;
+}
+
+.homeMoon:hover::before,
+.homeMoon:focus-visible::before {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.homeMoon:focus-visible {
+  outline: 2px solid var(--nav-text-hover, #f0e6d2);
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 
 /* koszyk: domyślnie (desktop) widoczny w rzędzie, mobilny wariant ukryty */
@@ -68,7 +162,18 @@
   .nav {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 1.6vh;
+
+    /* powrót do kompaktowego rogu — bez paska i szkła */
+    top: 2vh;
+    right: 2vh;
+    left: auto;
+    padding: 2vh;
+    background: none;
+    border-bottom: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   /* koszyk zawsze widoczny obok hamburgera, nad panelem menu */
@@ -89,6 +194,21 @@
     display: none;
   }
 
+  /* na mobile nav to róg po prawej — księżyc trzymamy sztywno w lewym rogu */
+  .homeMoon {
+    position: fixed;
+    top: 2vh;
+    transform: none;
+  }
+  .homeMoon:hover,
+  .homeMoon:focus-visible {
+    transform: scale(1.06);
+  }
+  /* księżyc równo z koszykiem na mobile */
+  .homeMoon img {
+    height: 4.5vh;
+  }
+
   .burger {
     display: flex;
     position: relative;
@@ -105,10 +225,20 @@
     padding: 10vh 6vw;
     background: rgba(5, 3, 15, 0.97);
 
+    /* reset pastylki z desktopu */
+    border-radius: 0;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+
     /* gładkie rozlewanie z punktu hamburgera */
     clip-path: circle(0% at calc(100% - 6vw) 6vh);
     pointer-events: none;
     transition: clip-path 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* na mobile drawer ma własne pełne tło — szklana pastylka niepotrzebna */
+  .links::before {
+    display: none;
   }
 
   .links .linkItem {
