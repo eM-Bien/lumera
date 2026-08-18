@@ -1,26 +1,14 @@
 /* =========================================================================
-   OfferCta — zamykająca sekcja strony Zabiegi: pas pełnej szerokości.
-   Bez ramki i kafelka — subtelna złota poświata wtapia się w tło strony.
+   CtaBand — zamykający pas CTA pełnej szerokości (bez ramki/kafelka).
+   Subtelna złota poświata wtapia się w tło strony.
    ========================================================================= */
 
 .cta {
   position: relative;
   z-index: 1;
-  padding: clamp(11vh, 15vh, 20vh) 6vw;
+  /* mniej u góry (wyżej), więcej u dołu */
+  padding: clamp(1vh, 2.5vh, 4vh) 6vw clamp(11vh, 15vh, 20vh);
   text-align: center;
-
-  /* złota poświata w centrum + delikatny fioletowy wash od góry (jak tło strony) */
-  background:
-    radial-gradient(
-      55% 120% at 50% 52%,
-      rgba(194, 163, 107, 0.14) 0%,
-      rgba(194, 163, 107, 0) 70%
-    ),
-    radial-gradient(
-      120% 90% at 50% 0%,
-      rgba(72, 62, 105, 0.22),
-      transparent 60%
-    );
 }
 
 .inner {
@@ -34,7 +22,7 @@
 
 .eyebrow {
   font-family: var(--font-basic), sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #9a8c6f;
@@ -42,14 +30,15 @@
 
 .title {
   font-family: var(--font-decoration);
-  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  font-size: clamp(3.4rem, 7.5vw, 5.6rem);
   font-weight: 500;
   line-height: 1.05;
   color: #c2a36b;
 }
 
 .text {
-  max-width: 46ch;
+  max-width: 50ch;
+  font-size: 1.25rem;
   line-height: 1.7;
   color: #c9bfa8;
 }

@@ -1,0 +1,34 @@
+/* =========================================================================
+   ScrollBlueNavy — dwie warstwy tła (z-index 1, nad wideo/scrimem, pod treścią).
+   Niebieska u góry obszaru, granatowa ku dołowi. Krycie sterowane scrollem.
+   ========================================================================= */
+
+.blue,
+.navy {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.blue {
+  background:
+    radial-gradient(
+      120% 100% at 50% 32%,
+      rgba(40, 108, 205, 0.55) 0%,
+      rgba(40, 108, 205, 0) 68%
+    ),
+    linear-gradient(165deg, #05122e 0%, #0d2c66 46%, #1c5bab 100%);
+}
+
+/* ciemny granat — z delikatną niebieską poświatą u góry, by przejście było płynne */
+.navy {
+  background:
+    radial-gradient(
+      120% 90% at 50% 18%,
+      rgba(24, 60, 130, 0.4) 0%,
+      rgba(24, 60, 130, 0) 60%
+    ),
+    linear-gradient(180deg, #08183a 0%, #061020 55%, #02060f 100%);
+}

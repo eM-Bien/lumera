@@ -1,7 +1,7 @@
 import styles from "./page.module.css";
 import PageHeader from "../components/PageHeader/PageHeader";
 import OfferTabs from "../components/OfferTabs/OfferTabs";
-import OfferCta from "../components/OfferCta/OfferCta";
+import CtaBand from "../components/CtaBand/CtaBand";
 
 export default function OfferPage() {
   return (
@@ -14,7 +14,13 @@ export default function OfferPage() {
 
       <OfferTabs />
 
-      <OfferCta />
+      <CtaBand
+        eyebrow="Nie wiesz na co się zdecydować?"
+        title="Umów się na konsultację"
+        text="Dobierzemy zabieg do Twoich potrzeb i skóry. Napisz lub zadzwoń — pomożemy wybrać to, co sprawdzi się najlepiej."
+        buttonLabel="Skontaktuj się"
+        href="/kontakt"
+      />
     </div>
   );
 }

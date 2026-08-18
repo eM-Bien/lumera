@@ -9,11 +9,12 @@ import {
   intro,
   philosophy,
   story,
-  summary,
-  values,
 } from "../components/AboutSection/about.content";
 import SectionHeading from "../components/AboutSection/SectionHeading/SectionHeading";
+import ValueCards from "../components/AboutSection/ValueCards/ValueCards";
+import ScrollBlueNavy from "../components/AboutSection/ScrollBlueNavy/ScrollBlueNavy";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
+import CtaBand from "../components/CtaBand/CtaBand";
 
 export default function AboutPage() {
   return (
@@ -29,21 +30,22 @@ export default function AboutPage() {
       <TextColumn align="left" paragraphs={story.left} />
       <TextColumn align="right" paragraphs={story.right} />
 
-      <SectionHeading text="Nasze wartości" />
+      <ScrollBlueNavy>
+        <ValueCards />
 
-      {values.map((v) => (
-        <div key={v.label}>
-          <Subtitle>{v.label}</Subtitle>
-          <TextColumn align="left" paragraphs={[v.text]} />
-        </div>
-      ))}
-
-      <SectionHeading text="Nasza filozofia" align="right" />
-      <TextColumn align="right" paragraphs={philosophy.right} />
+        <SectionHeading text="Nasza filozofia" align="right" />
+        <TextColumn align="right" paragraphs={philosophy.right} />
+      </ScrollBlueNavy>
 
       <div className={styles.spacer} />
 
-      <Subtitle>{summary}</Subtitle>
+      <CtaBand
+        eyebrow="Zapraszamy Cię do świata Lumera"
+        title="Umów wizytę"
+        text="Miejsce stworzone z pasji, wiedzy i serca. Napisz lub zadzwoń — z przyjemnością Cię poznamy."
+        buttonLabel="Skontaktuj się"
+        href="/kontakt"
+      />
       <ScrollToTop />
     </main>
   );
