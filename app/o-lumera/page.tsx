@@ -45,7 +45,7 @@ export default function AboutPage() {
       <CtaBand
         eyebrow="Zapraszamy Cię do świata Lumera"
         title="Umów wizytę"
-        text="Miejsce stworzone z pasji, wiedzy i serca. Napisz lub zadzwoń — z przyjemnością Cię poznamy."
+        text="Napisz lub zadzwoń — chętnie odpowiemy na Twoje pytania i pomożemy wybrać odpowiednie zabiegi dla Ciebie"
         buttonLabel="Skontaktuj się"
         href="/kontakt"
       />

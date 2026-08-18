@@ -1,5 +1,4 @@
-export const intro =
-  "Lumera to miejsce stworzone z pasji do świadomej pielęgnacji oraz holistycznego podejścia do zdrowia i piękna.";
+export const intro = "Miejscu stworzonym z pasji do świadomej pielęgnacji";
 
 export const summary =
   "Zapraszamy Cię do świata Lumera - miejsca stworzonego z pasji, wiedzy i serca";
