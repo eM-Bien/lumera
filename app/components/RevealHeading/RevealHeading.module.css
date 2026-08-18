@@ -1,0 +1,27 @@
+/* =========================================================================
+   RevealHeading — litery na starcie rozjechane na zewnątrz, przy scrollu
+   zjeżdżają na miejsce. Bez narzucania typografii (z klasy `className`).
+   ========================================================================= */
+
+.reveal {
+  display: block;
+}
+
+/* słowo się nie łamie w środku; spacja (nbsp) trzyma się słowa */
+.word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.char {
+  display: inline-block;
+  white-space: pre;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .char {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}

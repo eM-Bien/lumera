@@ -2,6 +2,7 @@
 
 import { useTransition } from "@/app/transition/TransitionProvider";
 import PrimaryButton from "../Buttons/PrimaryButton/PrimaryButton";
+import RevealHeading from "../RevealHeading/RevealHeading";
 import styles from "./CtaBand.module.css";
 
 type CtaBandProps = {
@@ -29,7 +30,7 @@ export default function CtaBand({
     <section className={styles.cta} aria-label={title}>
       <div className={styles.inner}>
         {eyebrow && <p className={styles.eyebrow}>{eyebrow}</p>}
-        <h2 className={styles.title}>{title}</h2>
+        <RevealHeading as="h2" className={styles.title} text={title} />
         {text && <p className={styles.text}>{text}</p>}
         <PrimaryButton
           className={styles.button}

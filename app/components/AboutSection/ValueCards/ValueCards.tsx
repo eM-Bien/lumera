@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { values } from "../about.content";
+import RevealHeading from "../../RevealHeading/RevealHeading";
 import styles from "./ValueCards.module.css";
 
 /** Jak mocno karty schodzą się przy pełnym wyśrodkowaniu (0..1). */
@@ -19,7 +20,6 @@ export default function ValueCards() {
   const [intensity, setIntensity] = useState(0); // 0 = przy brzegach, 1 = zeszły do środka
   const [spread, setSpread] = useState(0); // px, rozstaw skrajnych kart
   const [isMobile, setIsMobile] = useState(false);
-  const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -64,42 +64,15 @@ export default function ValueCards() {
     };
   }, []);
 
-  // reveal nagłówków przy wejściu w kadr
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      !("IntersectionObserver" in window)
-    ) {
-      setRevealed(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
-            setRevealed(true);
-            io.disconnect();
-          }
-        }
-      },
-      { threshold: 0.2 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
   const n = values.length;
 
   return (
-    <section
-      ref={ref}
-      className={`${styles.section} ${revealed ? styles.revealed : ""}`}
-    >
-        <h2 className={styles.heading}>
-          <span className={styles.headingInner}>Nasze wartości</span>
-        </h2>
+    <section ref={ref} className={styles.section}>
+        <RevealHeading
+          as="h2"
+          className={styles.heading}
+          text="Nasze wartości"
+        />
 
         <div ref={stackRef} className={styles.stack}>
           {values.map((v, i) => {

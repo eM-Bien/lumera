@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./page.module.css";
-import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
+import RevealHeading from "../components/RevealHeading/RevealHeading";
 import VideoBackground from "../components/AboutSection/VideoBackground/VideoBackground";
 import Subtitle from "../components/AboutSection/Subtitle/Subtitle";
 import TextColumn from "../components/AboutSection/TextColumn/TextColumn";
@@ -10,7 +10,6 @@ import {
   philosophy,
   story,
 } from "../components/AboutSection/about.content";
-import SectionHeading from "../components/AboutSection/SectionHeading/SectionHeading";
 import ValueCards from "../components/AboutSection/ValueCards/ValueCards";
 import ScrollBlueNavy from "../components/AboutSection/ScrollBlueNavy/ScrollBlueNavy";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
@@ -22,7 +21,7 @@ export default function AboutPage() {
       <VideoBackground />
 
       <section className={styles.hero}>
-        <ScrollReveal as="h1" className={styles.h1} text="Witamy w Lumera" />
+        <RevealHeading as="h1" className={styles.h1} text="Witamy w Lumera" />
       </section>
 
       <Subtitle>{intro}</Subtitle>
@@ -33,8 +32,12 @@ export default function AboutPage() {
       <ScrollBlueNavy>
         <ValueCards />
 
-        <SectionHeading text="Nasza filozofia" align="right" />
-        <TextColumn align="right" paragraphs={philosophy.right} />
+        <RevealHeading
+          as="h2"
+          className={styles.sectionHeading}
+          text="Nasza filozofia"
+        />
+        <TextColumn align="left" paragraphs={philosophy.right} />
       </ScrollBlueNavy>
 
       <div className={styles.spacer} />

@@ -6,8 +6,8 @@
 .cta {
   position: relative;
   z-index: 1;
-  /* mniej u góry (wyżej), więcej u dołu */
-  padding: clamp(1vh, 2.5vh, 4vh) 6vw clamp(11vh, 15vh, 20vh);
+  /* mniej u góry (wyżej), zapas u dołu — żeby litery zdążyły się złożyć */
+  padding: clamp(1vh, 2.5vh, 4vh) 6vw clamp(16vh, 22vh, 30vh);
   text-align: center;
 }
 
@@ -29,11 +29,11 @@
 }
 
 .title {
-  font-family: var(--font-decoration);
-  font-size: clamp(3.4rem, 7.5vw, 5.6rem);
-  font-weight: 500;
-  line-height: 1.05;
-  color: #c2a36b;
+  font-family: var(--font-header), serif;
+  font-size: clamp(2.8rem, 7vw, 4.8rem);
+  font-weight: 700;
+  line-height: 1.02;
+  color: #f0e6d2;
 }
 
 .text {
