@@ -1,16 +1,32 @@
 import styles from "./page.module.css";
-import PageHeader from "../components/PageHeader/PageHeader";
+import RevealHeading from "../components/RevealHeading/RevealHeading";
+import {
+  DecorativeSubtitle,
+  Description,
+} from "../components/PageHeader/Typography";
 import OfferTabs from "../components/OfferTabs/OfferTabs";
 import CtaBand from "../components/CtaBand/CtaBand";
 
 export default function OfferPage() {
   return (
     <div className={styles.offer}>
-      <PageHeader
-        title="Zabiegi"
-        subtitle="Znajdź coś dla siebie"
-        description="Zabiegi na twarz, ciało i skórę głowy — oczyszczanie, nawilżanie, odmładzanie, modelowanie. Wyszukaj po nazwie lub zawęź po lokalizacji, żeby łatwiej znaleźć coś dla siebie."
-      />
+      <header className={styles.header}>
+        <RevealHeading
+          as="h1"
+          className={styles.title}
+          text="Zabiegi"
+          mode="load"
+          delayMs={150}
+        />
+        <DecorativeSubtitle className={styles.subtitle}>
+          Znajdź coś dla siebie
+        </DecorativeSubtitle>
+        <Description className={styles.desc}>
+          Zabiegi na twarz, ciało i skórę głowy — oczyszczanie, nawilżanie,
+          odmładzanie, modelowanie. Wyszukaj po nazwie lub zawęź po lokalizacji,
+          żeby łatwiej znaleźć coś dla siebie.
+        </Description>
+      </header>
 
       <OfferTabs />
 
