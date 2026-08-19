@@ -16,14 +16,28 @@ export default function OfferControls({
 }: OfferControlsProps) {
   return (
     <div className={styles.controls}>
-      <input
-        type="search"
-        className={styles.search}
-        placeholder="Szukaj zabiegu po nazwie…"
-        value={query}
-        onChange={(e) => onQueryChange(e.target.value)}
-        aria-label="Szukaj zabiegu po nazwie"
-      />
+      <div className={styles.searchWrap}>
+        <svg
+          className={styles.searchIcon}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          aria-hidden="true"
+        >
+          <circle cx="11" cy="11" r="7" />
+          <path d="M20 20l-3.2-3.2" />
+        </svg>
+        <input
+          type="search"
+          className={styles.search}
+          placeholder="Wyszukaj zabieg po nazwie…"
+          value={query}
+          onChange={(e) => onQueryChange(e.target.value)}
+          aria-label="Wyszukaj zabieg po nazwie"
+        />
+      </div>
 
       <div className={styles.filterBar}>
         <span className={styles.filterLabel}>Lokalizacja</span>

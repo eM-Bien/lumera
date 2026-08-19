@@ -8,11 +8,80 @@
   z-index: 1;
 }
 
-.tabs {
+/* przełącznik kategorii — etykieta + zakładki (underline na całą szerokość) */
+.switcher {
   display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.4vh;
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 6vw;
+}
+
+.kicker {
+  font-family: var(--font-basic), sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #9a8c6f;
+}
+
+/* linia bazowa na całą szerokość; dwie równe połówki (po 50%) */
+.tabs {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  border-bottom: 1px solid rgba(194, 163, 107, 0.22);
+}
+
+.tab {
+  position: relative;
+  padding: 0.5rem 0.6rem 1.1rem;
+  background: none;
+  border: none;
+  font-family: var(--font-header), serif;
+  font-size: clamp(1.15rem, 2vw, 1.6rem);
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  color: #9a8c6f;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.tab:hover {
+  color: #d8c1a0;
+}
+
+.tabActive {
+  color: #f0e6d2;
+}
+
+/* wskaźnik = pełna połowa; ślizga się między połówkami */
+.indicator {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 50%;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #d8c1a0, #c2a36b);
+  box-shadow:
+    0 0 12px rgba(194, 163, 107, 0.7),
+    0 0 26px rgba(194, 163, 107, 0.35);
+  transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  will-change: transform;
+}
+
+.tab:focus-visible {
+  outline: none;
+  color: #f0e6d2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indicator {
+    transition: none;
+  }
 }

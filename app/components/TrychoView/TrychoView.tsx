@@ -2,11 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { useTransition } from "@/app/transition/TransitionProvider";
-import {
-  LOCATIONS,
-  normalize,
-  type Location,
-} from "../OfferExplorer/offer-types";
+import { normalize, type Location } from "../OfferExplorer/offer-types";
+import OfferControls from "../OfferControls/OfferControls";
 import PrimaryButton from "../Buttons/PrimaryButton/PrimaryButton";
 import {
   TRYCHO_TREATMENTS,
@@ -41,34 +38,12 @@ export default function TrychoView() {
 
   return (
     <div className={styles.view}>
-      <div className={styles.controls}>
-        <input
-          type="search"
-          className={styles.search}
-          placeholder="Szukaj zabiegu po nazwie…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          aria-label="Szukaj zabiegu trychologicznego po nazwie"
-        />
-
-        <span className={styles.filterLabel}>Lokalizacja</span>
-        <div className={styles.filters} role="group" aria-label="Lokalizacja">
-          {LOCATIONS.map((loc) => {
-            const on = activeLoc.has(loc);
-            return (
-              <button
-                key={loc}
-                type="button"
-                className={`${styles.chip} ${on ? styles.chipActive : ""}`}
-                aria-pressed={on}
-                onClick={() => toggleLocation(loc)}
-              >
-                {loc}
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      <OfferControls
+        query={query}
+        onQueryChange={setQuery}
+        activeLoc={activeLoc}
+        onToggleLocation={toggleLocation}
+      />
 
       {filtered.length === 0 ? (
         <p className={styles.empty}>

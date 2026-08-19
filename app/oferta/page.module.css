@@ -39,7 +39,7 @@
 }
 
 .header .desc {
-  max-width: 60ch;
+  max-width: 70ch;
   margin: 3vh auto 0;
 }
 
@@ -59,4 +59,3 @@
     animation: none;
   }
 }
-

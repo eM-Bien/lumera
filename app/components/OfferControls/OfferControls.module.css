@@ -6,15 +6,33 @@
   z-index: 2;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 1rem 1.5rem;
-  padding: 3vh 0 2.5vh;
+  gap: 1.4rem 2.5rem;
+  padding: 5vh 0 2.5vh;
+}
+
+/* wyszukiwarka — rośnie po lewej, z ikoną lupy */
+.searchWrap {
+  position: relative;
+  flex: 1 1 360px;
+  min-width: 260px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 19px;
+  height: 19px;
+  color: #9a8c6f;
+  pointer-events: none;
 }
 
 .search {
-  flex: 1 1 320px;
-  min-width: 220px;
-  padding: 0.9rem 1.2rem;
+  width: 100%;
+  padding: 0.95rem 1.2rem 0.95rem 3.1rem;
   font-family: var(--font-basic), sans-serif;
   font-size: 1.05rem;
   color: #f0e6d2;
@@ -52,6 +70,7 @@
 .filterBar {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   flex-wrap: wrap;
   gap: 0.6rem 0.9rem;
 }
