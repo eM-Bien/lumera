@@ -194,15 +194,17 @@
     display: none;
   }
 
-  /* na mobile nav to róg po prawej — księżyc trzymamy sztywno w lewym rogu */
+  /* na mobile nav to róg po prawej — księżyc w lewym rogu, na wysokości hamburgera
+     (środek = top navu 2vh + padding 2vh + połowa wysokości hamburgera 40px) */
   .homeMoon {
     position: fixed;
-    top: 2vh;
-    transform: none;
+    top: calc(4vh + 20px);
+    left: 5vw; /* większa przerwa od lewej krawędzi */
+    transform: translateY(-50%);
   }
   .homeMoon:hover,
   .homeMoon:focus-visible {
-    transform: scale(1.06);
+    transform: translateY(-50%) scale(1.06);
   }
   /* księżyc równo z koszykiem na mobile */
   .homeMoon img {
