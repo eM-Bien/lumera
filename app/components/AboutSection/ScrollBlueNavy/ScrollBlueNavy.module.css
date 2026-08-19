@@ -55,15 +55,15 @@
   }
 }
 
-/* dół obszaru — głębszy, przyciemniony wariant tej samej palety */
+/* dół obszaru — bardzo ciemny, niemal czarny */
 .navy {
   background:
     radial-gradient(
-      120% 90% at 50% 18%,
-      rgba(70, 55, 170, 0.4),
-      transparent 60%
+      120% 90% at 50% 15%,
+      rgba(48, 38, 110, 0.22),
+      transparent 55%
     ),
-    linear-gradient(180deg, #10184a 0%, #0a1030 55%, #05060f 100%);
+    linear-gradient(180deg, #04071a 0%, #020309 55%, #000103 100%);
 }
 
 @media (prefers-reduced-motion: reduce) {
