@@ -1,20 +1,20 @@
 /* =========================================================================
-   ValueCards — karuzela wartości w stylu „lookbook": po lewej tytuł,
-   po prawej opis; wartości rotują (autoplay + ręczne przełączanie).
+   ValueCards — nieskończona taśma wysokich, zaokrąglonych kafli z gradientem
+   (każdy inny), z ikoną wystającą ponad górną krawędź.
    ========================================================================= */
 
 .section {
   position: relative;
   z-index: 2;
-  max-width: 1200px;
   /* duża przerwa przed „Nasze wartości" — około pół ekranu */
-  margin: 50vh auto 0;
-  padding: 0 clamp(1rem, 4vw, 3rem);
+  margin: 50vh 0 0;
+  padding: 0;
 }
 
-/* --- Nagłówek sekcji: duży, pogrubiony ---------------------------------- */
+/* --- Nagłówek sekcji: duży, pogrubiony, wyśrodkowany -------------------- */
 .heading {
-  margin: 0 0 clamp(4vh, 7vh, 9vh);
+  margin: 0 0 clamp(5vh, 8vh, 10vh);
+  padding: 0 6vw;
   font-family: var(--font-header), serif;
   font-size: clamp(2.8rem, 7vw, 4.8rem);
   font-weight: 700;
@@ -23,201 +23,103 @@
   text-align: center;
 }
 
-/* --- Karuzela: [tytuł] | [opis], bez tła -------------------------------- */
-.carousel {
+/* --- Taśma (marquee) — perspektywa 3D dla efektu „RIG" ------------------ */
+.marquee {
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: clamp(1.6rem, 5vw, 5rem);
-  min-height: clamp(220px, 30vw, 340px);
-  padding: clamp(1.5rem, 4vh, 4vh) 0;
+  width: 100%;
+  overflow: hidden;
+  padding: clamp(9rem, 15vh, 13rem) 0 clamp(5rem, 9vh, 9rem);
+  perspective: 1600px;
+  perspective-origin: 50% 50%;
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y; /* pionowy scroll strony zostaje, poziom = przeciąganie */
 }
 
-/* lewa kolumna — licznik + tytuł, wyrównane do linii środkowej */
-.left {
+.grabbing {
+  cursor: grabbing;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* --- Kafel wartości: wysoki, ikona u góry, tytuł na równej wysokości ---- */
+.card {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(260px, 24vw, 360px);
+  min-height: clamp(280px, 32vw, 380px);
+  margin-right: clamp(2.5rem, 5vw, 5rem);
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  text-align: right;
-}
-
-.index {
-  margin-bottom: clamp(0.8rem, 1.6vh, 1.4rem);
-  font-family: var(--font-basic), sans-serif;
-  font-size: 0.8rem;
-  letter-spacing: 0.3em;
-  color: #c2a36b;
-}
-
-.title {
-  margin: 0;
-  font-family: var(--font-header), serif;
-  font-size: clamp(2rem, 4.6vw, 3.8rem);
-  font-weight: 700;
-  line-height: 1.05;
-  color: #f0e6d2;
-}
-
-/* pionowa linia rozdzielająca tytuł od opisu */
-.divider {
-  width: 1px;
-  align-self: stretch;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(194, 163, 107, 0.5) 25%,
-    rgba(194, 163, 107, 0.5) 75%,
-    transparent 100%
-  );
-}
-
-.right {
-  display: flex;
-}
-
-.text {
-  margin: 0;
-  max-width: 46ch;
-  font-family: var(--font-basic), sans-serif;
-  font-size: clamp(1rem, 1.35vw, 1.25rem);
-  line-height: 1.7;
-  color: #d9d0bd;
-}
-
-/* --- Animacja wejścia (odtwarzana przez remount po zmianie key):
-   tytuł wjeżdża do góry, opis w dół ------------------------------------- */
-.index,
-.title {
-  animation: enterUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.text {
-  animation: enterDown 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes enterUp {
-  from {
-    opacity: 0;
-    transform: translateY(28px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes enterDown {
-  from {
-    opacity: 0;
-    transform: translateY(-28px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-/* --- Nawigacja: strzałki + kropki --------------------------------------- */
-.nav {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 1.6rem;
-  margin-top: clamp(2rem, 4vh, 4vh);
+  text-align: center;
+  padding: clamp(6.5rem, 8vw, 8.5rem) clamp(1.6rem, 2.2vw, 2.4rem)
+    clamp(2rem, 3vw, 2.8rem);
+  border-radius: clamp(20px, 2.4vw, 32px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  transform-origin: center center;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
 }
 
-.arrow {
+/* ikona (bez kółka) wystająca nieco ponad kafel */
+.icon {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -55%);
   display: grid;
   place-items: center;
-  width: 2.6rem;
-  height: 2.6rem;
-  font-size: 1.4rem;
-  line-height: 1;
-  color: #f0e6d2;
-  background: transparent;
-  border: 1px solid rgba(194, 163, 107, 0.4);
-  border-radius: 50%;
-  cursor: pointer;
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease,
-    transform 0.3s ease;
+  width: clamp(128px, 11.5vw, 180px);
+  height: clamp(128px, 11.5vw, 180px);
+  color: #fff;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45));
 }
 
-.arrow:hover {
-  border-color: rgba(194, 163, 107, 0.8);
-  background: rgba(194, 163, 107, 0.12);
-  transform: translateY(-1px);
+.icon svg {
+  width: 82%;
+  height: 82%;
 }
 
-.dots {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
+.iconImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  -webkit-user-drag: none;
 }
 
-.dot {
-  width: 9px;
-  height: 9px;
-  padding: 0;
-  border: none;
-  border-radius: 50%;
-  background: rgba(240, 230, 210, 0.28);
-  cursor: pointer;
-  transition:
-    background-color 0.3s ease,
-    transform 0.3s ease;
+/* „troska" ma większy rysunek — ograniczamy, by była równa reszcie */
+.iconTroska {
+  width: 82%;
+  height: 82%;
 }
 
-.dot:hover {
-  background: rgba(240, 230, 210, 0.55);
+.label {
+  margin: 0 0 0.9rem;
+  font-family: var(--font-header), serif;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  font-weight: 700;
+  line-height: 1.12;
+  color: #ffffff;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
 }
 
-.dotOn {
-  background: #c2a36b;
-  transform: scale(1.35);
-}
-
-/* --- Mobile: pionowo, tytuł nad opisem ---------------------------------- */
-@media (max-width: 720px) {
-  .carousel {
-    grid-template-columns: 1fr;
-    gap: 1.4rem;
-    min-height: 0;
-    text-align: center;
-  }
-
-  .left {
-    align-items: center;
-    text-align: center;
-  }
-
-  .divider {
-    width: 60%;
-    height: 1px;
-    justify-self: center;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(194, 163, 107, 0.5),
-      transparent
-    );
-  }
-
-  .right {
-    justify-content: center;
-  }
-
-  .text {
-    text-align: center;
-  }
+.text {
+  margin: 0;
+  font-family: var(--font-basic), sans-serif;
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.92);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .index,
-  .title,
-  .text {
+  .track {
     animation: none;
   }
 }
