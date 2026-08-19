@@ -35,11 +35,13 @@ export default function ScrollBlueNavy({ children }: { children: ReactNode }) {
         vis = 1 - clamp((c - rect.bottom) / (vh * 0.6), 0, 1);
       else vis = 1;
 
-      // 0 na górze obszaru (niebieski) → 1 na dole (granat)
-      const frac = smooth(clamp((c - rect.top) / Math.max(1, rect.height), 0, 1));
+      // 0..1 wzdłuż obszaru; kolor pojawia się dopiero w środku, a na początku
+      // i na końcu jest ciemno (dużo mocniejszy granat)
+      const raw = clamp((c - rect.top) / Math.max(1, rect.height), 0, 1);
+      const mid = smooth(1 - Math.abs(2 * raw - 1)); // 0 na krańcach, 1 w środku
 
-      setBlue(vis * (1 - frac) * 0.95);
-      setNavy(vis * frac * 0.97);
+      setBlue(vis * mid * 0.95);
+      setNavy(vis * (1 - mid));
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);

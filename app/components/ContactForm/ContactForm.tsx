@@ -143,7 +143,7 @@ export default function ContactForm() {
           onChange={(e) => setZabieg(e.target.value)}
         >
           <option value={CONSULTATION_VALUE}>
-            Konsultacja / nie wiem jeszcze
+            Konsultacja / jeszcze nie wiem
           </option>
           {groups.map(([group, items]) => (
             <optgroup key={group} label={group}>
@@ -259,7 +259,7 @@ export default function ContactForm() {
           value={wiadomosc}
           onChange={(e) => setWiadomosc(e.target.value)}
           rows={3}
-          placeholder="Coś, co powinniśmy wiedzieć? (opcjonalnie)"
+          placeholder="Coś, co powinniśmy o Tobie wiedzieć? (opcjonalnie)"
         />
       </label>
 
