@@ -30,6 +30,22 @@
   line-height: var(--display-desc-line);
 }
 
+/* wariant „wide" — większy tekst i szersza kolumna */
+.wide .column {
+  max-width: 70%;
+}
+
+.wide .p {
+  font-size: calc(var(--display-desc-size) * 1.4);
+  line-height: 1.65;
+}
+
+@media (max-width: 786px) {
+  .wide .column {
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 786px) {
   .column {
     max-width: 100%;

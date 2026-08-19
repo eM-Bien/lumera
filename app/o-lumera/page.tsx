@@ -43,7 +43,7 @@ export default function AboutPage() {
           className={styles.sectionHeading}
           text="Nasza filozofia"
         />
-        <TextColumn align="left" paragraphs={philosophy.right} />
+        <TextColumn align="left" paragraphs={philosophy.right} wide />
 
         <div className={styles.spacer} />
 
