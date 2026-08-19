@@ -8,6 +8,7 @@ import TransitionOverlay from "./transition/TransitionOverlay";
 import Nav from "./components/Nav/Nav";
 import { CartProvider } from "./components/Ebooks/Cart/CartContext";
 import CartDrawer from "./components/Ebooks/Cart/CartDrawer";
+import CursorInk from "./components/CursorInk/CursorInk";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -59,6 +60,7 @@ export default function RootLayout({
                 burstFactor={2.5}
               />{" "}
               <Nav />
+              <CursorInk /> {/* pył za kursorem — podstrony (bez koszyka), desktop */}
               <TransitionOverlay /> {/* przyciemnienie tła — czyta fazę */}
               {children}
               <CartDrawer />
