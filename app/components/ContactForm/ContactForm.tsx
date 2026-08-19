@@ -126,8 +126,8 @@ export default function ContactForm() {
       <div className={styles.success} role="status">
         <p className={styles.successTitle}>Dziękujemy!</p>
         <p className={styles.successText}>
-          Twoja prośba o termin została wysłana. Odezwiemy się na podany kontakt,
-          żeby potwierdzić szczegóły.
+          Twoja prośba o termin została wysłana. Odezwiemy się na podany
+          kontakt, żeby potwierdzić szczegóły.
         </p>
       </div>
     );
@@ -135,8 +135,6 @@ export default function ContactForm() {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
-      <h2 className={styles.formTitle}>Umów się na zabieg</h2>
-
       <label className={styles.field}>
         <span className={styles.label}>Zabieg</span>
         <select
@@ -287,8 +285,8 @@ export default function ContactForm() {
           aria-invalid={!!errors.zgoda}
         />
         <span>
-          Wyrażam zgodę na przetwarzanie moich danych w celu kontaktu i umówienia
-          wizyty. *
+          Wyrażam zgodę na przetwarzanie moich danych w celu kontaktu i
+          umówienia wizyty. *
         </span>
       </label>
       {errors.zgoda && <span className={styles.errorText}>{errors.zgoda}</span>}

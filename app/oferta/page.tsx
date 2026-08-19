@@ -8,8 +8,8 @@ export default function OfferPage() {
     <div className={styles.offer}>
       <PageHeader
         title="Zabiegi"
-        subtitle="Sprawdź, co pasuje do Ciebie"
-        description="Zabiegi na twarz i ciało — od oczyszczania, przez nawilżenie, po odmładzanie i modelowanie. Wyszukaj po nazwie lub zawęź po lokalizacji, żeby szybciej znaleźć coś dla siebie."
+        subtitle="Znajdź coś dla siebie"
+        description="Zabiegi na twarz, ciało i skórę głowy — oczyszczanie, nawilżanie, odmładzanie, modelowanie. Wyszukaj po nazwie lub zawęź po lokalizacji, żeby łatwiej znaleźć coś dla siebie."
       />
 
       <OfferTabs />

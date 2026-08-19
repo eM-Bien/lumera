@@ -68,7 +68,7 @@ export default function ContactPage() {
             Do zobaczenia w Lumera
           </PageHeading>
           <DecorativeSubtitle className={styles.subtitle}>
-            Wybierz lokalizację i zarezerwuj chwilę tylko dla siebie
+            Zarezerwuj chwilę dla siebie
           </DecorativeSubtitle>
         </header>
 
