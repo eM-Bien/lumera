@@ -1,6 +1,6 @@
 .contact {
   position: relative;
-  min-height: 100dvh;
+  height: 100dvh;
   overflow: hidden;
   color: #d8c1a0;
   background:
@@ -13,40 +13,92 @@
     radial-gradient(#0a0720 0%, #060414 45%, #000 100%);
 }
 
-/* kontener treści — lewa połowa (litera zajmuje prawą) */
-.content {
+/* siatka na całą wysokość: lewa = formularz, prawa = kontakt + adresy */
+.grid {
   position: relative;
   z-index: 2; /* nad LetterBackground */
-  min-height: 100dvh;
-  max-width: 56vw;
-  padding: 20vh 6vw 0;
+  height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(0, 900px) 1fr;
+  gap: 0;
 }
 
-/* --- Nagłówek (lewa strona) --------------------------------------------- */
+/* --- LEWA: kontakt nad panelem, panel wypełnia resztę wysokości do dołu -- */
 
-/* tylko rozstawienie — typografia z komponentu PageHeading */
-.title {
-  margin: 5vh 0 3vh;
-}
-
-/* tylko rozstawienie — typografia z komponentu DecorativeSubtitle */
-.subtitle {
-  margin: 1rem 0 0;
-}
-
-.formWrap {
-  margin: 5vh 0 2vh;
-}
-
-.shared {
+.formCol {
+  position: relative; /* kontekst dla napisu w tle */
   display: flex;
-  gap: 1.5rem;
-  margin: 3.8vh 0 0;
+  flex-direction: column;
+  min-height: 0;
+  padding-top: 16vh; /* zejście spod nawigacji (reszta odstępu z .reach) */
+}
+
+/* „Zadzwoń / Napisz" — nad panelem, z większym odstępem do formularza */
+.reach {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem 2vw;
+  padding: 0 3vw 0 6vw;
+  margin-bottom: 8vh;
+}
+
+.reachItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-decoration: none;
+}
+
+.reachLabel {
+  font-family: var(--font-basic), sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #9a8c6f;
+}
+
+.reachValue {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: clamp(1.5rem, 2.2vw, 2.2rem);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  color: #f0e6d2;
+  transition: color 0.3s ease;
+}
+
+.reachItem:hover .reachValue {
+  color: #fffaf0;
+}
+
+/* panel wypełnia pozostałą wysokość aż do dołu ekranu */
+.formWrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+/* --- PRAWA: telefon/mail u góry, adresy u dołu (grafika w tle) ----------- */
+
+.infoCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  text-align: right;
+  min-height: 0;
+  padding: 4vh 6vw;
+}
+
+.contactTop {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
 .contactLink {
   font-family: var(--font-montserrat), sans-serif;
-  font-size: clamp(1.6rem, 1.6vw, 1.3rem);
+  font-size: clamp(1.1rem, 1.5vw, 1.5rem);
   letter-spacing: 0.06em;
   color: #f0e6d2;
   text-decoration: none;
@@ -57,49 +109,47 @@
   color: #fffaf0;
 }
 
-.divider {
-  color: #c2a36b;
-  opacity: 0.7;
+.infoBottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4vh;
 }
 
-/* --- Lokalizacje — obok siebie, rozdzielone kropką ---------------------- */
+/* --- Lokalizacje: miasto duże, obok na tej samej linii ulica + kod ------- */
 
 .locations {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 1.75rem;
-  margin-top: 7vh;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.6rem;
 }
 
 .location {
-  text-align: left;
-}
-
-/* kropka rozdzielająca między lokalizacjami */
-.locDivider {
-  font-size: 3.2rem;
-  line-height: 1;
-  color: #c2a36b;
-  opacity: 0.7;
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 1.5rem;
 }
 
 .city {
-  margin: 0 0 1rem;
+  margin: 0;
   font-family: var(--font-cinzel), serif;
   font-weight: 400;
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-size: clamp(2rem, 3.6vw, 3rem);
   letter-spacing: 0.06em;
   color: #f0e6d2;
 }
 
 .address {
   display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.4rem 1rem;
   font-style: normal;
   font-family: var(--font-basic), sans-serif;
-  font-size: 1.05rem;
+  font-size: clamp(1.3rem, 1.7vw, 1.7rem);
   line-height: 1.5;
   color: #c9bfa8;
 }
@@ -108,8 +158,8 @@
 .social {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 1.5rem;
-  margin-top: 8vh;
 }
 
 .socialLink {
@@ -144,40 +194,6 @@
     opacity 0.4s ease;
 }
 
-@media (max-width: 768px) {
-  .content {
-    display: flex;
-    flex-direction: column;
-    gap: 5vh;
-    max-width: none;
-    padding: 10vh 6vw 12vh;
-  }
-
-  .subtitle {
-    margin-bottom: 32vh;
-  }
-
-  .shared {
-    flex-direction: column;
-    gap: 0.6rem;
-    margin: 0;
-  }
-  .divider {
-    display: none;
-  }
-
-  .locations {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4vh;
-    width: 100%;
-  }
-
-  .locDivider {
-    display: none;
-  }
-}
-
 @media (hover: hover) {
   .socialLink:hover .socialLabel,
   .socialLink:focus-visible .socialLabel {
@@ -187,5 +203,69 @@
   .socialLink:hover .socialIcon {
     transform: translateY(-1px);
     filter: brightness(1.2);
+  }
+}
+
+/* --- Mobile: jedna kolumna, naturalny przepływ --------------------------- */
+
+@media (max-width: 900px) {
+  .contact {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .grid {
+    height: auto;
+    grid-template-columns: 1fr;
+    gap: 6vh;
+    padding: 12vh 6vw 12vh;
+  }
+
+  .formCol {
+    justify-content: flex-start;
+    padding: 0;
+  }
+
+  .reach {
+    flex-wrap: wrap;
+    padding: 0;
+    margin-bottom: 3vh;
+  }
+
+  .formWrap {
+    flex: none;
+  }
+
+  .infoCol {
+    align-items: flex-start;
+    text-align: left;
+    gap: 6vh;
+  }
+
+  .contactTop {
+    align-items: flex-start;
+  }
+
+  .infoBottom {
+    align-items: flex-start;
+    gap: 4vh;
+  }
+
+  .locations {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .location {
+    justify-content: flex-start;
+  }
+
+  .address {
+    justify-content: flex-start;
+  }
+
+  .social {
+    justify-content: flex-start;
   }
 }

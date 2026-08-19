@@ -1,12 +1,8 @@
 "use client";
 
-import { Fragment, Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Cinzel } from "next/font/google";
 import LetterBackground from "../components/LetterBackground/LetterBackground";
-import {
-  PageHeading,
-  DecorativeSubtitle,
-} from "../components/PageHeader/Typography";
 import ContactForm from "../components/ContactForm/ContactForm";
 import styles from "./page.module.css";
 
@@ -21,8 +17,8 @@ const PHONE_HREF = "+48600000000";
 const EMAIL = "kontakt@lumera.pl";
 
 const LOCATIONS = [
-  { city: "Sierpc", address: ["ul. Przykładowa 12", "09-200 Sierpc"] },
-  { city: "Łódź", address: ["ul. Przykładowa 34", "90-001 Łódź"] },
+  { city: "Sierpc", street: "ul. Przykładowa 12", zip: "09-200" },
+  { city: "Łódź", street: "ul. Przykładowa 34", zip: "90-001" },
 ];
 
 const SOCIALS = [
@@ -58,75 +54,64 @@ export default function ContactPage() {
           scale={1}
           letterFrac={0.45}
           offsetX="24vw"
-          offsetY="10vh"
+          offsetY="2vh"
         />
       )}
 
-      <div className={styles.content}>
-        <header className={styles.header}>
-          <PageHeading className={styles.title}>
-            Do zobaczenia w Lumera
-          </PageHeading>
-          <DecorativeSubtitle className={styles.subtitle}>
-            Zarezerwuj chwilę dla siebie
-          </DecorativeSubtitle>
-        </header>
-
-        <div className={styles.formWrap}>
-          <Suspense fallback={null}>
-            <ContactForm />
-          </Suspense>
-        </div>
-
-        {/* telefon + email — wyróżnione */}
-        <div className={styles.shared}>
-          <a className={styles.contactLink} href={`tel:${PHONE_HREF}`}>
-            {PHONE}
-          </a>
-        </div>
-        <div className={styles.shared}>
-          <a className={styles.contactLink} href={`mailto:${EMAIL}`}>
-            {EMAIL}
-          </a>
-        </div>
-
-        {/* lokalizacje — obok siebie, rozdzielone kropką */}
-        <div className={styles.locations}>
-          {LOCATIONS.map((loc, i) => (
-            <Fragment key={loc.city}>
-              {i > 0 && (
-                <span className={styles.locDivider} aria-hidden="true">
-                  ·
-                </span>
-              )}
-              <section className={styles.location}>
-                <h2 className={styles.city}>{loc.city}</h2>
-                <address className={styles.address}>
-                  {loc.address.map((line) => (
-                    <span key={line}>{line}</span>
-                  ))}
-                </address>
-              </section>
-            </Fragment>
-          ))}
-        </div>
-
-        <footer className={styles.social}>
-          {SOCIALS.map((s) => (
-            <a
-              key={s.name}
-              className={styles.socialLink}
-              href={s.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={s.name}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className={styles.socialIcon} src={s.icon} alt="" />
-              <span className={styles.socialLabel}>{s.label}</span>
+      <div className={styles.grid}>
+        {/* LEWA — kontakt (zadzwoń/napisz) nad panelem, panel do dołu */}
+        <div className={styles.formCol}>
+          <div className={styles.reach}>
+            <a className={styles.reachItem} href={`tel:${PHONE_HREF}`}>
+              <span className={styles.reachLabel}>Zadzwoń</span>
+              <span className={styles.reachValue}>{PHONE}</span>
             </a>
-          ))}
-        </footer>
+            <a className={styles.reachItem} href={`mailto:${EMAIL}`}>
+              <span className={styles.reachLabel}>Napisz</span>
+              <span className={styles.reachValue}>{EMAIL}</span>
+            </a>
+          </div>
+
+          <div className={styles.formWrap}>
+            <Suspense fallback={null}>
+              <ContactForm />
+            </Suspense>
+          </div>
+        </div>
+
+        {/* PRAWA — adresy pod grafiką */}
+        <div className={styles.infoCol}>
+          <div className={styles.infoBottom}>
+            <div className={styles.locations}>
+              {LOCATIONS.map((loc) => (
+                <section className={styles.location} key={loc.city}>
+                  <h2 className={styles.city}>{loc.city}</h2>
+                  <address className={styles.address}>
+                    <span>{loc.street}</span>
+                    <span>{loc.zip}</span>
+                  </address>
+                </section>
+              ))}
+            </div>
+
+            <footer className={styles.social}>
+              {SOCIALS.map((s) => (
+                <a
+                  key={s.name}
+                  className={styles.socialLink}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.name}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img className={styles.socialIcon} src={s.icon} alt="" />
+                  <span className={styles.socialLabel}>{s.label}</span>
+                </a>
+              ))}
+            </footer>
+          </div>
+        </div>
       </div>
     </main>
   );

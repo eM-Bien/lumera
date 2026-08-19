@@ -2,20 +2,49 @@
    ContactForm — formularz rezerwacji (ciemny „liquid glass" LUMERA).
    ========================================================================= */
 
+/* Panel przyklejony do lewej krawędzi: pełna wysokość, bez ramki, bez
+   zaokrągleń po lewej — część strony, nie wiszący kafelek. */
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
-  max-width: 620px;
-  padding: 2.5rem;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
-  border: 1px solid rgba(194, 163, 107, 0.25);
-  border-radius: 20px;
-  box-shadow:
-    0 8px 30px rgba(0, 0, 0, 0.3),
-    inset 0 1px 1px rgba(255, 255, 255, 0.04);
+  justify-content: flex-start;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+  padding: 4vh 3vw 4vh 6vw;
+  background:
+    linear-gradient(
+      155deg,
+      rgba(94, 82, 132, 0.42) 0%,
+      rgba(48, 40, 82, 0.4) 42%,
+      rgba(14, 10, 38, 0.5) 100%
+    );
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: none;
+  border-right: 1px solid rgba(194, 163, 107, 0.22);
+  border-radius: 0 24px 0 0; /* dół płasko — panel schodzi do krawędzi */
+  box-shadow: 24px 0 70px rgba(0, 0, 0, 0.35);
+  overflow-y: auto;
+  /* na dzień dobry: panel wysuwa się od lewej krawędzi */
+  animation: formSlideIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes formSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form {
+    animation: none;
+  }
 }
 
 .formTitle {
@@ -29,7 +58,7 @@
 .field {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.35rem;
   border: none;
   padding: 0;
   margin: 0;
@@ -46,7 +75,20 @@
 .row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.4rem;
+  gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  /* na mobile wraca zwykły „kafelek", pełna szerokość kolumny */
+  .form {
+    height: auto;
+    padding: 2rem 1.6rem;
+    border: 1px solid rgba(194, 163, 107, 0.25);
+    border-radius: 20px;
+    box-shadow:
+      0 8px 30px rgba(0, 0, 0, 0.3),
+      inset 0 1px 1px rgba(255, 255, 255, 0.04);
+  }
 }
 
 @media (max-width: 560px) {
@@ -59,7 +101,7 @@
 .select,
 .textarea {
   width: 100%;
-  padding: 0.8rem 1rem;
+  padding: 0.65rem 1rem;
   font-family: var(--font-basic), sans-serif;
   font-size: 1rem;
   color: #f0e6d2;
@@ -75,12 +117,24 @@
 
 .textarea {
   resize: vertical;
-  min-height: 6rem;
+  min-height: 4rem;
 }
 
 .select {
   cursor: pointer;
   appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 2.6rem;
+  /* własny złoty „chevron" spójny z resztą strony */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9' fill='none'><path d='M1 1l6 6 6-6' stroke='%23c2a36b' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.85rem;
+}
+
+.select:hover {
+  border-color: rgba(194, 163, 107, 0.5);
 }
 
 .input::placeholder,
@@ -92,15 +146,21 @@
 .select:focus,
 .textarea:focus {
   border-color: rgba(194, 163, 107, 0.6);
-  background: rgba(255, 255, 255, 0.06);
+  background-color: rgba(255, 255, 255, 0.06);
   box-shadow: 0 0 0 3px rgba(194, 163, 107, 0.18);
 }
 
-/* opcje selecta czytelne w ciemnym motywie */
-.select option,
+/* lista opcji spójna z ciemnym motywem formularza */
+.select option {
+  color: #f0e6d2;
+  background: #140f2e;
+}
+
 .select optgroup {
-  color: #0e1022;
-  background: #efe6d4;
+  color: #c2a36b;
+  background: #140f2e;
+  font-style: normal;
+  font-weight: 600;
 }
 
 /* --- chipy lokalizacji --------------------------------------------------- */

@@ -258,7 +258,7 @@ export default function ContactForm() {
           className={styles.textarea}
           value={wiadomosc}
           onChange={(e) => setWiadomosc(e.target.value)}
-          rows={4}
+          rows={3}
           placeholder="Coś, co powinniśmy wiedzieć? (opcjonalnie)"
         />
       </label>
