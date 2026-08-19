@@ -41,8 +41,8 @@
   transform: scale(1.04);
   filter: drop-shadow(0 0 26px rgba(216, 193, 160, 0));
   transition:
-    opacity 1.1s ease,
-    filter 1.1s ease;
+    opacity 0.45s ease,
+    filter 0.45s ease;
 }
 .logo.show {
   opacity: 1;
@@ -66,8 +66,8 @@
   opacity: 0;
   transform: translate(-50%, calc(-50% + 12px));
   transition:
-    opacity 1.1s ease,
-    transform 1.1s ease;
+    opacity 0.45s ease,
+    transform 0.45s ease;
 }
 .tagline.show {
   opacity: 1;

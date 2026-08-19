@@ -157,7 +157,7 @@ export function createLumeraReveal(
     loopDelay: 2.4,
     // 0 = drobinki ZNIKAJĄ po złożeniu logo (poprzednio 0.5 = zostawało halo)
     haloGlow: 0,
-    haloFade: 1.2,
+    haloFade: 0.4,
     onComplete: null,
     onLayout: null,
     onReplay: null,
@@ -377,7 +377,7 @@ export function createLumeraReveal(
     drawAmbient(t);
     drawParticles(t, elapsed);
 
-    const total = cfg.gather + cfg.stagger + 0.8;
+    const total = cfg.gather + cfg.stagger + 0.15;
     if (!completed && elapsed >= total) {
       completed = true;
       completeAt = elapsed;
@@ -538,8 +538,8 @@ export interface LumeraRevealProps {
 
 export default function LumeraReveal({
   src = "/lumera-logo.svg",
-  gather = 2.8,
-  stagger = 1.5,
+  gather = 2.2,
+  stagger = 0.7,
   maxParticles = 3000,
   // ROZMIAR LOGO: zwiększ, by powiększyć; zmniejsz, by pomniejszyć.
   logoFrac = 0.6,
