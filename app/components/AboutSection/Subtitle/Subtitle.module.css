@@ -1,11 +1,33 @@
 .subtitleWrapper {
   position: relative;
-  padding: 2vh 6vw 4vh;
-  max-width: 77%;
+  padding: 1vh 6vw 13vh;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
   z-index: 2;
+  /* pojawia się chwilę po nagłówku „na dzień dobry" */
+  animation: subtitleIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 1s;
 }
 
 .subtitle {
   font-size: var(--display-subtitle-size);
   font-family: var(--font-decoration);
+}
+
+@keyframes subtitleIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .subtitleWrapper {
+    animation: none;
+  }
 }

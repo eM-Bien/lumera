@@ -8,18 +8,24 @@ type RevealHeadingProps = {
   text: string;
   as?: ElementType;
   className?: string;
+  /** "scroll" (domyślnie) — efekt sterowany scrollem; "load" — odtwarza się raz na wejściu. */
+  mode?: "scroll" | "load";
+  /** Opóźnienie startu (ms) dla trybu "load". */
+  delayMs?: number;
 };
 
 /**
  * Nagłówek z efektem jak everwonder/about: na starcie litery są rozjechane na
- * zewnątrz (im dalej od środka, tym bardziej), a przy scrollu zjeżdżają na
- * właściwe miejsca. Efekt związany ze scrollem (reaguje w obie strony).
+ * zewnątrz (im dalej od środka, tym bardziej), a przy scrollu (lub „na dzień
+ * dobry" w trybie load) zjeżdżają na właściwe miejsca.
  * Typografia w całości z przekazanego `className`.
  */
 export default function RevealHeading({
   text,
   as = "h2",
   className = "",
+  mode = "scroll",
+  delayMs = 0,
 }: RevealHeadingProps) {
   const elRef = useRef<HTMLElement | null>(null);
   const lettersRef = useRef<Array<HTMLSpanElement | null>>([]);
@@ -28,7 +34,6 @@ export default function RevealHeading({
   const words = text.split(" ");
   const wordMeta = words.map((w, i) => ({
     w,
-    // globalny indeks pierwszej litery = suma długości poprzednich słów + spacje
     start: words.slice(0, i).reduce((s, ww) => s + ww.length + 1, 0),
   }));
   const total = text.length;
@@ -43,14 +48,21 @@ export default function RevealHeading({
       Math.max(a, Math.min(b, v));
     const easeOut = (x: number) => 1 - Math.pow(1 - x, 3);
 
-    const settle = () => {
-      letters.forEach((s) => {
-        if (s) {
-          s.style.transform = "none";
-          s.style.opacity = "1";
-        }
+    // ustawia litery dla postępu e (0 = rozjechane, 1 = na miejscu)
+    const applyE = (e: number) => {
+      const amp = Math.min(window.innerWidth * 0.018, 20);
+      letters.forEach((s, k) => {
+        if (!s) return;
+        const dir = k - center;
+        const tx = dir * amp * (1 - e);
+        const ty = Math.sin(k * 1.7) * 20 * (1 - e);
+        const op = 0.3 + 0.7 * e;
+        s.style.transform = `translate(${tx}px, ${ty}px)`;
+        s.style.opacity = String(op);
       });
     };
+
+    const settle = () => applyE(1);
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       settle();
@@ -58,26 +70,38 @@ export default function RevealHeading({
     }
 
     let raf = 0;
+
+    // --- tryb „load": jednorazowa animacja na wejściu ----------------------
+    if (mode === "load") {
+      applyE(0);
+      const duration = 1100;
+      let startT = 0;
+      const tick = (t: number) => {
+        if (!startT) startT = t;
+        const elapsed = t - startT - delayMs;
+        if (elapsed <= 0) {
+          raf = requestAnimationFrame(tick);
+          return;
+        }
+        const p = clamp(elapsed / duration, 0, 1);
+        applyE(easeOut(p));
+        if (p < 1) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+      return () => {
+        if (raf) cancelAnimationFrame(raf);
+      };
+    }
+
+    // --- tryb „scroll": efekt związany z pozycją w oknie -------------------
     const update = () => {
       raf = 0;
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      // pełne zejście już około połowy ekranu (subtelniej)
       const start = vh * 0.95;
       const end = vh * 0.56;
       const p = clamp((start - rect.top) / (start - end), 0, 1);
-      const e = easeOut(p);
-      const amp = Math.min(window.innerWidth * 0.018, 20); // px na krok od środka
-
-      letters.forEach((s, k) => {
-        if (!s) return;
-        const dir = k - center;
-        const tx = dir * amp * (1 - e);
-        const ty = Math.sin(k * 1.7) * 20 * (1 - e); // lekki rozrzut w pionie
-        const op = 0.3 + 0.7 * e;
-        s.style.transform = `translate(${tx}px, ${ty}px)`;
-        s.style.opacity = String(op);
-      });
+      applyE(easeOut(p));
     };
 
     const onScroll = () => {
@@ -92,8 +116,7 @@ export default function RevealHeading({
       window.removeEventListener("resize", onScroll);
       if (raf) cancelAnimationFrame(raf);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [text]);
+  }, [text, mode, delayMs, center]);
 
   const Tag = as;
   return (
@@ -124,7 +147,7 @@ export default function RevealHeading({
               }}
               className={styles.char}
             >
-              {" "}
+              {" "}
             </span>
           )}
         </span>

@@ -21,7 +21,13 @@ export default function AboutPage() {
       <VideoBackground />
 
       <section className={styles.hero}>
-        <RevealHeading as="h1" className={styles.h1} text="Witamy w Lumera" />
+        <RevealHeading
+          as="h1"
+          className={styles.h1}
+          text="Witamy w Lumera"
+          mode="load"
+          delayMs={150}
+        />
       </section>
 
       <Subtitle>{intro}</Subtitle>
