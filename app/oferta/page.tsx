@@ -30,13 +30,15 @@ export default function OfferPage() {
 
       <OfferTabs />
 
-      <CtaBand
-        eyebrow="Nie wiesz na co się zdecydować?"
-        title="Umów się na konsultację"
-        text="Dobierzemy zabieg do Twoich potrzeb i skóry. Napisz lub zadzwoń — pomożemy wybrać to, co sprawdzi się najlepiej."
-        buttonLabel="Skontaktuj się"
-        href="/kontakt"
-      />
+      <div className={styles.ctaWrap}>
+        <CtaBand
+          eyebrow="Nie wiesz na co się zdecydować?"
+          title="Umów się na konsultację"
+          text="Dobierzemy zabieg do Twoich potrzeb i skóry. Napisz lub zadzwoń — pomożemy wybrać to, co sprawdzi się najlepiej."
+          buttonLabel="Skontaktuj się"
+          href="/kontakt"
+        />
+      </div>
     </div>
   );
 }
