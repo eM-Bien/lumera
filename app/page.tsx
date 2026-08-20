@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import LumeraReveal from "./components/LumeraReveal/LumeraReveal";
 import InkBackground from "./components/InkBackground/InkBackground";
 import InkBlobFilter from "./components/InkBlobFilter/InkBlobFilter";
+import HomeAbout from "./components/HomeAbout/HomeAbout";
 
 const INTRO_KEY = "lumera_intro_seen";
 
@@ -40,6 +41,7 @@ export default function Home() {
               scrim={0.6}
               skipIntro={skipIntro}
               onComplete={handleComplete}
+              parallax
             />
           )}
         </div>
@@ -53,8 +55,9 @@ export default function Home() {
           />
         )}
         <InkBlobFilter />
-        <div className={styles.vignette} />
       </main>
+
+      <HomeAbout />
     </div>
   );
 }

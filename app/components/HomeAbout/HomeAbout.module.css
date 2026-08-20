@@ -1,0 +1,178 @@
+/* =========================================================================
+   HomeAbout — granatowa „zakładka" wysuwana przy scrollu pod hero.
+   ========================================================================= */
+
+.about {
+  position: relative;
+  z-index: 3; /* nad winietą hero (z2) */
+  width: 100%;
+  margin-top: 0; /* startuje dokładnie pod hero — nie wystaje na górze */
+  padding: clamp(11vh, 16vh, 20vh) 6vw clamp(12vh, 16vh, 20vh);
+  border-radius: clamp(28px, 5vw, 64px) clamp(28px, 5vw, 64px) 0 0;
+  background: linear-gradient(180deg, #000000 0%, #030409 55%, #010205 100%);
+  box-shadow: 0 -30px 80px rgba(0, 0, 0, 0.6);
+  color: #e7e0d0;
+
+  /* wjazd całej „zakładki" */
+  transform: translateY(80px);
+  opacity: 0;
+  transition:
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.9s ease;
+}
+
+.about.in {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  margin: 0 0 1.4rem;
+  font-family: var(--font-basic), sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8fa2d8;
+}
+
+.heading {
+  margin: 0 0 clamp(3vh, 4vh, 5vh);
+  max-width: 20ch;
+  font-family: var(--font-header), serif;
+  font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.05;
+  color: #f3ede0;
+}
+
+.lead {
+  max-width: 60ch;
+  margin: 0 0 clamp(6vh, 8vh, 10vh);
+  font-family: var(--font-basic), sans-serif;
+  font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+  line-height: 1.75;
+  color: #c7cbe0;
+
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s ease 0.1s,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+}
+
+.about.in .lead {
+  opacity: 1;
+  transform: none;
+}
+
+/* --- karty zachęcające do rozglądania --------------------------------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.2rem, 2.5vw, 2rem);
+}
+
+@media (max-width: 860px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(1.8rem, 2.5vw, 2.6rem);
+  border-radius: 20px;
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid rgba(143, 162, 216, 0.22);
+
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.about.in .card {
+  opacity: 1;
+  transform: none;
+}
+
+.card:hover {
+  border-color: rgba(143, 162, 216, 0.5);
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.03)
+  );
+}
+
+.cardTitle {
+  margin: 0 0 0.8rem;
+  font-family: var(--font-header), serif;
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #f3ede0;
+}
+
+.cardText {
+  flex: 1;
+  margin: 0 0 1.6rem;
+  font-family: var(--font-basic), sans-serif;
+  line-height: 1.65;
+  color: #c1c6dc;
+}
+
+.cardLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-basic), sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #d8c1a0;
+  transition:
+    gap 0.3s ease,
+    color 0.3s ease;
+}
+
+.cardLink:hover {
+  gap: 0.9rem;
+  color: #f0e6d2;
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+}
+
+.cardLink:hover .arrow {
+  transform: translateX(2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about,
+  .lead,
+  .card {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}

@@ -536,6 +536,8 @@ export interface LumeraRevealProps {
   exiting?: boolean;
   /* intro tylko na start*/
   skipIntro?: boolean;
+  /** Parallax przy scrollu: logo w górę, film w dół — chowają się. */
+  parallax?: boolean;
 }
 
 export default function LumeraReveal({
@@ -556,10 +558,12 @@ export default function LumeraReveal({
   onComplete,
   exiting = false,
   skipIntro = false,
+  parallax = false,
 }: LumeraRevealProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const tagRef = useRef<HTMLSpanElement | null>(null);
+  const stageRef = useRef<HTMLDivElement | null>(null);
   const apiRef = useRef<LumeraRevealApi | null>(null);
 
   const [isMobile, setIsMobile] = useState(false);
@@ -570,6 +574,31 @@ export default function LumeraReveal({
     mq.addEventListener("change", sync);
     return () => mq.removeEventListener("change", sync);
   }, []);
+
+  // parallax sterowany scrollem — logo w górę, film w dół (chowają się)
+  useEffect(() => {
+    if (!parallax) return;
+    const stage = stageRef.current;
+    if (!stage) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const vh = window.innerHeight || 1;
+      const p = Math.min(1, Math.max(0, window.scrollY / (vh * 0.5)));
+      stage.style.setProperty("--p", String(p));
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [parallax]);
 
   // na mobile drobinki I ostre logo to TYLKO górna część (lumera-top)
   const logoSrc = isMobile ? "/lumera-top.svg" : src;
@@ -661,7 +690,10 @@ export default function LumeraReveal({
 
   return (
     <div
-      className={`${styles.stage} ${className} ${exiting ? styles.exiting : ""}`}
+      ref={stageRef}
+      className={`${styles.stage} ${className} ${exiting ? styles.exiting : ""} ${
+        parallax ? styles.parallax : ""
+      }`}
     >
       {/* Tło (film lub zdjęcie) + przyciemnienie — pod canvasem */}
       {video ? (
@@ -698,19 +730,22 @@ export default function LumeraReveal({
         </>
       ) : null}
       <canvas ref={canvasRef} className={styles.canvas} />
-      {/* PRAWDZIWE logo — pojawia się ostre dokładnie tam, gdzie złożyły się drobinki */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        ref={imgRef}
-        src={logoSrc}
-        alt="LUMERA"
-        className={styles.logo}
-        aria-hidden="true"
-      />
-      {/* Tagline jako prawdziwy tekst (font Cinzel) — pojawia się razem z logo */}
-      <span ref={tagRef} className={`${styles.tagline} ${cinzel.className}`}>
-        {tagline}
-      </span>
+      {/* logo + tagline w jednej warstwie — razem jadą do góry przy scrollu */}
+      <div className={styles.foreground}>
+        {/* PRAWDZIWE logo — pojawia się ostre dokładnie tam, gdzie złożyły się drobinki */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          ref={imgRef}
+          src={logoSrc}
+          alt="LUMERA"
+          className={styles.logo}
+          aria-hidden="true"
+        />
+        {/* Tagline jako prawdziwy tekst (font Cinzel) — pojawia się razem z logo */}
+        <span ref={tagRef} className={`${styles.tagline} ${cinzel.className}`}>
+          {tagline}
+        </span>
+      </div>
       <div className={styles.vignette} aria-hidden="true" />
       <LightsBackground />
     </div>
