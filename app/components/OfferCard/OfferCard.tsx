@@ -2,12 +2,25 @@
 
 import { useEffect, useRef } from "react";
 import { useTransition } from "@/app/transition/TransitionProvider";
-import type { Offer } from "../OfferExplorer/offer-types";
+import type { Location } from "../OfferExplorer/offer-types";
 import PrimaryButton from "../Buttons/PrimaryButton/PrimaryButton";
 import styles from "./OfferCard.module.css";
 
+// Wspólny model karty — pasuje zarówno do Offer (twarz i ciało),
+// jak i do zabiegu trychologicznego (bez zdjęcia/efektów).
+type CardData = {
+  id: string;
+  title: string;
+  price: string;
+  description: string;
+  locations: Location[];
+  category?: string;
+  image?: string;
+  effects?: string[];
+};
+
 type OfferCardProps = {
-  offer: Offer;
+  offer: CardData;
   reversed?: boolean;
   open: boolean;
   onToggle: () => void;
@@ -124,7 +137,9 @@ export default function OfferCard({
       </div>
 
       <div className={styles.content}>
-        <span className={styles.eyebrow}>{offer.category}</span>
+        {offer.category && (
+          <span className={styles.eyebrow}>{offer.category}</span>
+        )}
         <span className={styles.locations}>{offer.locations.join(" · ")}</span>
         <h3 className={styles.cardTitle}>{offer.title}</h3>
         <span className={styles.price}>{offer.price}</span>
@@ -148,7 +163,7 @@ export default function OfferCard({
           <div className={styles.descInner}>
             <p className={styles.desc}>{offer.description}</p>
 
-            {offer.effects.length > 0 && (
+            {offer.effects && offer.effects.length > 0 && (
               <div className={styles.effects}>
                 <span className={styles.effectsTitle}>Efekty zabiegu</span>
                 <ul className={styles.effectsList}>

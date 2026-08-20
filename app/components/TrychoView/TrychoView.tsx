@@ -1,10 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useTransition } from "@/app/transition/TransitionProvider";
 import { normalize, type Location } from "../OfferExplorer/offer-types";
 import OfferControls from "../OfferControls/OfferControls";
-import PrimaryButton from "../Buttons/PrimaryButton/PrimaryButton";
+import OfferCard from "../OfferCard/OfferCard";
 import {
   TRYCHO_TREATMENTS,
   TRYCHO_WSKAZANIA,
@@ -13,15 +12,24 @@ import {
 import styles from "./TrychoView.module.css";
 
 export default function TrychoView() {
-  const { navigate } = useTransition();
   const [query, setQuery] = useState("");
   const [activeLoc, setActiveLoc] = useState<Set<Location>>(new Set());
+  const [openIds, setOpenIds] = useState<Set<string>>(new Set());
 
   const toggleLocation = (loc: Location) => {
     setActiveLoc((prev) => {
       const next = new Set(prev);
       if (next.has(loc)) next.delete(loc);
       else next.add(loc);
+      return next;
+    });
+  };
+
+  const toggleOpen = (id: string) => {
+    setOpenIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
       return next;
     });
   };
@@ -38,12 +46,14 @@ export default function TrychoView() {
 
   return (
     <div className={styles.view}>
-      <OfferControls
-        query={query}
-        onQueryChange={setQuery}
-        activeLoc={activeLoc}
-        onToggleLocation={toggleLocation}
-      />
+      <div className={styles.controlsWrap}>
+        <OfferControls
+          query={query}
+          onQueryChange={setQuery}
+          activeLoc={activeLoc}
+          onToggleLocation={toggleLocation}
+        />
+      </div>
 
       {filtered.length === 0 ? (
         <p className={styles.empty}>
@@ -52,27 +62,20 @@ export default function TrychoView() {
         </p>
       ) : (
         <ul className={styles.list}>
-          {filtered.map((t) => (
-            <li key={t.id} className={styles.card}>
-              <span className={styles.locations}>
-                {t.locations.join(" · ")}
-              </span>
-              <h3 className={styles.cardTitle}>{t.title}</h3>
-              <span className={styles.price}>{t.price}</span>
-              <p className={styles.desc}>{t.description}</p>
-              <div className={styles.actions}>
-                <PrimaryButton
-                  onClick={() => navigate(`/kontakt?zabieg=${t.id}`)}
-                >
-                  Umów
-                </PrimaryButton>
-              </div>
-            </li>
+          {filtered.map((t, i) => (
+            <OfferCard
+              key={t.id}
+              offer={{ ...t, category: "Trychologia" }}
+              reversed={i % 2 === 1}
+              open={openIds.has(t.id)}
+              onToggle={() => toggleOpen(t.id)}
+            />
           ))}
         </ul>
       )}
 
-      <div className={styles.panels}>
+      <div className={styles.panelsWrap}>
+        <div className={styles.panels}>
         <section className={styles.panel}>
           <h3 className={styles.panelTitle}>Wskazania</h3>
           <ul className={styles.wskazaniaList}>
@@ -84,8 +87,9 @@ export default function TrychoView() {
 
         <section className={styles.panel}>
           <h3 className={styles.panelTitle}>Przeciwwskazania</h3>
-          <p className={styles.desc}>{TRYCHO_PRZECIWWSKAZANIA}</p>
+          <p className={styles.panelText}>{TRYCHO_PRZECIWWSKAZANIA}</p>
         </section>
+        </div>
       </div>
     </div>
   );
