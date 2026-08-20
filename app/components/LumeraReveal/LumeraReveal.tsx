@@ -524,6 +524,8 @@ export interface LumeraRevealProps {
   className?: string;
   /** URL zdjęcia w tle (np. '/tlo.jpg' z /public lub adres zdalny). */
   background?: string;
+  /** URL filmu w tle (np. '/clip.mp4'); ma pierwszeństwo przed `background`. */
+  video?: string;
   /** Przyciemnienie zdjęcia 0..1 (kontrast pod złote logo). Domyślnie 0.5. */
   scrim?: number;
   /** Treść podpisu pod logo (renderowana wersalikami w foncie Cinzel). */
@@ -548,6 +550,7 @@ export default function LumeraReveal({
   loop = false,
   className = "",
   background,
+  video,
   scrim = 0.5,
   tagline = "Harmonia twarzy i ciała",
   onComplete,
@@ -660,8 +663,27 @@ export default function LumeraReveal({
     <div
       className={`${styles.stage} ${className} ${exiting ? styles.exiting : ""}`}
     >
-      {/* Zdjęcie w tle + przyciemnienie — pod canvasem; drobinki świecą na zdjęciu */}
-      {background && (
+      {/* Tło (film lub zdjęcie) + przyciemnienie — pod canvasem */}
+      {video ? (
+        <>
+          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+          <video
+            className={styles.bg}
+            src={video}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+          />
+          <div
+            className={styles.scrim}
+            style={{ background: `rgba(8, 6, 24, ${scrim})` }}
+            aria-hidden="true"
+          />
+        </>
+      ) : background ? (
         <>
           <div
             className={styles.bg}
@@ -674,7 +696,7 @@ export default function LumeraReveal({
             aria-hidden="true"
           />
         </>
-      )}
+      ) : null}
       <canvas ref={canvasRef} className={styles.canvas} />
       {/* PRAWDZIWE logo — pojawia się ostre dokładnie tam, gdzie złożyły się drobinki */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
