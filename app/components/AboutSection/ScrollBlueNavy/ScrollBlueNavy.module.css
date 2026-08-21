@@ -12,47 +12,15 @@
   will-change: opacity;
 }
 
-/* płynne, „pływające" przejście barw: cyan → niebieski → fiolet → magenta */
+/* ciemny granat z leciutką chłodną poświatą (bez kolorowego tła) */
 .blue {
   background:
     radial-gradient(
-      52% 62% at 14% 44%,
-      rgba(0, 210, 235, 0.55),
+      60% 60% at 30% 40%,
+      rgba(40, 60, 120, 0.28),
       transparent 60%
     ),
-    radial-gradient(
-      46% 56% at 86% 34%,
-      rgba(200, 45, 200, 0.5),
-      transparent 60%
-    ),
-    linear-gradient(
-      110deg,
-      #06b6d4 0%,
-      #1e4fe6 32%,
-      #6a2bd6 62%,
-      #b52ab0 100%
-    );
-  background-size:
-    100% 100%,
-    100% 100%,
-    260% 260%;
-  animation: colorFlow 22s ease-in-out infinite;
-}
-
-@keyframes colorFlow {
-  0%,
-  100% {
-    background-position:
-      0% 50%,
-      100% 50%,
-      0% 50%;
-  }
-  50% {
-    background-position:
-      0% 50%,
-      100% 50%,
-      100% 50%;
-  }
+    linear-gradient(160deg, #0a1836 0%, #050c22 60%, #02040e 100%);
 }
 
 /* dół obszaru — bardzo ciemny, niemal czarny */

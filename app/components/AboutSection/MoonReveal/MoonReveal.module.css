@@ -7,7 +7,7 @@
 .scene {
   --dp: 0;
   position: relative;
-  z-index: 2;
+  z-index: 3; /* nad „Nasze wartości" — nachodzi na przyklejoną sekcję */
   height: 200vh;
 }
 
@@ -20,6 +20,10 @@
   top: 0;
   height: 100vh;
   overflow: hidden;
+  /* zaokrąglona góra + cień w górę = „nachodzenie" na poprzednią sekcję */
+  border-top-left-radius: clamp(28px, 4vw, 64px);
+  border-top-right-radius: clamp(28px, 4vw, 64px);
+  box-shadow: 0 -50px 100px rgba(0, 0, 0, 0.6);
   background:
     radial-gradient(
       60% 55% at 68% 40%,
@@ -128,6 +132,8 @@
   z-index: 4;
   padding: clamp(0.3rem, 0.8vh, 0.7rem) 6vw;
   background: #01020a;
+  border-top-left-radius: clamp(20px, 3vw, 44px);
+  border-top-right-radius: clamp(20px, 3vw, 44px);
   /* pasek wysuwa się najpierw (pierwsze ~32%), potem pojawiają się teksty */
   transform: translateY(calc((1 - clamp(0, calc(var(--bar) / 0.32), 1)) * 100%));
   opacity: clamp(0, calc(var(--bar) / 0.18), 1);

@@ -1,20 +1,23 @@
 /* =========================================================================
-   ValueCards — nieskończona taśma wysokich, zaokrąglonych kafli z gradientem
-   (każdy inny), z ikoną wystającą ponad górną krawędź.
+   ValueCards — rząd szklanych (frosted glass) kafli z ikoną, tytułem i opisem.
    ========================================================================= */
 
 .section {
-  position: relative;
-  z-index: 2;
+  /* przyklejona — zostaje na ekranie, a kolejna sekcja nachodzi na nią */
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   /* duża przerwa przed „Nasze wartości" — około pół ekranu */
-  margin: 50vh 0 0;
-  padding: 0;
+  margin: 40vh 0 0;
+  padding: 8vh 6vw;
 }
 
-/* --- Nagłówek sekcji: duży, pogrubiony, wyśrodkowany -------------------- */
 .heading {
-  margin: 0 0 clamp(5vh, 8vh, 10vh);
-  padding: 0 6vw;
+  margin: 0 0 clamp(4vh, 7vh, 9vh);
   font-family: var(--font-header), serif;
   font-size: clamp(2.8rem, 7vw, 4.8rem);
   font-weight: 700;
@@ -23,67 +26,89 @@
   text-align: center;
 }
 
-/* --- Taśma (marquee) — perspektywa 3D dla efektu „RIG" ------------------ */
-.marquee {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  padding: clamp(9rem, 15vh, 13rem) 0 clamp(5rem, 9vh, 9rem);
-  perspective: 1600px;
-  perspective-origin: 50% 50%;
-  cursor: grab;
-  user-select: none;
-  touch-action: pan-y; /* pionowy scroll strony zostaje, poziom = przeciąganie */
-}
-
-.grabbing {
-  cursor: grabbing;
-}
-
-.track {
+/* --- rząd kafli ---------------------------------------------------------- */
+.grid {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
-  width: max-content;
-  transform-style: preserve-3d;
-  will-change: transform;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: clamp(1rem, 1.8vw, 2rem);
 }
 
-/* --- Kafel wartości: wysoki, ikona u góry, tytuł na równej wysokości ---- */
+/* --- szklany kafel ------------------------------------------------------- */
 .card {
   position: relative;
-  flex: 0 0 auto;
-  width: clamp(260px, 24vw, 360px);
-  min-height: clamp(280px, 32vw, 380px);
-  margin-right: clamp(2.5rem, 5vw, 5rem);
+  flex: 1 1 200px;
+  max-width: 280px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: clamp(6.5rem, 8vw, 8.5rem) clamp(1.6rem, 2.2vw, 2.4rem)
-    clamp(2rem, 3vw, 2.8rem);
-  border-radius: clamp(20px, 2.4vw, 32px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-  transform-origin: center center;
-  backface-visibility: hidden;
-  will-change: transform, opacity;
+  gap: 1.1rem;
+  padding: clamp(2rem, 3.4vh, 3rem) clamp(1.2rem, 1.6vw, 1.9rem)
+    clamp(1.8rem, 3vh, 2.6rem);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(200, 215, 255, 0.16);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.035) 42%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 24px 55px rgba(0, 0, 0, 0.4);
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.55s ease,
+    background 0.55s ease,
+    border-color 0.55s ease;
 }
 
-/* ikona (bez kółka) wystająca nieco ponad kafel */
-.icon {
+/* delikatny blik światła u góry (jak w referencji) */
+.card::before {
+  content: "";
   position: absolute;
-  top: 0;
+  top: -38%;
   left: 50%;
-  transform: translate(-50%, -55%);
+  width: 130%;
+  height: 70%;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    closest-side,
+    rgba(180, 205, 255, 0.24),
+    transparent
+  );
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(210, 225, 255, 0.32);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.16) 0%,
+      rgba(255, 255, 255, 0.06) 100%
+    );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      0 34px 75px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.icon {
+  position: relative;
   display: grid;
   place-items: center;
-  width: clamp(128px, 11.5vw, 180px);
-  height: clamp(128px, 11.5vw, 180px);
-  color: #fff;
-  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45));
-}
-
-.icon svg {
-  width: 82%;
-  height: 82%;
+  width: clamp(64px, 6vw, 92px);
+  height: clamp(64px, 6vw, 92px);
+  filter: drop-shadow(0 0 14px rgba(180, 205, 255, 0.35));
 }
 
 .iconImg {
@@ -101,25 +126,31 @@
 }
 
 .label {
-  margin: 0 0 0.9rem;
+  margin: 0;
   font-family: var(--font-header), serif;
-  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  font-size: clamp(1.2rem, 1.7vw, 1.55rem);
   font-weight: 700;
-  line-height: 1.12;
-  color: #ffffff;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
+  line-height: 1.15;
+  color: #f2ecdd;
 }
 
 .text {
   margin: 0;
   font-family: var(--font-basic), sans-serif;
-  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  font-size: clamp(0.9rem, 1vw, 1rem);
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(228, 233, 248, 0.82);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .track {
-    animation: none;
+@media (max-width: 820px) {
+  .card {
+    flex: 1 1 42%;
+    max-width: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .card {
+    flex: 1 1 100%;
   }
 }

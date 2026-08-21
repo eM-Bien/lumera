@@ -64,7 +64,7 @@
 }
 
 .spacer {
-  height: 20vh;
+  height: 28vh;
 }
 
 .vignette {
@@ -82,6 +82,6 @@
 
 @media (max-width: 786px) {
   .spacer {
-    height: 12vh;
+    height: 18vh;
   }
 }
