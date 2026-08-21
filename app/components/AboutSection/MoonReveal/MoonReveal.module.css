@@ -26,12 +26,12 @@
   box-shadow: 0 -50px 100px rgba(0, 0, 0, 0.6);
   background:
     radial-gradient(
-      60% 55% at 68% 40%,
-      rgba(44, 58, 108, 0.4) 0%,
-      rgba(10, 16, 40, 0.85) 55%,
-      #03040c 100%
+      58% 52% at 68% 44%,
+      rgba(44, 58, 108, 0.36) 0%,
+      rgba(8, 12, 32, 0.85) 55%,
+      transparent 100%
     ),
-    linear-gradient(180deg, #0a1230 0%, #04071a 55%, #010205 100%);
+    linear-gradient(180deg, #000000 0%, #010309 46%, #010205 100%);
 }
 
 /* --- tekst „Nasza filozofia" (lewa strona, wyżej) ------------------------- */

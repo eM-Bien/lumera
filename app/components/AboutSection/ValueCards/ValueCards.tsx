@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { values } from "../about.content";
-import RevealHeading from "../../RevealHeading/RevealHeading";
 import styles from "./ValueCards.module.css";
 
 /** Ikony z public/ dla kolejnych wartości. */
@@ -44,8 +43,8 @@ export default function ValueCards() {
           io.disconnect();
         }
       },
-      // odpala się później — dopiero gdy sekcja jest już mocno w kadrze
-      { threshold: 0.85 },
+      // zaczyna się pojawiać trochę wcześniej (gdy sekcja jest wyżej w kadrze)
+      { threshold: 0.55 },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -67,7 +66,7 @@ export default function ValueCards() {
         ))}
       </div>
 
-      <RevealHeading as="h2" className={styles.heading} text="Nasze wartości" />
+      <h2 className={styles.heading}>Nasze wartości</h2>
 
       <div className={styles.grid}>
         {values.map((v, i) => (
