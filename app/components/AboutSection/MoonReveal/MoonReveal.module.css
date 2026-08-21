@@ -184,20 +184,37 @@
   .scene {
     height: 170vh;
   }
+  /* układ pionowy: tekst na górze, pod nim księżyc */
+  .sticky {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 10vh;
+  }
+  /* tekst „Nasza filozofia" — w normalnym flow, na górze */
   .aside {
-    top: 8vh;
-    right: 0;
-    width: auto;
+    position: static;
+    top: auto;
+    left: auto;
+    width: 100%;
     height: auto;
     padding: 0 8vw;
     text-align: center;
   }
+  /* księżyc POD tekstem — rośnie w dół (origin u góry), nie nachodzi na tekst */
   .moon {
-    top: 56%;
-    left: 50%;
-    width: min(96vw, 60vh);
-    transform: translate(-50%, calc(-50% - (1 - var(--dp)) * 16vh))
-      scale(calc(1 + var(--dp) * 1.2));
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-top: 6vh;
+    width: min(70vw, 42vh);
+    transform: scale(calc(1 + var(--dp) * 1.6));
+    transform-origin: 50% 0;
+  }
+  /* pasek „umów" — pełna szerokość na dole */
+  .behind {
+    padding: clamp(0.4rem, 1vh, 0.9rem) 7vw;
   }
 }
 

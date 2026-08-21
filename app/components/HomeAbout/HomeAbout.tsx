@@ -50,6 +50,11 @@ export default function HomeAbout() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
+          // na mobile kafle są jeden pod drugim, więc „Odkryj Lumerę"
+          // odsłaniamy już przy wejściu w sekcję (nie po kaflu Kontakt)
+          if (window.matchMedia("(max-width: 820px)").matches) {
+            setHeadIn(true);
+          }
           io.disconnect();
         }
       },

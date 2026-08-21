@@ -43,8 +43,8 @@ export default function ValueCards() {
           io.disconnect();
         }
       },
-      // zaczyna się pojawiać trochę wcześniej (gdy sekcja jest wyżej w kadrze)
-      { threshold: 0.55 },
+      // wyzwalacz niezależny od wysokości sekcji (na mobile bywa wyższa niż ekran)
+      { threshold: 0, rootMargin: "0px 0px -30% 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
