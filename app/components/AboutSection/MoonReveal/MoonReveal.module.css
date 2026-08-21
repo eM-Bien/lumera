@@ -91,18 +91,32 @@
   top: 60%;
   left: 50%;
   width: min(46vw, 84vh);
-  height: auto;
   transform-origin: 50% 50%;
   transform: translate(
       calc(-50% + (1 - var(--dp)) * 20vw),
       calc(-50% - (1 - var(--dp)) * 22vh)
     )
     scale(calc(1 + var(--dp) * 1.6));
-  filter: drop-shadow(0 0 70px rgba(200, 215, 255, 0.28));
   z-index: 3;
   pointer-events: none;
   user-select: none;
   will-change: transform;
+}
+
+/* powolny obrót księżyca (niezależny od scrolla) */
+.moonImg {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform-origin: 50% 50%;
+  filter: drop-shadow(0 0 70px rgba(200, 215, 255, 0.28));
+  animation: moonSpin 200s linear infinite;
+}
+
+@keyframes moonSpin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* --- pasek na dole z CTA — wysuwa się od dołu ----------------------------- */

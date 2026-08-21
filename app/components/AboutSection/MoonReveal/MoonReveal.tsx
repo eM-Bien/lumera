@@ -68,13 +68,10 @@ export default function MoonReveal({ title, paragraphs, children }: Props) {
 
         <div className={styles.behind}>{children}</div>
 
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          className={styles.moon}
-          src="/about/moon.png"
-          alt=""
-          aria-hidden="true"
-        />
+        <div className={styles.moon} aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className={styles.moonImg} src="/about/moon.png" alt="" />
+        </div>
       </div>
     </div>
   );
