@@ -121,10 +121,10 @@ export default function HomeAbout() {
         <button
           type="button"
           className={styles.orderNow}
-          onClick={() => navigate("/kontakt")}
+          onClick={() => navigate("/o-lumera")}
         >
           <span className={styles.orderLine} aria-hidden="true" />
-          <span className={styles.orderLabel}>Umów wizytę</span>
+          <span className={styles.orderLabel}>Poznaj nas</span>
           <span className={styles.orderArrow} aria-hidden="true">
             →
           </span>
