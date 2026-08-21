@@ -158,7 +158,7 @@
   /* lewy górny róg ostry, pozostałe zaokrąglone */
   border-radius: 0 clamp(60px, 9vw, 120px) clamp(60px, 9vw, 120px)
     clamp(60px, 9vw, 120px);
-  background: linear-gradient(155deg, #164653 0%, #071626 100%);
+  background: linear-gradient(155deg, #12224e 0%, #070f2e 55%, #03060f 100%);
 }
 
 .shapeTitle {
