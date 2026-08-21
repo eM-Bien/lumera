@@ -14,13 +14,13 @@ const SHAPES = [
   {
     key: "ebooki",
     title: "Ebooki",
-    sub: "Wiedza, którą zabierzesz ze sobą",
+    sub: "Przewodniki o świadomej pielęgnacji",
     href: "/ebooki",
   },
   {
     key: "kontakt",
     title: "Kontakt",
-    sub: "Nie wiesz od czego zacząć?",
+    sub: "Napisz lub zadzwoń",
     href: "/kontakt",
   },
 ] as const;
@@ -39,7 +39,6 @@ const SHAPE_CLASS: Record<string, string> = {
 export default function HomeAbout() {
   const { navigate } = useTransition();
   const ref = useRef<HTMLElement | null>(null);
-  const headingRef = useRef<HTMLHeadingElement | null>(null);
   const shapeRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [inView, setInView] = useState(false);
   const [headIn, setHeadIn] = useState(false);
@@ -60,24 +59,8 @@ export default function HomeAbout() {
     return () => io.disconnect();
   }, []);
 
-  // nagłówek: wyłania się z dołu, gdy sam wjedzie w widok (nie za wcześnie)
-  useEffect(() => {
-    const el = headingRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setHeadIn(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0, rootMargin: "0px 0px -28% 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  // kafle wpływają, gdy wjadą w widok; „Zabiegi" i „Kontakt" dopiero przy dole
+  // kafle wpływają, gdy wjadą w widok; „Zabiegi" i „Kontakt" dopiero przy dole.
+  // Nagłówek „Odkryj Lumerę" wjeżdża dopiero, gdy pojawi się Kontakt.
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
     shapeRefs.current.forEach((el, i) => {
@@ -94,6 +77,7 @@ export default function HomeAbout() {
         ([e]) => {
           if (e.isIntersecting) {
             el.classList.add(styles.shapeIn);
+            if (key === "kontakt") setHeadIn(true); // nagłówek po Kontakcie
             io.disconnect();
           }
         },
@@ -109,12 +93,13 @@ export default function HomeAbout() {
     <section ref={ref} className={`${styles.about} ${inView ? styles.in : ""}`}>
       <div className={styles.inner}>
         <div className={`${styles.head} ${headIn ? styles.headIn : ""}`}>
-          <h2 ref={headingRef} className={styles.heading}>
+          <h2 className={styles.heading}>
             <span className={styles.headingInner}>Odkryj Lumerę</span>
           </h2>
           <p className={styles.lead}>
-            Studio kosmetologii i trychologii, w którym profesjonalna wiedza
-            spotyka się z troską. Zacznij od tego, co Cię interesuje.
+            Studio kosmetologii i trychologii, w którym dzięki profesjonalnej
+            wiedzy pomożemy Ci w doborze zabiegów dopasowanych do Twoich
+            potrzeb. Poznaj naszą ofertę i znajdź coś dla siebie.
           </p>
         </div>
 
