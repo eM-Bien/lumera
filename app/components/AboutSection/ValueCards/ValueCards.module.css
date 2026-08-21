@@ -178,8 +178,8 @@
   position: relative;
   display: grid;
   place-items: center;
-  width: clamp(76px, 7vw, 108px);
-  height: clamp(76px, 7vw, 108px);
+  width: clamp(92px, 8.5vw, 132px);
+  height: clamp(92px, 8.5vw, 132px);
   filter: drop-shadow(0 0 14px rgba(180, 205, 255, 0.35));
 }
 
@@ -191,10 +191,10 @@
   -webkit-user-drag: none;
 }
 
-/* „troska" ma większy rysunek — ograniczamy, by była równa reszcie */
+/* „troska" ma większy rysunek — mocniej ograniczamy, by nie rosła z resztą */
 .iconTroska {
-  width: 82%;
-  height: 82%;
+  width: 56%;
+  height: 56%;
 }
 
 .label {
