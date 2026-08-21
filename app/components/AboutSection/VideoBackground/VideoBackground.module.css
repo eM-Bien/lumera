@@ -6,6 +6,10 @@
   height: 100dvh;
   object-fit: cover;
   z-index: 0;
+  /* parallax: przy scrollu zjeżdża w dół i gaśnie (--p ustawia strona) */
+  transform: translateY(calc(var(--p, 0) * 30vh));
+  opacity: calc(1 - var(--p, 0) * 0.85);
+  will-change: transform, opacity;
 }
 
 .scrim {
@@ -16,6 +20,9 @@
   height: 100dvh;
   z-index: 1;
   pointer-events: none;
+  transform: translateY(calc(var(--p, 0) * 30vh));
+  opacity: calc(1 - var(--p, 0) * 0.85);
+  will-change: transform, opacity;
   background:
     radial-gradient(
       120% 90% at 50% 40%,

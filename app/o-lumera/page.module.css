@@ -3,6 +3,7 @@
    ========================================================================= */
 
 .about {
+  --p: 0; /* postęp scrolla (ustawia JS) — parallax hero */
   min-height: 100dvh;
   color: #d8c1a0;
   background: #05030f;
@@ -18,6 +19,25 @@
   font-family: var(--font-header), serif;
   text-align: center;
   z-index: 2;
+  /* „Witamy w Lumera" leci do góry przy scrollu (samo przesunięcie — efekt liter zostaje) */
+  transform: translateY(calc(var(--p) * -90vh));
+  will-change: transform;
+}
+
+/* teksty intro jadą do góry przy scrollu — każdy w swoim tempie (--sp) */
+.rise {
+  position: relative;
+  z-index: 2; /* nad scrimem (transform tworzy kontekst nakładania) */
+  transform: translateY(calc(var(--p) * var(--sp, 0px)));
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .rise {
+    transform: none;
+    opacity: 1;
+  }
 }
 
 .hero .h1 {

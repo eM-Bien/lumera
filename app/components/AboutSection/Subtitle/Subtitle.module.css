@@ -13,6 +13,8 @@
 .subtitle {
   font-size: var(--display-subtitle-size);
   font-family: var(--font-decoration);
+  color: #d8c1a0; /* złoty */
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
 }
 
 @keyframes subtitleIn {
