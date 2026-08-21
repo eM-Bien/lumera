@@ -1,0 +1,223 @@
+/* =========================================================================
+   MoonReveal — ciemna sekcja z księżycem. Przy scrollu księżyc wysuwa się
+   spod spodu i lekko się przybliża, „Nasza filozofia" znika, a od dołu
+   wysuwa się pasek z tekstem o umówieniu wizyty (jak w referencji MOON).
+   ========================================================================= */
+
+.scene {
+  --dp: 0;
+  position: relative;
+  z-index: 2;
+  height: 200vh;
+}
+
+.sticky {
+  /* 0→1: wysuwanie (pierwsze 30%); 0→1: pasek na dole (40%→85%) */
+  --enter: clamp(0, calc(var(--dp) / 0.3), 1);
+  --bar: clamp(0, calc((var(--dp) - 0.4) / 0.45), 1);
+
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      60% 55% at 68% 40%,
+      rgba(44, 58, 108, 0.4) 0%,
+      rgba(10, 16, 40, 0.85) 55%,
+      #03040c 100%
+    ),
+    linear-gradient(180deg, #0a1230 0%, #04071a 55%, #010205 100%);
+}
+
+/* --- tekst „Nasza filozofia" (lewa strona, wyżej) ------------------------- */
+.aside {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: min(44vw, 620px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 22vh 3vw 0 6vw;
+  z-index: 2;
+  /* całość znika, gdy zaczyna wjeżdżać księżyc / pasek */
+  opacity: clamp(0, calc(1 - (var(--dp) - 0.4) / 0.15), 1);
+  will-change: opacity;
+}
+
+/* nagłówek najpierw wysuwa się od dołu, potem opis tak samo */
+.asideHeading {
+  --r: clamp(0, calc(var(--enter) / 0.55), 1);
+  transform: translateY(calc((1 - var(--r)) * 60px));
+  opacity: var(--r);
+  will-change: transform, opacity;
+}
+.asideText {
+  --r: clamp(0, calc((var(--enter) - 0.45) / 0.55), 1);
+  transform: translateY(calc((1 - var(--r)) * 55px));
+  opacity: var(--r);
+  will-change: transform, opacity;
+}
+
+.asideHeading {
+  margin: 0 0 clamp(1.4rem, 2.5vh, 2.4rem);
+  font-family: var(--font-header), serif;
+  font-weight: 700;
+  /* jak nagłówek „Nasze wartości" */
+  font-size: clamp(2.8rem, 7vw, 4.8rem);
+  line-height: 1.05;
+  color: #f0e6d2;
+}
+
+.asideText p {
+  margin: 0 0 1.1em;
+  font-family: var(--font-basic), sans-serif;
+  /* jak opisy w „Witamy" */
+  font-size: calc(var(--display-desc-size) * 1.12);
+  line-height: var(--display-desc-line);
+  color: #d8c1a0;
+}
+
+.asideText p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- księżyc: najpierw wyżej i z prawej, ze scrollem zniża się do środka
+   i coraz bardziej się powiększa -------------------------------------------- */
+.moon {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  width: min(46vw, 84vh);
+  height: auto;
+  transform-origin: 50% 50%;
+  transform: translate(
+      calc(-50% + (1 - var(--dp)) * 20vw),
+      calc(-50% - (1 - var(--dp)) * 22vh)
+    )
+    scale(calc(1 + var(--dp) * 1.6));
+  filter: drop-shadow(0 0 70px rgba(200, 215, 255, 0.28));
+  z-index: 3;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform;
+}
+
+/* --- pasek na dole z CTA — wysuwa się od dołu ----------------------------- */
+.behind {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  padding: clamp(0.3rem, 0.8vh, 0.7rem) 6vw;
+  background: #01020a;
+  /* pasek wysuwa się najpierw (pierwsze ~32%), potem pojawiają się teksty */
+  transform: translateY(calc((1 - clamp(0, calc(var(--bar) / 0.32), 1)) * 100%));
+  opacity: clamp(0, calc(var(--bar) / 0.18), 1);
+  will-change: transform, opacity;
+}
+
+/* CtaBand w pasku niższy — mniej wewnętrznego paddingu niż na /oferta */
+.behind section {
+  padding-top: clamp(1vh, 2vh, 3vh);
+  padding-bottom: clamp(5vh, 8vh, 11vh);
+}
+
+/* treść CTA wjeżdża od dołu jedna po drugiej (po pojawieniu się paska) */
+.behind section p,
+.behind section h2,
+.behind section a,
+.behind section button {
+  will-change: transform, opacity;
+}
+
+/* eyebrow */
+.behind section p:nth-of-type(1) {
+  --r: clamp(0, calc((var(--bar) - 0.5) / 0.18), 1);
+  transform: translateY(calc((1 - var(--r)) * 90px));
+  opacity: var(--r);
+}
+/* tytuł „Umów wizytę" — po chwili */
+.behind section h2 {
+  --r: clamp(0, calc((var(--bar) - 0.64) / 0.18), 1);
+  transform: translateY(calc((1 - var(--r)) * 110px));
+  opacity: var(--r);
+}
+/* opis — tak samo, później */
+.behind section p:nth-of-type(2) {
+  --r: clamp(0, calc((var(--bar) - 0.78) / 0.16), 1);
+  transform: translateY(calc((1 - var(--r)) * 95px));
+  opacity: var(--r);
+}
+/* przycisk — na końcu */
+.behind section a,
+.behind section button {
+  --r: clamp(0, calc((var(--bar) - 0.9) / 0.1), 1);
+  transform: translateY(calc((1 - var(--r)) * 80px));
+  opacity: var(--r);
+}
+
+@media (max-width: 820px) {
+  .scene {
+    height: 170vh;
+  }
+  .aside {
+    top: 8vh;
+    right: 0;
+    width: auto;
+    height: auto;
+    padding: 0 8vw;
+    text-align: center;
+  }
+  .moon {
+    top: 56%;
+    left: 50%;
+    width: min(96vw, 60vh);
+    transform: translate(-50%, calc(-50% - (1 - var(--dp)) * 16vh))
+      scale(calc(1 + var(--dp) * 1.2));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene {
+    height: auto;
+  }
+  .sticky {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+  .aside {
+    position: static;
+    width: auto;
+    height: auto;
+    transform: none;
+    opacity: 1;
+    padding: 8vh 6vw 2vh;
+  }
+  .asideHeading,
+  .asideText {
+    transform: none;
+    opacity: 1;
+  }
+  .behind {
+    position: static;
+    transform: none;
+    opacity: 1;
+    background: none;
+    padding: 4vh 6vw 6vh;
+  }
+  .behind section p,
+  .behind section h2,
+  .behind section a,
+  .behind section button {
+    transform: none;
+    opacity: 1;
+  }
+  .moon {
+    display: none;
+  }
+}

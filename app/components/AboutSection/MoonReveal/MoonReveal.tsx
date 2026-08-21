@@ -2,23 +2,22 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 import RevealHeading from "../../RevealHeading/RevealHeading";
-import styles from "./DoorReveal.module.css";
+import styles from "./MoonReveal.module.css";
 
 type Props = {
-  /** Nagłówek obok drzwi (np. „Nasza filozofia"). */
+  /** Nagłówek obok księżyca (np. „Nasza filozofia"). */
   title: string;
-  /** Akapity tekstu obok drzwi. */
+  /** Akapity tekstu obok księżyca. */
   paragraphs: string[];
-  /** To, co odsłania się „za drzwiami" (np. CTA „Umów wizytę"). */
+  /** To, co odsłania się na dole (pasek CTA „Umów wizytę"). */
   children: ReactNode;
 };
 
 /**
- * „Wejście przez drzwi" — obok drzwi znajduje się tekst („Nasza filozofia"),
- * a przy scrollu drzwi przybliżają się (jakby się w nie wchodziło) i gasną,
- * odsłaniając to, co za nimi (children — np. CTA „Umów wizytę").
+ * Ciemna sekcja z księżycem. Przy scrollu księżyc zniża się do środka i rośnie,
+ * „Nasza filozofia" znika, a od dołu wysuwa się pasek z CTA „Umów wizytę".
  */
-export default function DoorReveal({ title, paragraphs, children }: Props) {
+export default function MoonReveal({ title, paragraphs, children }: Props) {
   const sceneRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -71,7 +70,7 @@ export default function DoorReveal({ title, paragraphs, children }: Props) {
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          className={styles.door}
+          className={styles.moon}
           src="/about/moon.png"
           alt=""
           aria-hidden="true"

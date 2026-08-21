@@ -13,7 +13,7 @@ import {
 } from "../components/AboutSection/about.content";
 import ValueCards from "../components/AboutSection/ValueCards/ValueCards";
 import ScrollBlueNavy from "../components/AboutSection/ScrollBlueNavy/ScrollBlueNavy";
-import DoorReveal from "../components/AboutSection/DoorReveal/DoorReveal";
+import MoonReveal from "../components/AboutSection/MoonReveal/MoonReveal";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 import CtaBand from "../components/CtaBand/CtaBand";
 
@@ -76,7 +76,7 @@ export default function AboutPage() {
 
         <div className={styles.spacer} />
 
-        <DoorReveal title="Nasza filozofia" paragraphs={philosophy.right}>
+        <MoonReveal title="Nasza filozofia" paragraphs={philosophy.right}>
           <CtaBand
             eyebrow="Zapraszamy Cię do świata Lumera"
             title="Umów wizytę"
@@ -84,7 +84,7 @@ export default function AboutPage() {
             buttonLabel="Skontaktuj się"
             href="/kontakt"
           />
-        </DoorReveal>
+        </MoonReveal>
       </ScrollBlueNavy>
       <ScrollToTop />
     </main>
