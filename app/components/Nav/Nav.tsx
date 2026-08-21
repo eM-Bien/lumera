@@ -43,16 +43,18 @@ export default function Nav() {
 
   return (
     <nav className={`${styles.nav} ${show ? styles.visible : ""}`}>
-      {/* księżyc z logo w lewym górnym rogu — link do strony głównej */}
-      <Link
-        href="/"
-        className={styles.homeMoon}
-        onClick={goHome}
-        aria-label="Strona główna"
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/moon.svg" alt="Lumera — strona główna" />
-      </Link>
+      {/* księżyc z logo w lewym górnym rogu — link do strony głównej (nie na stronie głównej) */}
+      {!isHome && (
+        <Link
+          href="/"
+          className={styles.homeMoon}
+          onClick={goHome}
+          aria-label="Strona główna"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/moon.svg" alt="Lumera — strona główna" />
+        </Link>
+      )}
 
       {/* koszyk zawsze widoczny obok hamburgera — tylko mobile */}
       <span className={styles.cartMobile}>
