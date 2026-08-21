@@ -53,7 +53,7 @@
   text-align: center;
   gap: 1.25rem;
   padding: clamp(2.2rem, 3.8vh, 3.2rem) clamp(1.4rem, 1.8vw, 2.1rem)
-    clamp(2rem, 3.2vh, 2.8rem);
+    clamp(3rem, 5vh, 4.2rem);
   border-radius: 22px;
   overflow: hidden;
   border: 1px solid rgba(200, 215, 255, 0.16);
