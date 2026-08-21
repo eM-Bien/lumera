@@ -38,8 +38,8 @@
 
 /* parallax: film zjeżdża w dół (wolniej), logo ucieka w górę (szybciej) */
 .parallax .bg {
-  transform: translateY(calc(var(--p) * 42vh));
-  opacity: calc(1 - var(--p));
+  transform: translateY(calc(var(--p) * 30vh));
+  opacity: calc(1 - var(--p) * 0.85);
   will-change: transform, opacity;
 }
 

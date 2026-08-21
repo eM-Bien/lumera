@@ -584,7 +584,7 @@ export default function LumeraReveal({
     const update = () => {
       raf = 0;
       const vh = window.innerHeight || 1;
-      const p = Math.min(1, Math.max(0, window.scrollY / (vh * 0.5)));
+      const p = Math.min(1, Math.max(0, window.scrollY / (vh * 1.2)));
       stage.style.setProperty("--p", String(p));
     };
     const onScroll = () => {
