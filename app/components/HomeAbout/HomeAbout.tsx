@@ -5,31 +5,37 @@ import { useTransition } from "@/app/transition/TransitionProvider";
 import RevealHeading from "../RevealHeading/RevealHeading";
 import styles from "./HomeAbout.module.css";
 
-const EXPLORE = [
+const SHAPES = [
   {
-    title: "Ebooki",
-    text: "Praktyczna wiedza o świadomej pielęgnacji — do przeczytania w swoim tempie.",
-    href: "/ebooki",
-    label: "Zobacz ebooki",
-  },
-  {
+    key: "oferta",
     title: "Zabiegi",
-    text: "Twarz, ciało i skóra głowy. Znajdź zabieg dopasowany do Twoich potrzeb.",
+    sub: "Twarz, ciało i skóra głowy",
     href: "/oferta",
-    label: "Przeglądaj zabiegi",
   },
   {
-    title: "Nie wiesz od czego zacząć?",
-    text: "Napisz do nas — pomożemy dobrać to, co sprawdzi się najlepiej właśnie dla Ciebie.",
-    href: "/kontakt",
-    label: "Skontaktuj się",
+    key: "ebooki",
+    title: "Ebooki",
+    sub: "Wiedza, którą zabierzesz ze sobą",
+    href: "/ebooki",
   },
-];
+  {
+    key: "kontakt",
+    title: "Kontakt",
+    sub: "Nie wiesz od czego zacząć?",
+    href: "/kontakt",
+  },
+] as const;
+
+const SHAPE_CLASS: Record<string, string> = {
+  ebooki: styles.ebooki,
+  oferta: styles.oferta,
+  kontakt: styles.kontakt,
+};
 
 /**
- * Sekcja pod hero na stronie głównej: granatowa „zakładka" wysuwa się przy
- * scrollu, pojawiają się duże nagłówki, krótkie info o nas i zachęta do
- * rozglądania po stronie (ebooki / zabiegi / kontakt).
+ * Sekcja pod hero na stronie głównej — układ „lookbook": duży nagłówek,
+ * krótkie info o nas i trzy zaokrąglone kształty (liście) prowadzące do
+ * ebooków, oferty i kontaktu.
  */
 export default function HomeAbout() {
   const { navigate } = useTransition();
@@ -55,41 +61,42 @@ export default function HomeAbout() {
   return (
     <section ref={ref} className={`${styles.about} ${inView ? styles.in : ""}`}>
       <div className={styles.inner}>
-        <p className={styles.eyebrow}>Kim jesteśmy</p>
-        <RevealHeading
-          as="h2"
-          className={styles.heading}
-          text="Pielęgnacja oparta na wiedzy i trosce"
-        />
-        <p className={styles.lead}>
-          Lumera to studio kosmetologii i trychologii, w którym profesjonalna
-          wiedza spotyka się z troską. Dobieramy pielęgnację twarzy, ciała i
-          skóry głowy do Twoich realnych potrzeb — z uważnością i bez
-          uniwersalnych rozwiązań.
-        </p>
-
-        <div className={styles.cards}>
-          {EXPLORE.map((c, i) => (
-            <article
-              key={c.href}
-              className={styles.card}
-              style={{ transitionDelay: `${0.15 + i * 0.12}s` }}
-            >
-              <h3 className={styles.cardTitle}>{c.title}</h3>
-              <p className={styles.cardText}>{c.text}</p>
-              <button
-                type="button"
-                className={styles.cardLink}
-                onClick={() => navigate(c.href)}
-              >
-                {c.label}
-                <span className={styles.arrow} aria-hidden="true">
-                  →
-                </span>
-              </button>
-            </article>
-          ))}
+        <div className={styles.head}>
+          <RevealHeading
+            as="h2"
+            className={styles.heading}
+            text="Odkryj Lumerę"
+          />
+          <p className={styles.lead}>
+            Studio kosmetologii i trychologii, w którym profesjonalna wiedza
+            spotyka się z troską. Zacznij od tego, co Cię interesuje.
+          </p>
         </div>
+
+        {SHAPES.map((s, i) => (
+          <button
+            key={s.key}
+            type="button"
+            className={`${styles.shape} ${SHAPE_CLASS[s.key]}`}
+            style={{ transitionDelay: `${0.15 + i * 0.12}s` }}
+            onClick={() => navigate(s.href)}
+          >
+            <span className={styles.shapeTitle}>{s.title}</span>
+            <span className={styles.shapeSub}>{s.sub}</span>
+          </button>
+        ))}
+
+        <button
+          type="button"
+          className={styles.orderNow}
+          onClick={() => navigate("/kontakt")}
+        >
+          <span className={styles.orderLine} aria-hidden="true" />
+          <span className={styles.orderLabel}>Umów wizytę</span>
+          <span className={styles.orderArrow} aria-hidden="true">
+            →
+          </span>
+        </button>
       </div>
     </section>
   );

@@ -1,19 +1,18 @@
 /* =========================================================================
-   HomeAbout — granatowa „zakładka" wysuwana przy scrollu pod hero.
+   HomeAbout — układ „lookbook" pod hero: nagłówek + trzy zaokrąglone
+   kształty (liście) do ebooków, oferty i kontaktu. Tło prawie czarne.
    ========================================================================= */
 
 .about {
   position: relative;
-  z-index: 3; /* nad winietą hero (z2) */
+  z-index: 3;
   width: 100%;
-  margin-top: 0; /* startuje dokładnie pod hero — nie wystaje na górze */
-  padding: clamp(11vh, 16vh, 20vh) 6vw clamp(12vh, 16vh, 20vh);
+  padding: clamp(12vh, 16vh, 20vh) 6vw clamp(14vh, 18vh, 22vh);
   border-radius: clamp(28px, 5vw, 64px) clamp(28px, 5vw, 64px) 0 0;
   background: linear-gradient(180deg, #000000 0%, #030409 55%, #010205 100%);
   box-shadow: 0 -30px 80px rgba(0, 0, 0, 0.6);
   color: #e7e0d0;
 
-  /* wjazd całej „zakładki" */
   transform: translateY(80px);
   opacity: 0;
   transition:
@@ -27,39 +26,42 @@
 }
 
 .inner {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1.05fr 0.62fr;
+  gap: clamp(1.2rem, 2.2vw, 2.4rem);
+  align-items: start;
+  grid-template-areas:
+    "title   center kontakt"
+    "zabiegi center order";
 }
 
-.eyebrow {
-  margin: 0 0 1.4rem;
-  font-family: var(--font-basic), sans-serif;
-  font-size: 0.8rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #8fa2d8;
+/* --- nagłówek + krótkie info (lewy górny róg) -------------------------- */
+.head {
+  grid-area: title;
+  align-self: start;
 }
 
 .heading {
-  margin: 0 0 clamp(3vh, 4vh, 5vh);
-  max-width: 20ch;
+  margin: 0;
   font-family: var(--font-header), serif;
-  font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
   font-weight: 700;
-  line-height: 1.05;
+  line-height: 1.02;
   color: #f3ede0;
 }
 
 .lead {
-  max-width: 60ch;
-  margin: 0 0 clamp(6vh, 8vh, 10vh);
+  margin: 1.6rem 0 0;
+  max-width: 42ch;
   font-family: var(--font-basic), sans-serif;
-  font-size: clamp(1.1rem, 1.5vw, 1.35rem);
-  line-height: 1.75;
-  color: #c7cbe0;
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  line-height: 1.7;
+  color: #b9c0d6;
 
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(20px);
   transition:
     opacity 0.8s ease 0.1s,
     transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
@@ -70,107 +72,212 @@
   transform: none;
 }
 
-/* --- karty zachęcające do rozglądania --------------------------------- */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1.2rem, 2.5vw, 2rem);
-}
-
-@media (max-width: 860px) {
-  .cards {
-    grid-template-columns: 1fr;
-  }
-}
-
-.card {
+/* --- kształty ---------------------------------------------------------- */
+.shape {
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: clamp(1.8rem, 2.5vw, 2.6rem);
-  border-radius: 20px;
-  background: linear-gradient(
-    160deg,
-    rgba(255, 255, 255, 0.05),
-    rgba(255, 255, 255, 0.02)
-  );
-  border: 1px solid rgba(143, 162, 216, 0.22);
+  justify-content: flex-end;
+  gap: 0.3rem;
+  width: 100%;
+  padding: clamp(1.5rem, 2.4vw, 2.6rem);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: #f2eee4;
+  overflow: hidden;
 
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(34px);
   transition:
     opacity 0.8s ease,
     transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.3s ease,
-    background-color 0.3s ease;
+    box-shadow 0.5s ease;
 }
 
-.about.in .card {
+.about.in .shape {
   opacity: 1;
-  transform: none;
+  transform: translateY(0);
 }
 
-.card:hover {
-  border-color: rgba(143, 162, 216, 0.5);
-  background: linear-gradient(
-    160deg,
-    rgba(255, 255, 255, 0.08),
-    rgba(255, 255, 255, 0.03)
+.about.in .shape:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 34px 70px rgba(0, 0, 0, 0.55);
+}
+
+/* poświata w rogu każdego kształtu */
+.shape::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    90% 70% at 80% 0%,
+    rgba(255, 255, 255, 0.14),
+    transparent 60%
   );
+  pointer-events: none;
 }
 
-.cardTitle {
-  margin: 0 0 0.8rem;
+/* Zabiegi — landscape po lewej, duży zaokrąglony róg dolny-prawy */
+.oferta {
+  grid-area: zabiegi;
+  aspect-ratio: 4 / 3;
+  align-self: start;
+  border-radius: 0 0 clamp(70px, 11vw, 160px) 0;
+  background:
+    linear-gradient(
+      110deg,
+      rgba(4, 7, 18, 0.82) 0%,
+      rgba(4, 7, 18, 0.32) 55%,
+      rgba(4, 7, 18, 0.05) 100%
+    ),
+    url("/offer/wodorowe.jpg") center / cover no-repeat;
+}
+
+/* Ebooki — najwyższy kafel w środku, okładka ebooka w tle */
+.ebooki {
+  grid-area: center;
+  align-self: stretch; /* rozciąga się na obie „wiersze" — najwyższy kafel */
+  min-height: clamp(460px, 52vw, 680px);
+  border-radius: clamp(70px, 11vw, 170px) 0 clamp(70px, 11vw, 170px) 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(4, 7, 18, 0.25) 0%,
+      rgba(4, 7, 18, 0.55) 55%,
+      rgba(4, 7, 18, 0.9) 100%
+    ),
+    url("/ebooks/poznaj-swoja-skore-ebook.png") center / cover no-repeat;
+}
+
+/* Kontakt — niższy, wąski kafel po prawej (kapsuła) */
+.kontakt {
+  grid-area: kontakt;
+  min-height: clamp(300px, 34vw, 440px);
+  align-self: start;
+  /* lewy górny róg ostry, pozostałe zaokrąglone */
+  border-radius: 0 clamp(60px, 9vw, 120px) clamp(60px, 9vw, 120px)
+    clamp(60px, 9vw, 120px);
+  background: linear-gradient(155deg, #164653 0%, #071626 100%);
+}
+
+.shapeTitle {
+  position: relative;
   font-family: var(--font-header), serif;
-  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
   font-weight: 700;
-  line-height: 1.15;
-  color: #f3ede0;
+  line-height: 1.1;
 }
 
-.cardText {
-  flex: 1;
-  margin: 0 0 1.6rem;
+.shapeSub {
+  position: relative;
   font-family: var(--font-basic), sans-serif;
-  line-height: 1.65;
-  color: #c1c6dc;
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  line-height: 1.4;
+  color: rgba(240, 236, 226, 0.82);
 }
 
-.cardLink {
-  display: inline-flex;
+
+/* --- „Umów wizytę" (jak Order Now) — dół po prawej --------------------- */
+.orderNow {
+  position: relative;
+  grid-area: order;
+  justify-self: end;
+  align-self: end;
+  display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0;
+  gap: 1.1rem;
+  margin: 0;
+  padding: 0.4rem 0.6rem;
   background: none;
   border: none;
   cursor: pointer;
   font-family: var(--font-basic), sans-serif;
-  font-size: 0.9rem;
-  letter-spacing: 0.06em;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #d8c1a0;
+  transition: color 0.8s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
+.orderLine {
+  width: clamp(70px, 11vw, 180px);
+  height: 1px;
+  background: rgba(216, 193, 160, 0.5);
+}
+
+/* etykieta z poświatą na hover — wyśrodkowaną na tekście (jak koszyk) */
+.orderLabel {
+  position: relative;
+}
+
+.orderLabel::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16vh;
+  height: 13vh;
+  transform: translate(-50%, -50%) scale(0.4);
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    var(--nav-blob, #ccb283),
+    transparent
+  );
+  filter: blur(20px);
+  mix-blend-mode: screen;
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
   transition:
-    gap 0.3s ease,
-    color 0.3s ease;
+    opacity 0.5s ease,
+    transform 0.7s ease;
 }
 
-.cardLink:hover {
-  gap: 0.9rem;
-  color: #f0e6d2;
+@media (hover: hover) {
+  .orderNow:hover {
+    color: #f0e6d2;
+  }
+  .orderNow:hover .orderLabel::before {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
-.arrow {
-  transition: transform 0.3s ease;
+.orderNow:focus-visible .orderLabel::before {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
-.cardLink:hover .arrow {
-  transform: translateX(2px);
+/* --- Mobile ------------------------------------------------------------ */
+@media (max-width: 820px) {
+  .inner {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "zabiegi"
+      "center"
+      "kontakt"
+      "order";
+    gap: 1.4rem;
+  }
+  .ebooki,
+  .oferta,
+  .kontakt {
+    aspect-ratio: 5 / 3;
+    min-height: 0;
+  }
+  .orderNow {
+    justify-self: start;
+    margin-top: 1rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .about,
   .lead,
-  .card {
+  .shape {
     transition: none;
     transform: none;
     opacity: 1;
