@@ -13,6 +13,7 @@ import {
 } from "../components/AboutSection/about.content";
 import ValueCards from "../components/AboutSection/ValueCards/ValueCards";
 import ScrollBlueNavy from "../components/AboutSection/ScrollBlueNavy/ScrollBlueNavy";
+import DoorReveal from "../components/AboutSection/DoorReveal/DoorReveal";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 import CtaBand from "../components/CtaBand/CtaBand";
 
@@ -73,22 +74,17 @@ export default function AboutPage() {
       <ScrollBlueNavy>
         <ValueCards />
 
-        <RevealHeading
-          as="h2"
-          className={styles.sectionHeading}
-          text="Nasza filozofia"
-        />
-        <TextColumn align="left" paragraphs={philosophy.right} wide />
-
         <div className={styles.spacer} />
 
-        <CtaBand
-          eyebrow="Zapraszamy Cię do świata Lumera"
-          title="Umów wizytę"
-          text="Napisz lub zadzwoń — chętnie odpowiemy na Twoje pytania i pomożemy wybrać odpowiednie zabiegi dla Ciebie"
-          buttonLabel="Skontaktuj się"
-          href="/kontakt"
-        />
+        <DoorReveal title="Nasza filozofia" paragraphs={philosophy.right}>
+          <CtaBand
+            eyebrow="Zapraszamy Cię do świata Lumera"
+            title="Umów wizytę"
+            text="Napisz lub zadzwoń — chętnie odpowiemy na Twoje pytania i pomożemy wybrać odpowiednie zabiegi dla Ciebie"
+            buttonLabel="Skontaktuj się"
+            href="/kontakt"
+          />
+        </DoorReveal>
       </ScrollBlueNavy>
       <ScrollToTop />
     </main>
