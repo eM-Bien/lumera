@@ -1,4 +1,6 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { values } from "../about.content";
 import RevealHeading from "../../RevealHeading/RevealHeading";
 import styles from "./ValueCards.module.css";
@@ -25,17 +27,55 @@ const ICONS: ReactNode[] = [
 ];
 
 /**
- * „Nasze wartości" — rząd szklanych (frosted glass) kafli: każda wartość
- * na osobnym, przezroczystym panelu z ikoną, tytułem i opisem.
+ * „Nasze wartości" — rząd szklanych kafli. Przy scrollu każdy kafel pojawia
+ * się po kolei z chwilowym blaskiem z góry.
  */
 export default function ValueCards() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          io.disconnect();
+        }
+      },
+      // odpala się później — dopiero gdy sekcja jest już mocno w kadrze
+      { threshold: 0.85 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <section className={styles.section}>
+    <section
+      ref={sectionRef}
+      className={`${styles.section} ${inView ? styles.in : ""}`}
+    >
+      {/* strumienie światła z samej góry — po jednym na kartę */}
+      <div className={styles.beams} aria-hidden="true">
+        {values.map((v, i) => (
+          <span
+            key={v.label}
+            className={styles.beam}
+            style={{ ["--i"]: i } as React.CSSProperties}
+          />
+        ))}
+      </div>
+
       <RevealHeading as="h2" className={styles.heading} text="Nasze wartości" />
 
       <div className={styles.grid}>
         {values.map((v, i) => (
-          <article key={v.label} className={styles.card}>
+          <article
+            key={v.label}
+            className={styles.card}
+            style={{ ["--i"]: i } as React.CSSProperties}
+          >
             <span className={styles.icon} aria-hidden="true">
               {ICONS[i]}
             </span>
