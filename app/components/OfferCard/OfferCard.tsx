@@ -24,6 +24,8 @@ type OfferCardProps = {
   reversed?: boolean;
   open: boolean;
   onToggle: () => void;
+  /** Wariant kształtu „liścia" (który róg zaokrąglony). */
+  leafVariant?: number;
 };
 
 export default function OfferCard({
@@ -31,7 +33,10 @@ export default function OfferCard({
   reversed = false,
   open,
   onToggle,
+  leafVariant = 0,
 }: OfferCardProps) {
+  const LEAVES = [styles.leaf0, styles.leaf1, styles.leaf2, styles.leaf3];
+  const leafClass = LEAVES[((leafVariant % LEAVES.length) + LEAVES.length) % LEAVES.length];
   const { navigate } = useTransition();
   const cardRef = useRef<HTMLLIElement | null>(null);
   const mediaRef = useRef<HTMLDivElement | null>(null);
@@ -122,7 +127,7 @@ export default function OfferCard({
       ref={cardRef}
       className={`${styles.card} ${reversed ? styles.cardRight : ""}`}
     >
-      <div className={styles.media} ref={mediaRef}>
+      <div className={`${styles.media} ${leafClass}`} ref={mediaRef}>
         {offer.image ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img

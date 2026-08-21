@@ -63,6 +63,7 @@ export default function OfferExplorer() {
               key={offer.id}
               offer={offer}
               reversed={i % 2 === 1}
+              leafVariant={i}
               open={openIds.has(offer.id)}
               onToggle={() => toggleOpen(offer.id)}
             />

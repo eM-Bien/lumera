@@ -7,25 +7,35 @@
   display: flex;
   align-items: center;
   gap: clamp(2rem, 5vw, 5.5rem);
-  padding-right: 6vw; /* tekst nie dotyka prawej krawędzi */
+  padding: 0 6vw; /* przestrzeń po obu stronach — grafika nie dotyka krawędzi */
 }
 .cardRight {
   flex-direction: row-reverse;
-  padding-right: 0;
-  padding-left: 6vw;
 }
 
-/* --- Zdjęcie (dosunięte do skrajnej krawędzi) --------------------------- */
+/* --- Zdjęcie (kształt „liścia", odsunięte od krawędzi) ------------------ */
 .media {
-  flex: 0 0 56%;
+  flex: 0 0 52%;
   overflow: hidden;
-  border-radius: 0 18px 18px 0; /* płaska krawędź od strony ekranu, zaokrąglona wewnątrz */
   box-shadow:
     0 24px 60px rgba(0, 0, 0, 0.55),
     0 2px 10px rgba(0, 0, 0, 0.4);
 }
-.cardRight .media {
-  border-radius: 18px 0 0 18px;
+
+/* wariacje „liścia" — mocne zaokrąglenie dwóch przeciwległych rogów */
+.media.leaf0 {
+  border-radius: 0 clamp(80px, 16vw, 240px) 0 clamp(80px, 16vw, 240px);
+}
+.media.leaf1 {
+  border-radius: clamp(80px, 16vw, 240px) 0 clamp(80px, 16vw, 240px) 0;
+}
+.media.leaf2 {
+  border-radius: clamp(80px, 16vw, 240px) clamp(80px, 16vw, 240px) 0
+    clamp(80px, 16vw, 240px);
+}
+.media.leaf3 {
+  border-radius: clamp(80px, 16vw, 240px) 0 clamp(80px, 16vw, 240px)
+    clamp(80px, 16vw, 240px);
 }
 
 .img {

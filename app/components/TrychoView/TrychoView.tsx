@@ -67,6 +67,7 @@ export default function TrychoView() {
               key={t.id}
               offer={{ ...t, category: "Trychologia" }}
               reversed={i % 2 === 1}
+              leafVariant={i}
               open={openIds.has(t.id)}
               onToggle={() => toggleOpen(t.id)}
             />
