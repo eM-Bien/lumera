@@ -94,7 +94,9 @@
   justify-content: flex-end;
   gap: 0.3rem;
   width: 100%;
-  padding: clamp(1.5rem, 2.4vw, 2.6rem);
+  /* prawy padding większy, żeby tekst nie dotykał krawędzi */
+  padding: clamp(1.5rem, 2.4vw, 2.6rem) clamp(2.4rem, 4.5vw, 5rem)
+    clamp(1.5rem, 2.4vw, 2.6rem) clamp(1.5rem, 2.4vw, 2.6rem);
   border: none;
   cursor: pointer;
   text-align: left;
