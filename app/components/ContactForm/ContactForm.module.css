@@ -62,6 +62,7 @@
   border: none;
   padding: 0;
   margin: 0;
+  min-width: 0; /* pozwala polu skurczyć się w kolumnie grid (np. input[type=date]) */
 }
 
 .label {
@@ -101,6 +102,7 @@
 .select,
 .textarea {
   width: 100%;
+  box-sizing: border-box;
   padding: 0.65rem 1rem;
   font-family: var(--font-basic), sans-serif;
   font-size: 1rem;
@@ -140,6 +142,17 @@
 .input::placeholder,
 .textarea::placeholder {
   color: #9a8c6f;
+}
+
+/* input[type=date] na mobile (iOS) ma natywną, sztywną szerokość i wychodzi
+   poza kolumnę — zdejmujemy natywny wygląd i pozwalamy mu się skurczyć */
+.input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  min-width: 0;
+}
+.input[type="date"]::-webkit-date-and-time-value {
+  text-align: left;
 }
 
 .input:focus,
