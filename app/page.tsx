@@ -6,12 +6,22 @@ import LumeraReveal from "./components/LumeraReveal/LumeraReveal";
 import InkBackground from "./components/InkBackground/InkBackground";
 import InkBlobFilter from "./components/InkBlobFilter/InkBlobFilter";
 import HomeAbout from "./components/HomeAbout/HomeAbout";
+import { useTransitionPhase } from "./transition/TransitionProvider";
 
 const INTRO_KEY = "lumera_intro_seen";
 
 export default function Home() {
   const [skipIntro, setSkipIntro] = useState<boolean | null>(null);
   const [desktop, setDesktop] = useState(false);
+  // WebGL montujemy dopiero po zakończeniu przejścia — kompilacja shaderów
+  // to duży, jednorazowy koszt na wątku głównym, który zacinał animację.
+  // Zatrzask: gdy raz dojdziemy do „idle", zostaje zamontowany (bez odmontowań
+  // przy wychodzeniu ze strony, gdzie faza wraca do „exiting").
+  const phase = useTransitionPhase();
+  const [inkReady, setInkReady] = useState(false);
+  useEffect(() => {
+    if (phase === "idle") setInkReady(true);
+  }, [phase]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -46,7 +56,7 @@ export default function Home() {
             />
           )}
         </div>
-        {desktop && (
+        {desktop && inkReady && (
           <InkBackground
             zIndex={2} /* nad zdjęciem, pod nawigacją */
             blendMode="screen" /* rozjaśnia las jak smugi światła */

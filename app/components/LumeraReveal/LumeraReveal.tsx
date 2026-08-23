@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Cinzel } from "next/font/google";
+import { useTransitionPhase } from "@/app/transition/TransitionProvider";
 import styles from "./LumeraReveal.module.css";
 import LightsBackground from "../LightsBackground";
 
@@ -596,6 +597,15 @@ export default function LumeraReveal({
   const tagRef = useRef<HTMLSpanElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const apiRef = useRef<LumeraRevealApi | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  // film w tle odtwarzamy dopiero po zakończeniu przejścia (faza "idle"),
+  // żeby dekodowanie nie zacinało animacji. Poster widoczny w międzyczasie.
+  const phase = useTransitionPhase();
+  useEffect(() => {
+    if (phase !== "idle") return;
+    videoRef.current?.play().catch(() => {});
+  }, [phase]);
 
   // Ustalamy breakpoint SYNCHRONICZNIE na pierwszym renderze — komponent montuje
   // się wyłącznie po stronie klienta (strona gate'uje go za `skipIntro !== null`),
@@ -769,8 +779,8 @@ export default function LumeraReveal({
         <>
           {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
           <video
+            ref={videoRef}
             className={styles.bg}
-            autoPlay
             muted
             loop
             playsInline
