@@ -1,7 +1,7 @@
 export type Category = "Twarz" | "Ciało";
 
-export type Location = "Sierpc" | "Łódź";
-export const LOCATIONS: Location[] = ["Sierpc", "Łódź"];
+export type Location = "Sierpc" | "Andrespol";
+export const LOCATIONS: Location[] = ["Sierpc", "Andrespol"];
 
 export type Offer = {
   id: string;
@@ -21,7 +21,7 @@ export const OFFERS: Offer[] = [
     title: "Oczyszczanie wodorowe",
     price: "500 zł",
     category: "Twarz",
-    locations: ["Sierpc", "Łódź"],
+    locations: ["Sierpc", "Andrespol"],
     image: "/offer/wodorowe.jpg",
     description:
       "Zaawansowany zabieg, który usuwa nadmiar sebum i zanieczyszczenia oraz neutralizuje wolne rodniki odpowiedzialne za przedwczesne starzenie skóry. Doskonały dla cery tłustej, mieszanej i problematycznej, a także dla każdego, kto chce przywrócić skórze świeżość i naturalny blask.",
@@ -38,7 +38,7 @@ export const OFFERS: Offer[] = [
     title: "Infuzja tlenowa",
     price: "500 zł",
     category: "Twarz",
-    locations: ["Sierpc", "Łódź"],
+    locations: ["Sierpc", "Andrespol"],
     image: "/offer/infuzja.jpg",
     description:
       "Zabieg wykorzystujący czysty tlen pod ciśnieniem do wtłaczania składników aktywnych w głąb skóry. Zapewnia natychmiastowe odżywienie i regenerację — bez bólu i okresu rekonwalescencji. Idealny dla zmęczonej, odwodnionej i pozbawionej blasku cery.",
@@ -55,7 +55,7 @@ export const OFFERS: Offer[] = [
     title: "Oczyszczanie wodorowe + infuzja tlenowa",
     price: "500 zł",
     category: "Twarz",
-    locations: ["Sierpc", "Łódź"],
+    locations: ["Sierpc", "Andrespol"],
     description:
       "Połączenie dwóch zabiegów, które kompleksowo odpowiadają na potrzeby skóry. Najpierw dokładne oczyszczenie z zanieczyszczeń i wolnych rodników, a następnie intensywne nawilżenie, odżywienie i regeneracja dzięki infuzji tlenowej.",
     effects: [
@@ -71,7 +71,7 @@ export const OFFERS: Offer[] = [
     title: "Żelazko przeciwzmarszczkowe — twarz",
     price: "500 zł",
     category: "Twarz",
-    locations: ["Sierpc", "Łódź"],
+    locations: ["Sierpc", "Andrespol"],
     description:
       "Zabieg z wykorzystaniem żelazka kosmetycznego, który wspomaga przenikanie substancji aktywnych, pobudza mikrokrążenie i stymuluje skórę do regeneracji. Skutecznie spowalnia pierwsze oznaki starzenia i przywraca wypoczęty wygląd.",
     effects: [
@@ -87,7 +87,7 @@ export const OFFERS: Offer[] = [
     title: "Żelazko antycellulitowe — ciało",
     price: "500 zł",
     category: "Ciało",
-    locations: ["Sierpc", "Łódź"],
+    locations: ["Sierpc", "Andrespol"],
     description:
       "Zabieg z wykorzystaniem żelazka kosmetycznego, który poprawia mikrokrążenie, wspomaga metabolizm komórkowy i zwiększa skuteczność działania preparatów antycellulitowych. Pomaga w walce z cellulitem i utratą jędrności.",
     effects: [

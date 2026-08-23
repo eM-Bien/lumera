@@ -12,27 +12,27 @@ const cinzel = Cinzel({
   variable: "--font-cinzel",
 });
 
-const PHONE = "+48 600 000 000";
-const PHONE_HREF = "+48600000000";
-const EMAIL = "kontakt@lumera.pl";
+const PHONE = "+48 505 829 913";
+const PHONE_HREF = "+48505829913";
+const EMAIL = "kontakt@lumera-clinic.pl";
 
 const LOCATIONS = [
-  { city: "Sierpc", street: "ul. Przykładowa 12", zip: "09-200" },
-  { city: "Łódź", street: "ul. Przykładowa 34", zip: "90-001" },
+  { city: "Sierpc", street: "ul. Andersa 11", zip: "09-200" },
+  { city: "Andrespol", street: "ul. Rokicińska 130/8", zip: "95-020" },
 ];
 
 const SOCIALS = [
   {
     name: "Instagram",
-    href: "https://instagram.com/lumera.studio",
+    href: "https://instagram.com/lumera_pl",
     icon: "/icons/insta.svg",
-    label: "@lumera.studio",
+    label: "@lumera_pl",
   },
   {
     name: "Facebook",
-    href: "https://facebook.com/lumera.studio",
+    href: "https://facebook.com/lumera.clinic",
     icon: "/icons/facebook.svg",
-    label: "/lumera.studio",
+    label: "/lumera.clinic",
   },
 ];
 
