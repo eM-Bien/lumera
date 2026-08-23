@@ -30,9 +30,9 @@ const SOCIALS = [
   },
   {
     name: "Facebook",
-    href: "https://facebook.com/lumera.clinic",
+    href: "https://facebook.com/lumera.selfcare",
     icon: "/icons/facebook.svg",
-    label: "/lumera.clinic",
+    label: "/lumera.selfcare",
   },
 ];
 
