@@ -18,7 +18,7 @@ export type Ebook = {
 export const EBOOKS: Ebook[] = [
   {
     id: "ebook-1",
-    cover: "/ebooks/poznaj-swoja-skore-ebook.png",
+    cover: "/ebooks/poznaj-swoja-skore-ebook.webp",
     title: "Poznaj swoją skórę",
     tagline: "Krótkie zdanie, które mówi, co z tego będziesz mieć.",
     description:

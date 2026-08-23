@@ -110,6 +110,7 @@ export default function LightsBackground({
     let H = 0;
     let dpr = 1;
     let rafId: number | null = null;
+    let running = false; // pętla aktywna tylko, gdy widoczna i karta na wierzchu
     const lights: Light[] = [];
     let pull = 0;
     let prevPhase: string = "idle";
@@ -279,15 +280,51 @@ export default function LightsBackground({
         drawLight(m, t);
       }
 
-      if (!reduce) rafId = requestAnimationFrame(frame);
+      if (!reduce && running) rafId = requestAnimationFrame(frame);
     }
 
     window.addEventListener("resize", resize);
     resize();
-    rafId = requestAnimationFrame(frame);
+
+    if (reduce) {
+      // brak ruchu — jedna statyczna klatka
+      frame(performance.now());
+    }
+
+    // pauzujemy pętlę, gdy tło jest poza ekranem lub karta w tle (oszczędza CPU)
+    let onScreen = true;
+    const startLoop = () => {
+      if (running || reduce) return;
+      running = true;
+      last = performance.now();
+      rafId = requestAnimationFrame(frame);
+    };
+    const stopLoop = () => {
+      running = false;
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    };
+    const sync = () => {
+      if (onScreen && !document.hidden) startLoop();
+      else stopLoop();
+    };
+    const io = new IntersectionObserver(
+      ([e]) => {
+        onScreen = e.isIntersecting;
+        sync();
+      },
+      { threshold: 0 },
+    );
+    io.observe(canvas);
+    document.addEventListener("visibilitychange", sync);
+    sync();
 
     return () => {
-      if (rafId !== null) cancelAnimationFrame(rafId);
+      stopLoop();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", sync);
       window.removeEventListener("resize", resize);
     };
     // variant/hues/phase czytane przez ref — celowo poza deps, by nie reinitować

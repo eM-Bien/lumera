@@ -535,6 +535,7 @@ export default function InkBackground({
     window.addEventListener("touchmove", onTouch, { passive: true });
 
     let raf = 0;
+    let running = true; // wstrzymujemy symulację, gdy karta jest w tle
     let last = performance.now();
     const frame = (now: number) => {
       const dt = Math.min((now - last) / 1000, 0.016);
@@ -551,12 +552,27 @@ export default function InkBackground({
       }
       step(dt);
       renderToScreen();
-      raf = requestAnimationFrame(frame);
+      if (running) raf = requestAnimationFrame(frame);
     };
     raf = requestAnimationFrame(frame);
 
+    // pauza symulacji, gdy karta przechodzi w tło (oszczędza GPU/baterię)
+    const onVis = () => {
+      if (document.hidden) {
+        running = false;
+        cancelAnimationFrame(raf);
+      } else if (!running) {
+        running = true;
+        last = performance.now();
+        raf = requestAnimationFrame(frame);
+      }
+    };
+    document.addEventListener("visibilitychange", onVis);
+
     return () => {
+      running = false;
       cancelAnimationFrame(raf);
+      document.removeEventListener("visibilitychange", onVis);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onPointer);
       window.removeEventListener("touchmove", onTouch);

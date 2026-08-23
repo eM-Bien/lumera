@@ -106,7 +106,7 @@ export default function LetterBackground({
                 flowerScale={1.8}
               />
               <Flower
-                src="/flowers/peonia-1.png"
+                src="/flowers/peonia-1.webp"
                 size={`${box.h * 0.45}px`}
                 left={`${box.cx - box.h * 0.55}px`}
                 top={`${box.cy + box.h * 0.08}px`}
@@ -119,7 +119,7 @@ export default function LetterBackground({
 
             <div className={styles.front}>
               <Flower
-                src="/flowers/gozdzik.png"
+                src="/flowers/gozdzik.webp"
                 size={`${plantW}px`}
                 left={`${box.cx - box.h * 0.3}px`}
                 top={`${plantTop}px`}

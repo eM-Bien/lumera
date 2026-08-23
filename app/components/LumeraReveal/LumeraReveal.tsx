@@ -84,6 +84,10 @@ export interface LumeraRevealApi {
   start(): void;
   stop(): void;
   replay(): void;
+  /** Wstrzymuje pętlę bez resetu stanu (np. gdy hero poza ekranem). */
+  pause(): void;
+  /** Wznawia pętlę, zachowując postęp animacji. */
+  resume(): void;
   destroy(): void;
   getBox(): Box;
   readonly config: LumeraConfig;
@@ -222,6 +226,7 @@ export function createLumeraReveal(
   let completed = false;
   let completeAt = 0;
   let t0 = 0;
+  let pauseStamp = 0;
 
   function computeBox(): void {
     // ============================================================
@@ -469,6 +474,26 @@ export function createLumeraReveal(
     cfg.onReplay?.();
     if (!running) start();
   }
+  // pauza/wznowienie BEZ resetu stanu (inaczej niż start/stop) — zachowuje
+  // postęp animacji, przesuwając znaczniki czasu o długość przerwy
+  function pause(): void {
+    if (!running) return;
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+    raf = null;
+    pauseStamp = performance.now();
+  }
+  function resume(): void {
+    if (running) return;
+    running = true;
+    if (pauseStamp) {
+      const delta = performance.now() - pauseStamp;
+      if (startTime) startTime += delta;
+      t0 += delta / 1000;
+      pauseStamp = 0;
+    }
+    raf = requestAnimationFrame(frame);
+  }
 
   const onResize = (): void => resize();
   window.addEventListener("resize", onResize);
@@ -485,6 +510,8 @@ export function createLumeraReveal(
     start,
     stop,
     replay,
+    pause,
+    resume,
     destroy() {
       stop();
       window.removeEventListener("resize", onResize);
@@ -673,6 +700,12 @@ export default function LumeraReveal({
       },
     });
     apiRef.current = reveal;
+
+    // pauzowanie silnika drobinek, gdy hero jest poza ekranem lub karta w tle
+    // (podłączane dopiero PO starcie intra, by nie wyścigować się ze startem)
+    let pauseIO: IntersectionObserver | null = null;
+    let pauseSync: (() => void) | null = null;
+
     reveal.ready
       .then(() => {
         layout(reveal.getBox());
@@ -682,10 +715,34 @@ export default function LumeraReveal({
           onComplete?.();
           return;
         }
+        const stage = stageRef.current;
+        const reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        if (stage && !reduceMotion) {
+          let onScreen = true;
+          pauseSync = () => {
+            if (onScreen && !document.hidden) reveal.resume();
+            else reveal.pause();
+          };
+          pauseIO = new IntersectionObserver(
+            ([e]) => {
+              onScreen = e.isIntersecting;
+              pauseSync?.();
+            },
+            { threshold: 0 },
+          );
+          pauseIO.observe(stage);
+          document.addEventListener("visibilitychange", pauseSync);
+        }
       })
       .catch((e: unknown) => console.error("[LumeraReveal]", e));
 
-    return () => reveal.destroy();
+    return () => {
+      pauseIO?.disconnect();
+      if (pauseSync) document.removeEventListener("visibilitychange", pauseSync);
+      reveal.destroy();
+    };
     // celowo bez onComplete w deps, by nie re-inicjalizować animacji
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
