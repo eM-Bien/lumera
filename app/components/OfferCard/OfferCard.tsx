@@ -86,7 +86,10 @@ export default function OfferCard({
     return () => io.disconnect();
   }, []);
 
-  // parallax na zdjęciu
+  // parallax na zdjęciu — pozycję mierzymy TYLKO w spoczynku (montaż / resize /
+  // po zatrzymaniu scrolla). Podczas przewijania liczymy przesunięcie wyłącznie
+  // z zapamiętanej pozycji i scrollY, bez czytania layoutu co klatkę — inaczej
+  // getBoundingClientRect wymusza reflow i strona zacina się przy rozwijaniu opisu.
   useEffect(() => {
     const media = mediaRef.current;
     const img = imgRef.current;
@@ -98,27 +101,48 @@ export default function OfferCard({
     if (reduce) return;
 
     let raf = 0;
-    const update = () => {
-      raf = 0;
+    let idleTimer = 0;
+    let mid = 0; // środek elementu względem dokumentu
+    let denom = 1; // mianownik postępu (vh + wysokość) / 2
+    let vh = window.innerHeight;
+
+    const measure = () => {
       const rect = media.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const progress =
-        (rect.top + rect.height / 2 - vh / 2) / (vh / 2 + rect.height / 2);
+      vh = window.innerHeight;
+      mid = rect.top + window.scrollY + rect.height / 2;
+      denom = vh / 2 + rect.height / 2;
+    };
+
+    const apply = () => {
+      raf = 0;
+      const progress = (mid - window.scrollY - vh / 2) / denom;
       const shift = Math.max(-1, Math.min(1, progress)) * 12;
       img.style.transform = `translateY(${shift}%) scale(1.25)`;
     };
 
     const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
+      if (!raf) raf = requestAnimationFrame(apply);
+      // po zatrzymaniu scrolla przelicz pozycję (koryguje dryf po rozwinięciach)
+      if (idleTimer) clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(() => {
+        measure();
+        apply();
+      }, 160);
+    };
+    const onResize = () => {
+      measure();
+      apply();
     };
 
-    update();
+    measure();
+    apply();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", onResize);
     return () => {
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", onResize);
       if (raf) cancelAnimationFrame(raf);
+      if (idleTimer) clearTimeout(idleTimer);
     };
   }, []);
 
