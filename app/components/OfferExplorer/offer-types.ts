@@ -56,6 +56,7 @@ export const OFFERS: Offer[] = [
     price: "500 zł",
     category: "Twarz",
     locations: ["Sierpc", "Andrespol"],
+    image: "/offer/oczyszczanie-infuzja.webp",
     description:
       "Połączenie dwóch zabiegów, które kompleksowo odpowiadają na potrzeby skóry. Najpierw dokładne oczyszczenie z zanieczyszczeń i wolnych rodników, a następnie intensywne nawilżenie, odżywienie i regeneracja dzięki infuzji tlenowej.",
     effects: [
@@ -72,6 +73,7 @@ export const OFFERS: Offer[] = [
     price: "500 zł",
     category: "Twarz",
     locations: ["Sierpc", "Andrespol"],
+    image: "/offer/zelazko-twarz.webp",
     description:
       "Zabieg z wykorzystaniem żelazka kosmetycznego, który wspomaga przenikanie substancji aktywnych, pobudza mikrokrążenie i stymuluje skórę do regeneracji. Skutecznie spowalnia pierwsze oznaki starzenia i przywraca wypoczęty wygląd.",
     effects: [
@@ -88,6 +90,7 @@ export const OFFERS: Offer[] = [
     price: "500 zł",
     category: "Ciało",
     locations: ["Sierpc", "Andrespol"],
+    image: "/offer/zelazko-cialo.webp",
     description:
       "Zabieg z wykorzystaniem żelazka kosmetycznego, który poprawia mikrokrążenie, wspomaga metabolizm komórkowy i zwiększa skuteczność działania preparatów antycellulitowych. Pomaga w walce z cellulitem i utratą jędrności.",
     effects: [

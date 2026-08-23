@@ -134,7 +134,9 @@ export default function OfferCard({
             ref={imgRef}
             src={offer.image}
             alt={offer.title}
-            className={styles.img}
+            className={`${styles.img} ${
+              offer.category === "Trychologia" ? styles.imgTrycho : ""
+            }`}
           />
         ) : (
           <div className={styles.imgPlaceholder} aria-hidden="true" />

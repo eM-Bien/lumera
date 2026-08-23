@@ -8,6 +8,7 @@ export type TrychoTreatment = {
   price: string; // np. "150 zł" lub "od 150 zł"
   description: string;
   locations: Location[];
+  image?: string; // ścieżka w /public
 };
 
 // Lokalizacje ustawione domyślnie na obie — dostosuj do realnej dostępności.
@@ -17,6 +18,7 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
     title: "Konsultacja trychologiczna z badaniem skóry głowy",
     price: "500 zł",
     locations: ["Sierpc", "Andrespol"],
+    image: "/offer/konsultacja-trychologiczna.webp",
     description:
       "Obejmuje szczegółowy wywiad zdrowotny, ocenę stanu włosów i skóry głowy oraz badanie trichoskopowe. Pozwala rozpoznać przyczyny problemów takich jak nadmierne wypadanie włosów, łupież, świąd, przetłuszczanie czy stany zapalne. Po konsultacji przygotowywany jest indywidualny plan terapii i pielęgnacji.",
   },
@@ -25,6 +27,7 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
     title: "Leczenie łysienia",
     price: "500 zł",
     locations: ["Sierpc", "Andrespol"],
+    image: "/offer/leczenie-lysienia.webp",
     description:
       "Postępowanie dobierane jest indywidualnie w zależności od rodzaju łysienia (androgenowe, telogenowe, plackowate i inne). Terapia może obejmować zabiegi gabinetowe, preparaty trychologiczne, zalecenia pielęgnacyjne oraz współpracę z lekarzem w razie potrzeby. Celem jest ograniczenie wypadania włosów i pobudzenie ich odrostu.",
   },
@@ -33,6 +36,7 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
     title: "Leczenie AZS, łupieżu i innych schorzeń skóry głowy",
     price: "500 zł",
     locations: ["Sierpc", "Andrespol"],
+    image: "/offer/leczenie-azs-lupiezu.webp",
     description:
       "Pomoc w terapii atopowego zapalenia skóry (AZS), łupieżu suchego i tłustego, łojotokowego zapalenia skóry, nadmiernego przetłuszczania, przesuszenia, świądu, łuszczycy skóry głowy oraz podrażnień. Terapia obejmuje odpowiednio dobrane preparaty, zabiegi i zalecenia pielęgnacyjne.",
   },
@@ -41,6 +45,7 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
     title: "Leczenie wszawicy",
     price: "500 zł",
     locations: ["Sierpc", "Andrespol"],
+    image: "/offer/leczenie-wszawicy.webp",
     description:
       "Ocena stopnia nasilenia problemu, instruktaż prawidłowego postępowania, dobór preparatów oraz zalecenia dotyczące dezynfekcji otoczenia i profilaktyki nawrotów.",
   },
@@ -49,6 +54,7 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
     title: "Infuzja na skórę głowy",
     price: "500 zł",
     locations: ["Sierpc", "Andrespol"],
+    image: "/offer/infuzja-skora-glowy.webp",
     description:
       "Nowoczesny zabieg polegający na wtłaczaniu substancji aktywnych w skórę głowy przy użyciu technologii infuzji. Składniki odżywcze, nawilżające i stymulujące cebulki włosów wspierają regenerację skóry, poprawiają kondycję włosów, ograniczają ich wypadanie i wspomagają wzrost. Zabieg jest komfortowy i nieinwazyjny.",
   },

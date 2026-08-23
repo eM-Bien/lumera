@@ -42,9 +42,15 @@
   width: 100%;
   aspect-ratio: 3 / 2; /* landscape */
   object-fit: cover;
+  object-position: center;
   display: block;
   transform: scale(1.25);
   will-change: transform;
+}
+
+/* zdjęcia trychologiczne kadrujemy wyżej (pokazujemy górną część) */
+.imgTrycho {
+  object-position: center 28%;
 }
 
 .imgPlaceholder {
