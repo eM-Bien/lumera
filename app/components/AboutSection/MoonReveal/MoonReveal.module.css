@@ -213,24 +213,33 @@
     transform: translateY(calc(var(--dp) * -30vh));
     will-change: transform, opacity;
   }
-  /* widoczny od razu, gdy sekcja wchodzi (nie czeka na przypięcie/scroll) */
-  .asideHeading,
+  /* nagłówek i opis wysuwają się od dołu przy wjeżdżaniu sekcji (jak reszta
+     nagłówków), opis zaraz po nagłówku */
+  .asideHeading {
+    --r: clamp(0, calc(var(--in, 1) / 0.55), 1);
+    transform: translateY(calc((1 - var(--r)) * 48px));
+    opacity: var(--r);
+  }
   .asideText {
-    opacity: 1;
-    transform: none;
+    --r: clamp(0, calc((var(--in, 1) - 0.15) / 0.55), 1);
+    transform: translateY(calc((1 - var(--r)) * 48px));
+    opacity: var(--r);
   }
   /* księżyc POD tekstem — rośnie w dół (origin u góry), nie nachodzi na tekst */
   /* księżyc jedzie do góry razem z tekstem, rośnie, a potem TRZYMA SIĘ na
      górze, gdy wyłania się pasek „umów" */
   .moon {
-    --rise: clamp(0, calc(var(--dp) / 0.5), 1);
     --grow: clamp(0, calc(var(--dp) / 0.6), 1);
-    position: relative;
-    top: auto;
-    left: auto;
-    margin-top: 6vh;
+    /* jedzie od dołu (spod tekstu) aż na samą górę viewportu; pasek „umów"
+       (z-index:4 > 3) zasłania jego dolną część */
+    --up: clamp(0, calc(var(--dp) / 0.85), 1);
+    position: absolute;
+    left: 50%;
+    top: 0;
+    margin: 0;
     width: min(70vw, 42vh);
-    transform: translateY(calc(var(--rise) * -34vh))
+    transform: translateX(-50%)
+      translateY(calc(80vh - var(--up) * 78vh))
       scale(calc(1 + var(--grow) * 1.7));
     transform-origin: 50% 0;
   }
