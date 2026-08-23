@@ -107,13 +107,32 @@
   will-change: transform;
 }
 
-/* powolny obrót księżyca (niezależny od scrolla) */
+/* poświata jako STATYCZNY element za księżycem — księżyc jest okrągły, więc
+   obrót nie zmienia jej wyglądu, a dzięki temu nie przeliczamy filtra co klatkę */
+.moon::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(200, 215, 255, 0.08) 45%,
+    rgba(200, 215, 255, 0.035) 60%,
+    transparent 80%
+  );
+  /* statyczne rozmycie — liczone raz, nie co klatkę (element się nie obraca) */
+  filter: blur(22px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* powolny obrót księżyca (niezależny od scrolla) — sam transform, bez filtra,
+   więc animacja jest tania (nie wymusza przeliczania cienia co klatkę) */
 .moonImg {
   display: block;
   width: 100%;
   height: auto;
   transform-origin: 50% 50%;
-  filter: drop-shadow(0 0 70px rgba(200, 215, 255, 0.28));
   animation: moonSpin 200s linear infinite;
 }
 
