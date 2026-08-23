@@ -524,8 +524,11 @@ export interface LumeraRevealProps {
   className?: string;
   /** URL zdjęcia w tle (np. '/tlo.jpg' z /public lub adres zdalny). */
   background?: string;
-  /** URL filmu w tle (np. '/clip.mp4'); ma pierwszeństwo przed `background`. */
+  /** URL filmu w tle (np. '/clip.mp4'); ma pierwszeństwo przed `background`.
+   *  Jeśli to .mp4, komponent dołoży też źródło .webm o tej samej nazwie. */
   video?: string;
+  /** Plakat filmu (klatka pokazywana natychmiast, zanim film się zbuforuje). */
+  poster?: string;
   /** Przyciemnienie zdjęcia 0..1 (kontrast pod złote logo). Domyślnie 0.5. */
   scrim?: number;
   /** Treść podpisu pod logo (renderowana wersalikami w foncie Cinzel). */
@@ -553,6 +556,7 @@ export default function LumeraReveal({
   className = "",
   background,
   video,
+  poster,
   scrim = 0.5,
   tagline = "Harmonia twarzy i ciała",
   onComplete,
@@ -709,14 +713,26 @@ export default function LumeraReveal({
           {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
           <video
             className={styles.bg}
-            src={video}
             autoPlay
             muted
             loop
             playsInline
             preload="auto"
+            poster={poster}
             aria-hidden="true"
-          />
+          >
+            {/* WebM preferowany (mniejszy), MP4 jako fallback */}
+            {video.endsWith(".mp4") && (
+              <source
+                src={video.replace(/\.mp4$/, ".webm")}
+                type="video/webm"
+              />
+            )}
+            <source
+              src={video}
+              type={video.endsWith(".webm") ? "video/webm" : "video/mp4"}
+            />
+          </video>
           <div
             className={styles.scrim}
             style={{ background: `rgba(8, 6, 24, ${scrim})` }}

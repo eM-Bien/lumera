@@ -37,7 +37,8 @@ export default function Home() {
           {skipIntro !== null && (
             <LumeraReveal
               tagline="Harmonia skóry głowy, twarzy i ciała"
-              video="/AdobeStock_1178025760.mov"
+              video="/hero-lumera.mp4"
+              poster="/hero-lumera-poster.jpg"
               scrim={0.6}
               skipIntro={skipIntro}
               onComplete={handleComplete}
