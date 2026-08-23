@@ -6,6 +6,7 @@ import {
 } from "../components/PageHeader/Typography";
 import OfferTabs from "../components/OfferTabs/OfferTabs";
 import CtaBand from "../components/CtaBand/CtaBand";
+import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 
 export default function OfferPage() {
   return (
@@ -39,6 +40,8 @@ export default function OfferPage() {
           href="/kontakt"
         />
       </div>
+
+      <ScrollToTop />
     </div>
   );
 }
