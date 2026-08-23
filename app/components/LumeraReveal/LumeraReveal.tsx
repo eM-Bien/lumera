@@ -566,7 +566,15 @@ export default function LumeraReveal({
   const stageRef = useRef<HTMLDivElement | null>(null);
   const apiRef = useRef<LumeraRevealApi | null>(null);
 
-  const [isMobile, setIsMobile] = useState(false);
+  // Ustalamy breakpoint SYNCHRONICZNIE na pierwszym renderze — komponent montuje
+  // się wyłącznie po stronie klienta (strona gate'uje go za `skipIntro !== null`),
+  // więc `window` jest dostępne. Dzięki temu logo i tagline od razu liczą się dla
+  // właściwego układu i nie ma migotania „desktop → mobile" (tekst w złym miejscu/rozmiarze).
+  const [isMobile, setIsMobile] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 768px)").matches,
+  );
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 768px)");
     const sync = () => setIsMobile(mq.matches);
