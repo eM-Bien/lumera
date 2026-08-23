@@ -183,6 +183,9 @@
 @media (max-width: 820px) {
   .scene {
     height: 240vh;
+    /* najpierw widać wszystkie kafle „Nasze wartości"; dopiero potem ta
+       sekcja wjeżdża od dołu przy scrollu (bez wcześniejszego zakrywania) */
+    margin-top: 0;
   }
   /* układ pionowy: tekst na górze, pod nim księżyc */
   .sticky {
@@ -193,6 +196,9 @@
     align-items: center;
     justify-content: flex-start;
     padding-top: 10vh;
+    /* cała sekcja wysuwa się od dołu przy scrollu (parallax wejścia) */
+    transform: translateY(calc((1 - var(--in, 1)) * 26vh));
+    will-change: transform;
   }
   /* tekst „Nasza filozofia" — w normalnym flow, na górze; przez chwilę
      jedzie do góry przy scrollu, potem gaśnie */
@@ -224,7 +230,7 @@
     left: auto;
     margin-top: 6vh;
     width: min(70vw, 42vh);
-    transform: translateY(calc(var(--rise) * -22vh))
+    transform: translateY(calc(var(--rise) * -34vh))
       scale(calc(1 + var(--grow) * 1.7));
     transform-origin: 50% 0;
   }

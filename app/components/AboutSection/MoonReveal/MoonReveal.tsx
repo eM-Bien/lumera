@@ -34,6 +34,10 @@ export default function MoonReveal({ title, paragraphs, children }: Props) {
       const scrolled = Math.min(total, Math.max(0, -rect.top));
       const p = total > 0 ? scrolled / total : 0;
       el.style.setProperty("--dp", String(p));
+      // wejście od dołu: 0, gdy góra sceny jest przy dolnej krawędzi ekranu;
+      // 1, gdy dojedzie do góry (przypnie się) — steruje slajdem na mobile
+      const enter = Math.min(1, Math.max(0, (vh - rect.top) / vh));
+      el.style.setProperty("--in", String(enter));
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
