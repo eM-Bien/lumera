@@ -124,10 +124,10 @@ export default function ContactForm() {
   if (status === "success") {
     return (
       <div className={styles.success} role="status">
-        <p className={styles.successTitle}>Dziękujemy!</p>
+        <p className={styles.successTitle}>Do usłyszenia!</p>
         <p className={styles.successText}>
-          Twoja prośba o termin została wysłana. Odezwiemy się na podany
-          kontakt, żeby potwierdzić szczegóły.
+          Otrzymaliśmy Twoje zgłoszenie — odezwiemy się, żeby potwierdzić
+          termin.
         </p>
       </div>
     );

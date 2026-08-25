@@ -270,23 +270,61 @@
 }
 
 .success {
-  max-width: 620px;
-  padding: 2.5rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(194, 163, 107, 0.25);
-  border-radius: 20px;
+  width: 100%;
+  max-width: 640px;
+  margin: auto; /* wyśrodkowanie w panelu — poziomo i pionowo */
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2.4rem; /* większa przerwa między nagłówkiem a opisem */
+  transform: translateY(-8vh); /* trochę wyżej niż sam środek panelu */
+}
+
+@media (max-width: 900px) {
+  .success {
+    transform: none; /* na mobile naturalny przepływ, bez podnoszenia */
+  }
 }
 
 .successTitle {
-  margin: 0 0 0.6rem;
-  font-family: var(--font-decoration), cursive;
-  font-size: 2rem;
-  color: #c2a36b;
+  margin: 0;
+  /* rozmiar i styl jak nagłówki na /o-lumera */
+  font-family: var(--font-header), serif;
+  font-weight: 700;
+  font-size: clamp(2.8rem, 7vw, 4.8rem);
+  line-height: 1.02;
+  color: #f0e6d2;
+  /* wjeżdża od dołu */
+  animation: successRise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .successText {
   margin: 0;
   font-family: var(--font-basic), sans-serif;
+  font-size: clamp(1.1rem, 1.5vw, 1.4rem);
   line-height: 1.7;
   color: #c9bfa8;
+  max-width: 44ch;
+  /* wjeżdża od dołu, chwilę po nagłówku */
+  animation: successRise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+
+@keyframes successRise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .successTitle,
+  .successText {
+    animation: none;
+  }
 }
