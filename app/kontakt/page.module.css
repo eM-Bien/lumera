@@ -30,7 +30,7 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
-  padding-top: 16vh; /* zejście spod nawigacji (reszta odstępu z .reach) */
+  padding-top: 11vh; /* zejście spod nawigacji (reszta odstępu z .reach) */
 }
 
 /* „Zadzwoń / Napisz" — nad panelem, z większym odstępem do formularza */
@@ -39,7 +39,7 @@
   flex-wrap: nowrap;
   gap: 1rem 2vw;
   padding: 0 3vw 0 6vw;
-  margin-bottom: 8vh;
+  margin-bottom: 4vh;
 }
 
 .reachItem {
