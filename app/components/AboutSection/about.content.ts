@@ -19,18 +19,22 @@ export const values = [
   {
     label: "Harmonia",
     text: "Wierzymy, że piękno jest odzwierciedleniem wewnętrznej równowagi i dobrego samopoczucia.",
+    long: "Chcemy, żeby w Lumera można było po prostu poczuć się dobrze. Przyjść, zwolnić na chwilę i mieć pewność, że ktoś naprawdę wsłucha się w Twoje potrzeby — bez pośpiechu, oceniania i przypadkowych rozwiązań.\n\nWierzymy, że dbanie o siebie to coś więcej niż zabieg czy dobrze dobrany kosmetyk. To także moment tylko dla Ciebie — czas, kiedy nie musisz o niczym pamiętać ani o nikogo się troszczyć. Tym razem to Ty jesteś najważniejsza, a my zadbamy o resztę.\n\nDlatego zależy nam nie tylko na efektach, ale też na tym, jak czujesz się podczas wizyty. Chcemy, żebyś czuła się swobodnie, bezpiecznie i zaopiekowana, a każda wizyta była czymś, na co naprawdę masz ochotę wracać.\n\nBo dla nas piękno zaczyna się od dobrego samopoczucia. Od chwili oddechu, troski o siebie i poczucia, że jesteś w dobrych rękach.",
   },
   {
     label: "Wiedza",
     text: "Nieustannie rozwijamy swoje kompetencje, aby oferować rozwiązania oparte na aktualnej wiedzy z zakresu kosmetologii i trychologii.",
+    long: "Kosmetologia i trychologia nieustannie się rozwijają — i my razem z nimi. Regularnie się szkolimy, śledzimy badania i weryfikujemy metody, aby proponować rozwiązania skuteczne i bezpieczne, a nie modne na chwilę. Każdą rekomendację opieramy na wiedzy, nie na domysłach.",
   },
   {
     label: "Indywidualne podejście",
     text: "Słuchamy, obserwujemy i dobieramy pielęgnację zgodnie z rzeczywistymi potrzebami naszych klientów",
+    long: "Nie wierzymy w uniwersalne recepty. Zanim cokolwiek zaproponujemy, słuchamy, pytamy i obserwujemy — bo Twoja skóra, skóra głowy i historia są niepowtarzalne. Pielęgnację dobieramy do Twoich realnych potrzeb, trybu życia i celów, a plan zmieniamy, gdy zmieniają się Twoje potrzeby.",
   },
   {
     label: "Troska",
     text: "Tworzymy atmosferę bezpieczeństwa, zaufania i uważności, ponieważ wiemy, jak ważne jest poczucie zaopiekowania.",
+    long: "Chcemy, aby każda osoba czuła się tu bezpiecznie i zaopiekowana od pierwszej chwili. Dbamy o atmosferę zaufania, spokoju i uważności — bez oceniania i bez pośpiechu. Dla nas troska nie jest dodatkiem do zabiegu, lecz jego sednem.",
   },
 ];
 

@@ -23,6 +23,10 @@ export default function SmoothScroll() {
       syncTouch: false, // dotyk zostawiamy natywnemu scrollowi
     });
 
+    // udostępniamy instancję, by inne komponenty mogły zablokować scroll
+    // (np. modal wartości: lenis.stop() / lenis.start())
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+
     let raf = 0;
     const loop = (time: number) => {
       lenis.raf(time);
@@ -33,6 +37,7 @@ export default function SmoothScroll() {
     return () => {
       cancelAnimationFrame(raf);
       lenis.destroy();
+      delete (window as unknown as { __lenis?: Lenis }).__lenis;
     };
   }, []);
 

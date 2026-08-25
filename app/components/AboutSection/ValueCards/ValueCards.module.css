@@ -266,3 +266,291 @@
     animation: none;
   }
 }
+
+/* =========================================================================
+   Kafle klikalne + pełnoekranowe „rozwinięcie" wartości
+   ========================================================================= */
+
+.card {
+  cursor: pointer;
+}
+.card:focus-visible {
+  outline: 2px solid rgba(210, 225, 255, 0.65);
+  outline-offset: 4px;
+}
+
+/* delikatna podpowiedź, że kafel jest klikalny */
+.more {
+  margin-top: 0.4rem;
+  font-family: var(--font-basic), sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #c2a36b;
+  opacity: 0.85;
+}
+
+/* --- tło modala (przyciemnienie + rozmycie), zamyka po kliknięciu --------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0; /* panel dochodzi do samych krawędzi ekranu */
+  background: rgba(4, 3, 15, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  perspective: 1600px; /* dla obrotu panelu „w poziomie" (rotateY) */
+  animation: valueFadeIn 0.5s ease both;
+}
+.overlayClosing {
+  animation: valueFadeOut 0.3s ease both;
+}
+
+/* --- panel: wylatuje z kafla na środek, powiększa się i obraca ------------ */
+.modal {
+  position: relative;
+  /* rozmiar docelowy = cały viewport (animacja dochodzi tu na końcu) */
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden; /* brak paska podczas animacji (pion→obrót→pełny ekran) */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* treść do lewej */
+  justify-content: center; /* nadal wyśrodkowana w pionie */
+  text-align: left;
+  gap: clamp(1rem, 2.4vh, 1.9rem);
+  padding: clamp(2rem, 6vw, 4rem) clamp(2rem, 6vw, 4rem) clamp(2rem, 6vw, 4rem)
+    clamp(2.5rem, 10vw, 8rem);
+  border-radius: 0;
+  border: none;
+  /* przyjemny, głęboki gradient z delikatnymi poświatami */
+  background:
+    radial-gradient(
+      120% 80% at 50% -10%,
+      rgba(94, 82, 132, 0.4) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      110% 90% at 50% 115%,
+      rgba(44, 58, 108, 0.35) 0%,
+      transparent 60%
+    ),
+    linear-gradient(160deg, #16123c 0%, #0a0720 55%, #05030f 100%);
+  transform-style: preserve-3d;
+  animation: valueOpen 1.7s both;
+  will-change: transform, width, height, opacity;
+}
+.modalClosing {
+  /* ease-in: wolno, potem coraz szybciej — „zassanie" do środka */
+  animation: valueClose 0.55s cubic-bezier(0.6, 0, 0.9, 0.25) both;
+}
+
+/* Etap 1 (0→40%): pionowy panel w rozmiarze kafla wyjeżdża z rzędu na środek
+   i staje się pionowym panelem (ease-out).
+   Etap 2 (40→100%): obrót „w poziomie" (rotateY) — wolno, potem szybciej
+   (ease-in) — i rozszerzenie na cały ekran. */
+@keyframes valueOpen {
+  0% {
+    width: var(--cw, 280px);
+    height: var(--ch, 360px);
+    border-radius: 22px;
+    opacity: 0.35;
+    transform: translate(var(--dx, 0), var(--dy, 0)) rotateY(0deg);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  40% {
+    width: min(58vw, 400px);
+    height: min(82vh, 660px);
+    border-radius: 26px;
+    opacity: 1;
+    transform: translate(0, 0) rotateY(0deg);
+    animation-timing-function: cubic-bezier(0.6, 0, 0.9, 0.35);
+  }
+  100% {
+    width: 100%;
+    height: 100dvh;
+    border-radius: 0;
+    opacity: 1;
+    transform: translate(0, 0) rotateY(360deg);
+  }
+}
+/* zamknięcie: panel zapada się do punktu na środku (zassanie) — skala w dół,
+   obrót i zanik; rozmiar zostaje pełnoekranowy, kurczy nas transform */
+@keyframes valueClose {
+  from {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotateY(0deg);
+  }
+  to {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.03) rotateY(-220deg);
+  }
+}
+@keyframes valueFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes valueFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.modalIcon {
+  display: grid;
+  place-items: center;
+  width: clamp(72px, 9vw, 118px);
+  height: clamp(72px, 9vw, 118px);
+  filter: drop-shadow(0 0 20px rgba(180, 205, 255, 0.4));
+}
+.modalTitle {
+  margin: 0;
+  font-family: var(--font-header), serif;
+  font-weight: 700;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 1.02;
+  color: #f0e6d2;
+}
+.modalText {
+  margin: 0;
+  max-width: 62ch;
+  font-family: var(--font-basic), sans-serif;
+  font-size: clamp(0.95rem, 1.2vw, 1.12rem);
+  line-height: 1.6;
+  color: #d8c1a0;
+}
+.modalText p {
+  margin: 0 0 1em;
+}
+.modalText p:last-child {
+  margin-bottom: 0;
+}
+
+.close {
+  position: absolute;
+  top: clamp(0.8rem, 2vw, 1.4rem);
+  right: clamp(0.8rem, 2vw, 1.4rem);
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(200, 215, 255, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+  color: #f0e6d2;
+  font-size: 1.7rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+.close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(200, 215, 255, 0.5);
+}
+.close:focus-visible {
+  outline: 2px solid rgba(210, 225, 255, 0.65);
+  outline-offset: 2px;
+}
+
+/* treść ukryta podczas rozsuwania/obrotu — wjeżdża jedna po drugiej dopiero,
+   gdy panel rozłoży się na cały ekran (koniec „znikania napisów w trakcie") */
+.modalIcon,
+.modalTitle,
+.modalText {
+  opacity: 0;
+  animation: valueContentIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+/* pełna treść pojawia się dopiero, gdy karta rozłoży się na cały ekran —
+   z wyraźnym odstępem między kolejnymi elementami (wysuwają się od dołu) */
+.modalIcon {
+  animation-delay: 1.85s;
+}
+.modalTitle {
+  animation-delay: 2.15s;
+}
+.modalText {
+  animation-delay: 2.45s;
+}
+
+/* stabilna ikona na czas powiększania (poza panelem, więc się nie rozjeżdża):
+   pojawia się, chwilę stoi, znika przed obrotem */
+.flyLabel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: clamp(90px, 12vw, 150px);
+  height: clamp(90px, 12vw, 150px);
+  filter: drop-shadow(0 0 20px rgba(180, 205, 255, 0.4));
+  pointer-events: none;
+  z-index: 1;
+  animation: flyLabelPhase 1.7s ease both;
+}
+@keyframes flyLabelPhase {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+  12% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  34% {
+    opacity: 1;
+  }
+  46% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes valueContentIn {
+  from {
+    opacity: 0;
+    transform: translateY(44px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* przy zamykaniu treść znika od razu (panel kurczy się „pusty") */
+.modalClosing .modalIcon,
+.modalClosing .modalTitle,
+.modalClosing .modalText {
+  animation: none;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal {
+    animation: valueFadeIn 0.3s ease both;
+  }
+  .modalClosing {
+    animation: valueFadeOut 0.25s ease both;
+  }
+  .modalIcon,
+  .modalTitle,
+  .modalText {
+    animation: none;
+    opacity: 1;
+  }
+  .flyLabel {
+    display: none;
+  }
+}
