@@ -19,11 +19,12 @@ export default function EbooksPage() {
           delayMs={150}
         />
         <DecorativeSubtitle className={styles.subtitle}>
-          Wiedza, którą zabierzesz ze sobą
+          Wiedza, która z Tobą zostanie
         </DecorativeSubtitle>
         <Description className={styles.desc}>
-          Praktyczne poradniki o świadomej pielęgnacji — do przeczytania w swoim
-          tempie, kiedy tylko chcesz. Z czasem pojawi się ich więcej.
+          Rzetelna wiedza i praktyczne wskazówki, dzięki którym łatwiej
+          zrozumiesz swoją skórę i wybierzesz to, czego naprawdę potrzebuje.
+          Zaglądaj tu czasem - pojawi się ich więcej.
         </Description>
       </header>
 

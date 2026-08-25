@@ -20,13 +20,13 @@ export const EBOOKS: Ebook[] = [
     id: "ebook-1",
     cover: "/ebooks/poznaj-swoja-skore-ebook.webp",
     title: "Poznaj swoją skórę",
-    tagline: "Krótkie zdanie, które mówi, co z tego będziesz mieć.",
+    tagline: "Przewodnik świadomej pielęgnacji",
     description:
-      "Tu opis ebooka — o czym jest, co znajdziesz w środku i dlaczego warto. Kilka zdań, które rozwijają tagline i budują wartość.",
+      "Testujesz kolejne kosmetyki z drogerii w nadziei, że w końcu trafisz na ten właściwy, ale efektów wciąż brak? Ten e-book pomoże Ci zrozumieć, czego naprawdę potrzebuje Twoja skóra i przestać dobierać pielęgnację na oślep.",
     forWhom: [
-      "Dla osób, które chcą zadbać o pielęgnację świadomie",
-      "Dla początkujących i tych, którzy chcą uporządkować wiedzę",
-      "Dla każdego, kto woli konkrety zamiast ogólników",
+      "Dla Ciebie, jeśli nie wiesz, jaki masz typ skóry",
+      "Dla Ciebie, jeśli masz dość kupowania kolejnych kosmetyków metodą prób i błędów",
+      "Dla Ciebie, jeśli Twoja kosmetyczka jest pełna produktów, ale nadal nie wiesz, co właściwie służy Twojej skórze",
     ],
     details: {
       format: "PDF",

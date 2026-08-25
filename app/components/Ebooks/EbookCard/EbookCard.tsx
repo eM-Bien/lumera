@@ -61,7 +61,7 @@ export default function EbookCard({ ebook }: EbookCardProps) {
         <p className={styles.note}>
           Płatność elektroniczna · dostęp do pliku od razu po zakupie
         </p>
-        <p className={styles.note}>Dostęp dożywotni · czytaj, kiedy chcesz</p>
+        <p className={styles.note}>Dostęp dożywotni · zawsze pod ręką</p>
       </div>
     </article>
   );
