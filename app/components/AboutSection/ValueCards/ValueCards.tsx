@@ -82,14 +82,14 @@ export default function ValueCards() {
   // Escape + blokada scrolla + fokus na „zamknij", gdy otwarte
   useEffect(() => {
     if (open === null) return;
-    // zatrzymujemy smooth scroll (Lenis) — samo overflow:hidden go nie blokuje
+    // Blokada scrolla BEZ ruszania overflow na body — przy Lenisie
+    // overflow:hidden potrafi zwinąć wysokość i „wyrzucić" stronę na górę.
+    // Zamiast tego zatrzymujemy Lenisa i blokujemy zdarzenia przewijania.
     const lenis = (
       window as unknown as { __lenis?: { stop: () => void; start: () => void } }
     ).__lenis;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
     lenis?.stop();
-    closeBtnRef.current?.focus();
+    closeBtnRef.current?.focus({ preventScroll: true });
 
     const SCROLL_KEYS = [
       "ArrowUp",
@@ -107,14 +107,15 @@ export default function ValueCards() {
       }
       if (SCROLL_KEYS.includes(e.key)) e.preventDefault();
     };
-    const preventTouch = (e: TouchEvent) => e.preventDefault();
+    const preventScroll = (e: Event) => e.preventDefault();
     document.addEventListener("keydown", onKey);
-    window.addEventListener("touchmove", preventTouch, { passive: false });
+    window.addEventListener("wheel", preventScroll, { passive: false });
+    window.addEventListener("touchmove", preventScroll, { passive: false });
 
     return () => {
       document.removeEventListener("keydown", onKey);
-      window.removeEventListener("touchmove", preventTouch);
-      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("wheel", preventScroll);
+      window.removeEventListener("touchmove", preventScroll);
       lenis?.start();
     };
   }, [open, requestClose]);
