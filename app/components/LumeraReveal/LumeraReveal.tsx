@@ -624,9 +624,14 @@ export default function LumeraReveal({
     return () => mq.removeEventListener("change", sync);
   }, []);
 
+  // parallax TYLKO na desktopie — na mobile transformy oparte na `vh` skaczą,
+  // gdy pasek adresu przeglądarki chowa się/pokazuje przy scrollu (100vh zmienia
+  // się), przez co hero „przeskakuje". Na dotyku zostawiamy statyczne hero.
+  const useParallax = parallax && !isMobile;
+
   // parallax sterowany scrollem — logo w górę, film w dół (chowają się)
   useEffect(() => {
-    if (!parallax) return;
+    if (!useParallax) return;
     const stage = stageRef.current;
     if (!stage) return;
     let raf = 0;
@@ -647,7 +652,7 @@ export default function LumeraReveal({
       window.removeEventListener("resize", onScroll);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [parallax]);
+  }, [useParallax]);
 
   // na mobile drobinki I ostre logo to TYLKO górna część (lumera-top)
   const logoSrc = isMobile ? "/lumera-top.svg" : src;
@@ -771,7 +776,7 @@ export default function LumeraReveal({
     <div
       ref={stageRef}
       className={`${styles.stage} ${className} ${exiting ? styles.exiting : ""} ${
-        parallax ? styles.parallax : ""
+        useParallax ? styles.parallax : ""
       }`}
     >
       {/* Tło (film lub zdjęcie) + przyciemnienie — pod canvasem */}

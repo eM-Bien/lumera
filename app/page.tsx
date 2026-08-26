@@ -58,7 +58,7 @@ export default function Home() {
         </div>
         {desktop && inkReady && (
           <InkBackground
-            zIndex={2} /* nad zdjęciem, pod nawigacją */
+            zIndex={4} /* nad hero i sekcją „Odkryj" (z-index:3), pod nawigacją (50) */
             blendMode="screen" /* rozjaśnia las jak smugi światła */
             ink={[0.95, 0.82, 0.55]} /* ciepłe, jasne złoto */
             intensity={0.8}
