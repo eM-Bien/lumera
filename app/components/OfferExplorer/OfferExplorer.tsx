@@ -8,7 +8,10 @@ import styles from "./OfferExplorer.module.css";
 
 export default function OfferExplorer() {
   const [query, setQuery] = useState("");
-  const [openIds, setOpenIds] = useState<Set<string>>(new Set());
+  // opisy rozwinięte „na dzień dobry" — wszystkie zabiegi otwarte na start
+  const [openIds, setOpenIds] = useState<Set<string>>(
+    () => new Set(OFFERS.map((o) => o.id)),
+  );
   const [activeLoc, setActiveLoc] = useState<Set<Location>>(new Set());
 
   const toggleLocation = (loc: Location) => {
