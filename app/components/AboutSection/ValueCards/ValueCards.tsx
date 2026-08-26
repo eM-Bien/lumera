@@ -33,9 +33,16 @@ export default function ValueCards() {
 
   const [open, setOpen] = useState<number | null>(null);
   const [closing, setClosing] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [origin, setOrigin] = useState({ dx: 0, dy: 0, cw: 280, ch: 360 });
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+  const modalRef = useRef<HTMLDivElement | null>(null);
   const lastFocused = useRef<HTMLElement | null>(null);
+  const expandedRef = useRef(false);
+
+  useEffect(() => {
+    expandedRef.current = expanded;
+  }, [expanded]);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -60,6 +67,7 @@ export default function ValueCards() {
     lastFocused.current = el;
     setOrigin({ dx, dy, cw: rect.width, ch: rect.height });
     setClosing(false);
+    setExpanded(false);
     setOpen(i);
   };
 
@@ -81,6 +89,12 @@ export default function ValueCards() {
     lenis?.stop();
     closeBtnRef.current?.focus({ preventScroll: true });
 
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const revealTimer = window.setTimeout(
+      () => setExpanded(true),
+      reduce ? 0 : 1750,
+    );
+
     const SCROLL_KEYS = [
       "ArrowUp",
       "ArrowDown",
@@ -90,22 +104,31 @@ export default function ValueCards() {
       "End",
       " ",
     ];
+    const insideModal = (e: Event) =>
+      expandedRef.current &&
+      modalRef.current !== null &&
+      e.target instanceof Node &&
+      modalRef.current.contains(e.target);
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         requestClose();
         return;
       }
-      if (SCROLL_KEYS.includes(e.key)) e.preventDefault();
+      if (SCROLL_KEYS.includes(e.key) && !insideModal(e)) e.preventDefault();
     };
-    const preventScroll = (e: Event) => e.preventDefault();
+    const preventScroll = (e: Event) => {
+      if (!insideModal(e)) e.preventDefault();
+    };
     document.addEventListener("keydown", onKey);
     window.addEventListener("wheel", preventScroll, { passive: false });
     window.addEventListener("touchmove", preventScroll, { passive: false });
 
     return () => {
+      window.clearTimeout(revealTimer);
       document.removeEventListener("keydown", onKey);
       window.removeEventListener("wheel", preventScroll);
       window.removeEventListener("touchmove", preventScroll);
+      setExpanded(false);
       lenis?.start();
     };
   }, [open, requestClose]);
@@ -164,7 +187,10 @@ export default function ValueCards() {
             onClick={requestClose}
           >
             <div
-              className={`${styles.modal} ${closing ? styles.modalClosing : ""}`}
+              ref={modalRef}
+              className={`${styles.modal} ${closing ? styles.modalClosing : ""} ${
+                expanded ? styles.modalScroll : ""
+              }`}
               style={
                 {
                   ["--dx"]: `${origin.dx}px`,

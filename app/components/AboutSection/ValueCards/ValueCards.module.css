@@ -321,6 +321,26 @@
   animation: valueClose 0.55s cubic-bezier(0.6, 0, 0.9, 0.25) both;
 }
 
+/* Po rozwinięciu na pełny ekran pozwól przewijać dłuższe opisy (mobile).
+   Auto-marginesy centrują treść, gdy się mieści, i pozwalają przewijać od
+   góry, gdy jest wyższa niż ekran. Pasek przewijania ukryty. */
+.modalScroll {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  justify-content: flex-start;
+  scrollbar-width: none;
+}
+.modalScroll::-webkit-scrollbar {
+  display: none;
+}
+.modalScroll > .modalTitle {
+  margin-top: auto;
+}
+.modalScroll > .modalText {
+  margin-bottom: auto;
+}
+
 @keyframes valueOpen {
   0% {
     width: var(--cw, 280px);
