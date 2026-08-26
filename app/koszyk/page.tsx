@@ -3,7 +3,7 @@
 import styles from "./page.module.css";
 import { useTransition } from "@/app/transition/TransitionProvider";
 import { useCart } from "@/app/components/Ebooks/Cart/CartContext";
-import { formatPrice } from "@/app/components/Ebooks/ebook-types";
+import { EBOOKS, formatPrice } from "@/app/components/Ebooks/ebook-types";
 import CheckoutSteps from "@/app/components/CheckoutSteps/CheckoutSteps";
 import EmptyCart from "../components/Ebooks/Cart/EmptyCart/EmptyCart";
 import PrimaryButton from "../components/Buttons/PrimaryButton/PrimaryButton";
@@ -45,7 +45,9 @@ export default function CartPage() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     className={styles.cover}
-                    src={item.cover}
+                    src={
+                      EBOOKS.find((e) => e.id === item.id)?.cover ?? item.cover
+                    }
                     alt={item.title}
                   />
 
