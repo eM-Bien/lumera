@@ -30,7 +30,7 @@ export const EBOOKS: Ebook[] = [
     ],
     details: {
       format: "PDF",
-      pages: 48,
+      pages: 100,
       language: "polski",
     },
     price: 49,
