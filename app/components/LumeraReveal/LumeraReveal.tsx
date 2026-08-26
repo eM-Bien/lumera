@@ -402,8 +402,11 @@ export function createLumeraReveal(
 
   function resize(): void {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
-    W = canvas.clientWidth || window.innerWidth;
-    H = canvas.clientHeight || window.innerHeight;
+    const nextW = canvas.clientWidth || window.innerWidth;
+    const nextH = canvas.clientHeight || window.innerHeight;
+    if (nextW === W && nextH === H) return;
+    W = nextW;
+    H = nextH;
     canvas.width = Math.floor(W * dpr);
     canvas.height = Math.floor(H * dpr);
     ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
