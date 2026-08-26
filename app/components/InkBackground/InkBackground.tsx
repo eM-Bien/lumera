@@ -3,19 +3,12 @@
 import { useEffect, useRef } from "react";
 
 export interface InkBackgroundProps {
-  /** Kolor atramentu jako RGB 0–1. Domyślnie ciepły bronz LUMERA. */
   ink?: [number, number, number];
-  /** Siła barwnika przy ruchu (0–1). */
   intensity?: number;
-  /** Jak szybko atrament znika (większe = szybciej). */
   dissipation?: number;
-  /** Wielkość plamy spod kursora. */
   splatRadius?: number;
-  /** Warstwa canvasu. Daj wartość WYŻSZĄ niż tło/zdjęcie, by atrament był widoczny. */
   zIndex?: number;
-  /** Tryb mieszania, np. 'screen' rozjaśnia ciemne tło jak świetlne smugi. */
   blendMode?: React.CSSProperties["mixBlendMode"];
-  /** Klasa CSS na canvasie. */
   className?: string;
 }
 
@@ -69,7 +62,6 @@ export default function InkBackground({
     gl.getExtension("EXT_color_buffer_float");
     const supportLinear = !!gl.getExtension("OES_texture_float_linear");
 
-    // ----- shadery -----
     const baseVertex = `#version 300 es
     precision highp float;
     in vec2 aPosition; out vec2 vUv, vL, vR, vT, vB; uniform vec2 texelSize;
@@ -342,15 +334,13 @@ export default function InkBackground({
       const changed = canvas!.width !== w || canvas!.height !== h;
       canvas!.width = w;
       canvas!.height = h;
-      // canvas!.style.width = window.innerWidth + "px";
-      // canvas!.style.height = window.innerHeight + "px";
       return changed;
     }
     function resize() {
       if (setCanvasSize()) initFramebuffers();
     }
     setCanvasSize();
-    initFramebuffers(); // zawsze twórz bufory dla bieżącego montażu
+    initFramebuffers();
     window.addEventListener("resize", resize);
 
     function step(dt: number) {
@@ -535,15 +525,13 @@ export default function InkBackground({
     window.addEventListener("touchmove", onTouch, { passive: true });
 
     let raf = 0;
-    let running = true; // wstrzymujemy symulację, gdy karta jest w tle
+    let running = true;
     let last = performance.now();
     const frame = (now: number) => {
       const dt = Math.min((now - last) / 1000, 0.016);
       last = now;
       if (pointer.moved) {
         pointer.moved = false;
-        // Ilość barwnika zależna od PRĘDKOŚCI ruchu (0–1):
-        // wolny ruch = ślad, szybki = pełny. Eliminuje kumulację w jednym punkcie.
         const dist = Math.hypot(pointer.dx, pointer.dy) / CONFIG.SPLAT_FORCE;
         const speedScale = Math.min(dist * 80.0, 1.0);
         const k = CONFIG.INTENSITY * speedScale;
@@ -556,7 +544,6 @@ export default function InkBackground({
     };
     raf = requestAnimationFrame(frame);
 
-    // pauza symulacji, gdy karta przechodzi w tło (oszczędza GPU/baterię)
     const onVis = () => {
       if (document.hidden) {
         running = false;
@@ -576,12 +563,6 @@ export default function InkBackground({
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onPointer);
       window.removeEventListener("touchmove", onTouch);
-      // UWAGA: celowo NIE wołamy loseContext(). W trybie deweloperskim
-      // React (Strict Mode) montuje efekt dwukrotnie: montuje → sprząta →
-      // montuje ponownie. Zniszczenie kontekstu w sprzątaniu sprawia, że ten
-      // sam <canvas> przy drugim montażu zwraca utracony kontekst, a shadery
-      // "kompilują się" na martwym kontekście → błędy na starcie. Pętla i
-      // słuchacze są zatrzymane powyżej; kontekst zwolni GC przy odmontowaniu.
     };
   }, [ink, intensity, dissipation, splatRadius]);
 

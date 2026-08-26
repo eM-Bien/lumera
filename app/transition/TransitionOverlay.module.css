@@ -1,11 +1,11 @@
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 40; /* nad treścią i drobinkami, pod nawigacją jeśli ma być klikalna */
+  z-index: 40;
   pointer-events: none;
   background: #05030f;
   opacity: 0;
-  transition: opacity 0.85s ease; /* zgrane z EXIT_MS / SETTLE_MS */
+  transition: opacity 0.85s ease;
 }
 .overlay.dark {
   opacity: 1;

@@ -21,11 +21,10 @@
   font-weight: 500;
   letter-spacing: 0.08em;
   cursor: pointer;
-  color: var(--nav-text, #d8d8d8); /* baza dla <a> i strzałki (currentColor) */
+  color: var(--nav-text, #d8d8d8);
   -webkit-tap-highlight-color: transparent;
 }
 
-/* --- Rozlewająca się plama pod napisem ---------------------------------- */
 .blob {
   position: absolute;
   left: 50%;
@@ -42,7 +41,7 @@
   filter: blur(36px) url(#lumera-ink-blob);
   mix-blend-mode: var(--nav-blob-blend, screen);
   opacity: 0;
-  z-index: -2; /* pod szklaną pastylką (.links::before ma -1) */
+  z-index: -2;
   pointer-events: none;
   transition:
     opacity 0.6s var(--nav-ease-out),
@@ -50,7 +49,6 @@
   will-change: opacity, transform;
 }
 
-/* --- Tekst -------------------------------------------------------------- */
 .label {
   display: inline-block;
   color: var(--nav-text, #d8d8d8);
@@ -58,8 +56,6 @@
   will-change: color;
 }
 
-/* --- Hover / focus: TYLKO na urządzeniach z kursorem (desktop) ----------
-   Na dotyku reguły nie istnieją, więc mobile zostaje bez zmian.            */
 @media (hover: hover) {
   .navButton:hover .blob,
   .navButton:focus-visible .blob {
@@ -72,7 +68,6 @@
   }
 }
 
-/* obrys focusa zostaje zawsze — dostępność z klawiatury */
 .navButton:focus-visible {
   outline: 2px solid var(--nav-text-hover, #ffffff);
   outline-offset: 4px;
@@ -87,7 +82,6 @@
 }
 
 @media (max-width: 768px) {
-  /* drawer używa tego samego fontu co desktop (Montserrat) — tylko większy */
   .label {
     font-size: 3.5vh;
   }

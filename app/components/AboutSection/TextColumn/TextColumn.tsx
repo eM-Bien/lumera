@@ -1,11 +1,9 @@
-// TextColumn.tsx
 import styles from "./TextColumn.module.css";
 import ScrollReveal from "../../ScrollReveal/ScrollReveal";
 
 type Props = {
   align?: "left" | "right";
   paragraphs: string[];
-  /** Większy tekst i szersza kolumna (np. „Nasza filozofia"). */
   wide?: boolean;
 };
 

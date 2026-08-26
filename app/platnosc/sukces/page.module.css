@@ -20,13 +20,11 @@
     radial-gradient(#0a0720 0%, #060414 45%, #000 100%);
 }
 
-/* stepper nad grafiką tła */
 .stepsWrap {
   position: relative;
   z-index: 1;
 }
 
-/* grafika w tle — po prawej, wyśrodkowana w pionie */
 .bgWrap {
   position: absolute;
   top: 50%;
@@ -46,7 +44,6 @@
   overflow: hidden;
   isolation: isolate;
 
-  /* złoty „liquid glass" (jak PrimaryButton) */
   background: linear-gradient(
     135deg,
     rgba(216, 193, 160, 0.85) 0%,
@@ -54,12 +51,10 @@
     rgba(176, 145, 90, 0.8) 100%
   );
 
-  /* kształt wycina maska z pliku */
   -webkit-mask: url("/icons/success.svg") center / contain no-repeat;
   mask: url("/icons/success.svg") center / contain no-repeat;
 }
 
-/* przesuwający się blask — przycięty maską do kształtu ikony */
 .bgIcon::before {
   content: "";
   position: absolute;
@@ -98,7 +93,6 @@
   }
 }
 
-/* treść — do lewej, od góry (spójnie z resztą stron) */
 .inner {
   position: relative;
   z-index: 1;
@@ -112,7 +106,6 @@
   padding: 2vh 6vw 12vh;
 }
 
-/* tylko rozstawienie — typografia z komponentów PageHeader */
 .title {
   margin: 0;
 }
@@ -136,8 +129,6 @@
   color: #c2a36b;
   text-decoration: underline;
 }
-
-/* --- Przyciski --- */
 
 .actions {
   display: flex;
@@ -173,7 +164,6 @@
   transform: translateY(1px);
 }
 
-/* --- Mobile --- */
 @media (max-width: 768px) {
   .bgWrap {
     right: 50%;

@@ -20,8 +20,6 @@ import CtaBand from "../components/CtaBand/CtaBand";
 export default function AboutPage() {
   const mainRef = useRef<HTMLElement | null>(null);
 
-  // parallax hero jak na stronie głównej: film zjeżdża w dół i gaśnie,
-  // nagłówek „Witamy w Lumera" ucieka szybciej w górę.
   useEffect(() => {
     const el = mainRef.current;
     if (!el) return;

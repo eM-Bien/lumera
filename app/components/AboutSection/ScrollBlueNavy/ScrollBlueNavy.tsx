@@ -28,17 +28,14 @@ export default function ScrollBlueNavy({ children }: { children: ReactNode }) {
       const vh = window.innerHeight;
       const c = vh / 2;
 
-      // widoczność: rośnie gdy środek okna wchodzi w obszar, znika przy krańcach
       let vis: number;
       if (rect.top > c) vis = 1 - clamp((rect.top - c) / (vh * 0.6), 0, 1);
       else if (rect.bottom < c)
         vis = 1 - clamp((c - rect.bottom) / (vh * 0.6), 0, 1);
       else vis = 1;
 
-      // 0..1 wzdłuż obszaru; kolor pojawia się dopiero w środku, a na początku
-      // i na końcu jest ciemno (dużo mocniejszy granat)
       const raw = clamp((c - rect.top) / Math.max(1, rect.height), 0, 1);
-      const mid = smooth(1 - Math.abs(2 * raw - 1)); // 0 na krańcach, 1 w środku
+      const mid = smooth(1 - Math.abs(2 * raw - 1));
 
       setBlue(vis * mid * 0.95);
       setNavy(vis * (1 - mid));

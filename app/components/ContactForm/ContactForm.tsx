@@ -16,8 +16,8 @@ type Errors = Partial<
   Record<"imie" | "email" | "telefon" | "lokalizacja" | "zgoda", string>
 >;
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+$/; // tekst @ tekst
-const PHONE_RE = /^\d{9}$/; // dokładnie 9 cyfr
+const EMAIL_RE = /^[^\s@]+@[^\s@]+$/;
+const PHONE_RE = /^\d{9}$/;
 
 const PORA_OPTIONS = [
   "",
@@ -39,13 +39,12 @@ export default function ContactForm() {
   const [telefon, setTelefon] = useState("");
   const [wiadomosc, setWiadomosc] = useState("");
   const [zgoda, setZgoda] = useState(false);
-  const [firma, setFirma] = useState(""); // honeypot
+  const [firma, setFirma] = useState("");
 
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  // zabiegi pogrupowane do <optgroup>
   const groups = useMemo(() => {
     const map = new Map<string, typeof BOOKING_OPTIONS>();
     for (const o of BOOKING_OPTIONS) {
@@ -68,10 +67,8 @@ export default function ContactForm() {
     return e;
   };
 
-  // błędy liczone pochodnie — pokazujemy je dopiero po pierwszej próbie wysyłki
   const errors: Errors = submitted ? validate() : {};
 
-  // telefon: wpuszczamy wyłącznie cyfry i maks. 9 znaków
   const onTelefonChange = (value: string) => {
     setTelefon(value.replace(/\D/g, "").slice(0, 9));
   };
@@ -263,7 +260,6 @@ export default function ContactForm() {
         />
       </label>
 
-      {/* honeypot — ukryte pole; ludzie go nie wypełnią */}
       <div className={styles.hp} aria-hidden="true">
         <label>
           Firma

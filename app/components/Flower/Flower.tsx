@@ -3,23 +3,15 @@
 import styles from "./Flower.module.css";
 
 type FlowerProps = {
-  /** Źródło obrazka (np. "/peonie/peonia-1.png"). */
   src: string;
   left: string;
   top: string;
-  /** Szerokość kwiatu (px lub inna jednostka CSS). */
   size: string;
-  /** Bazowy obrót w stopniach. */
   rotate?: number;
-  /** Amplituda kołysania w stopniach (jak mocno na wietrze). */
   sway?: number;
-  /** Długość jednego cyklu w sekundach. */
   duration?: number;
-  /** Opóźnienie startu — różne wartości = niezsynchronizowany, naturalny ruch. */
   delay?: number;
-  /** Lustrzane odbicie w poziomie. */
   flip?: boolean;
-  /** Lekki pionowy „oddech" w px. */
   bob?: number;
 };
 

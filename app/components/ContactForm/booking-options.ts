@@ -7,7 +7,6 @@ export type BookingOption = {
   group: "Twarz i ciało" | "Trychologia";
 };
 
-// Wszystkie zabiegi, które można wybrać w formularzu — połączone z obu katalogów.
 export const BOOKING_OPTIONS: BookingOption[] = [
   ...OFFERS.map((o) => ({
     id: o.id,
@@ -21,7 +20,6 @@ export const BOOKING_OPTIONS: BookingOption[] = [
   })),
 ];
 
-// Wartość dla „nie wiem / konsultacja" — także fallback, gdy id z linku nie pasuje.
 export const CONSULTATION_VALUE = "konsultacja";
 
 /** Zwraca id zabiegu, jeśli istnieje w katalogu; inaczej wartość konsultacji. */

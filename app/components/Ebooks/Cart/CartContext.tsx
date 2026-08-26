@@ -35,13 +35,9 @@ type CartContextValue = {
 
 const CartContext = createContext<CartContextValue | null>(null);
 
-/* =========================================================================
-   localStorage jako external store (źródło prawdy koszyka).
-   ========================================================================= */
-
 const STORAGE_KEY = "lumera_cart";
 const EMPTY: CartItem[] = [];
-const INVALID = "\u0000"; // sentinel wymuszający ponowny parse (zmiana w innej karcie)
+const INVALID = "\u0000";
 
 const listeners = new Set<() => void>();
 let cache: CartItem[] = EMPTY;
@@ -61,7 +57,7 @@ function read(): CartItem[] {
     raw = null;
   }
 
-  if (raw === cacheRaw) return cache; // bez zmian → ta sama referencja
+  if (raw === cacheRaw) return cache;
 
   cacheRaw = raw;
   if (!raw) {
@@ -82,9 +78,7 @@ function write(next: CartItem[]) {
   try {
     cacheRaw = JSON.stringify(next);
     localStorage.setItem(STORAGE_KEY, cacheRaw);
-  } catch {
-    // tryb prywatny / brak miejsca
-  }
+  } catch {}
   emit();
 }
 
@@ -145,7 +139,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const updateQty = useCallback((id: string, qty: number) => {
-    const q = Math.max(1, Math.floor(qty)); // minimum 1 — usuwanie jest osobno
+    const q = Math.max(1, Math.floor(qty));
     write(read().map((i) => (i.id === id ? { ...i, qty: q } : i)));
   }, []);
 

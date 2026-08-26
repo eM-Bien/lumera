@@ -8,13 +8,12 @@ export type Offer = {
   title: string;
   category: Category;
   locations: Location[];
-  image?: string; // ścieżka w /public; brak = placeholder gradientowy
+  image?: string;
   description: string;
-  effects: string[]; // lista efektów zabiegu
-  price: string; // np. "150 zł" lub "od 150 zł"
+  effects: string[];
+  price: string;
 };
 
-// Dane zabiegów. Lokalizacje ustawione domyślnie na obie — dostosuj do realnej dostępności.
 export const OFFERS: Offer[] = [
   {
     id: "oczyszczanie-wodorowe",

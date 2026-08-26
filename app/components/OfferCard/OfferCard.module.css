@@ -7,13 +7,12 @@
   display: flex;
   align-items: center;
   gap: clamp(2rem, 5vw, 5.5rem);
-  padding: 0 6vw; /* przestrzeń po obu stronach — grafika nie dotyka krawędzi */
+  padding: 0 6vw;
 }
 .cardRight {
   flex-direction: row-reverse;
 }
 
-/* --- Zdjęcie (kształt „liścia", odsunięte od krawędzi) ------------------ */
 .media {
   flex: 0 0 52%;
   overflow: hidden;
@@ -22,7 +21,6 @@
     0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
-/* wariacje „liścia" — mocne zaokrąglenie dwóch przeciwległych rogów */
 .media.leaf0 {
   border-radius: 0 clamp(80px, 16vw, 240px) 0 clamp(80px, 16vw, 240px);
 }
@@ -40,7 +38,7 @@
 
 .img {
   width: 100%;
-  aspect-ratio: 3 / 2; /* landscape */
+  aspect-ratio: 3 / 2;
   object-fit: cover;
   object-position: center;
   display: block;
@@ -48,7 +46,6 @@
   will-change: transform;
 }
 
-/* zdjęcia trychologiczne kadrujemy wyżej (pokazujemy górną część) */
 .imgTrycho {
   object-position: center 28%;
 }
@@ -64,10 +61,9 @@
   );
 }
 
-/* --- Treść -------------------------------------------------------------- */
 .content {
   flex: 1;
-  text-align: left; /* tekst zawsze do lewej, niezależnie od strony zdjęcia */
+  text-align: left;
 }
 
 .eyebrow {
@@ -136,7 +132,6 @@
   transform: rotate(180deg);
 }
 
-/* rozwijany opis — animacja przez grid-template-rows (0fr -> 1fr) */
 .descWrap {
   display: grid;
   grid-template-rows: 0fr;
@@ -162,12 +157,9 @@
   margin-top: 2rem;
 }
 
-/* szerszy przycisk „Umów" */
 .bookBtn {
   min-width: 16rem;
 }
-
-/* --- Efekty zabiegu --- */
 
 .effects {
   margin: 1.8rem 0 0;
@@ -214,7 +206,6 @@
   background: #c2a36b;
 }
 
-/* --- Mobile: zdjęcie pełną szerokością u góry, tekst pod spodem --------- */
 @media (max-width: 768px) {
   .card,
   .cardRight {

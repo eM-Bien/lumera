@@ -6,8 +6,6 @@ import type { Location } from "../OfferExplorer/offer-types";
 import PrimaryButton from "../Buttons/PrimaryButton/PrimaryButton";
 import styles from "./OfferCard.module.css";
 
-// Wspólny model karty — pasuje zarówno do Offer (twarz i ciało),
-// jak i do zabiegu trychologicznego (bez zdjęcia/efektów).
 type CardData = {
   id: string;
   title: string;
@@ -24,7 +22,6 @@ type OfferCardProps = {
   reversed?: boolean;
   open: boolean;
   onToggle: () => void;
-  /** Wariant kształtu „liścia" (który róg zaokrąglony). */
   leafVariant?: number;
 };
 
@@ -42,7 +39,6 @@ export default function OfferCard({
   const mediaRef = useRef<HTMLDivElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
 
-  // aktualne wartości dostępne w callbacku observera (bez stale closure)
   const openRef = useRef(open);
   useEffect(() => {
     openRef.current = open;
@@ -53,7 +49,6 @@ export default function OfferCard({
     onToggleRef.current = onToggle;
   });
 
-  // czy użytkownik kliknął przycisk — wtedy auto-rozwijanie go nie dotyczy
   const userToggledRef = useRef(false);
 
   const handleToggle = () => {
@@ -61,7 +56,6 @@ export default function OfferCard({
     onToggle();
   };
 
-  // auto-rozwijanie opisu, gdy karta wjedzie w widok
   useEffect(() => {
     const el = cardRef.current;
     if (!el) return;
@@ -74,8 +68,8 @@ export default function OfferCard({
             !openRef.current &&
             !userToggledRef.current
           ) {
-            onToggleRef.current(); // rozwiń (zostaje otwarte)
-            io.unobserve(el); // jednorazowo
+            onToggleRef.current();
+            io.unobserve(el);
           }
         }
       },
@@ -86,10 +80,6 @@ export default function OfferCard({
     return () => io.disconnect();
   }, []);
 
-  // parallax na zdjęciu — pozycję mierzymy TYLKO w spoczynku (montaż / resize /
-  // po zatrzymaniu scrolla). Podczas przewijania liczymy przesunięcie wyłącznie
-  // z zapamiętanej pozycji i scrollY, bez czytania layoutu co klatkę — inaczej
-  // getBoundingClientRect wymusza reflow i strona zacina się przy rozwijaniu opisu.
   useEffect(() => {
     const media = mediaRef.current;
     const img = imgRef.current;
@@ -102,8 +92,8 @@ export default function OfferCard({
 
     let raf = 0;
     let idleTimer = 0;
-    let mid = 0; // środek elementu względem dokumentu
-    let denom = 1; // mianownik postępu (vh + wysokość) / 2
+    let mid = 0;
+    let denom = 1;
     let vh = window.innerHeight;
 
     const measure = () => {
@@ -122,7 +112,6 @@ export default function OfferCard({
 
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(apply);
-      // po zatrzymaniu scrolla przelicz pozycję (koryguje dryf po rozwinięciach)
       if (idleTimer) clearTimeout(idleTimer);
       idleTimer = window.setTimeout(() => {
         measure();

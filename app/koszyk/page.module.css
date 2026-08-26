@@ -24,8 +24,6 @@
   padding: 1vh 6vw 4vh;
 }
 
-/* --- Stany pomocnicze --------------------------------------------------- */
-
 .loading {
   padding: 4vh 6vw 14vh;
   color: #9a8c6f;
@@ -58,8 +56,6 @@
   width: auto;
 }
 
-/* --- Układ treści ------------------------------------------------------- */
-
 .content {
   display: grid;
   grid-template-columns: 1fr 360px;
@@ -69,8 +65,6 @@
   margin: 0 auto;
   padding: 2vh 6vw 14vh;
 }
-
-/* --- Lista pozycji ------------------------------------------------------ */
 
 .items {
   list-style: none;
@@ -91,7 +85,6 @@
   border-top: 1px solid rgba(194, 163, 107, 0.18);
 }
 
-/* większa okładka */
 .cover {
   flex: 0 0 auto;
   width: clamp(120px, 18vw, 170px);
@@ -116,7 +109,6 @@
   color: #f0e6d2;
 }
 
-/* cena pod tytułem */
 .itemPrice {
   margin: 0.5rem 0 0;
   font-family: var(--font-header), serif;
@@ -131,15 +123,12 @@
   color: #9a8c6f;
 }
 
-/* rząd: stepper + kosz */
 .controls {
   display: flex;
   align-items: center;
   gap: 1rem;
   margin-top: 1.5rem;
 }
-
-/* --- Stepper ilości ----------------------------------------------------- */
 
 .qty {
   display: inline-flex;
@@ -183,8 +172,6 @@
   color: #f0e6d2;
 }
 
-/* --- Usuwanie (ikona kosza) --------------------------------------------- */
-
 .remove {
   display: grid;
   place-items: center;
@@ -199,10 +186,9 @@
 }
 
 .remove:hover {
-  color: #d88c8c; /* delikatna czerwień — akcja destrukcyjna */
+  color: #d88c8c;
 }
 
-/* svg z public/icons/trash.svg jako maska — kolor steruje currentColor */
 .trashIcon {
   display: block;
   width: 1.3rem;
@@ -211,8 +197,6 @@
   -webkit-mask: url("/icons/trash.svg") center / contain no-repeat;
   mask: url("/icons/trash.svg") center / contain no-repeat;
 }
-
-/* --- Podsumowanie (aside) ----------------------------------------------- */
 
 .aside {
   position: sticky;
@@ -258,7 +242,6 @@
   color: #f0e6d2;
 }
 
-/* kwota "Do zapłaty" — złoty akcent (odpowiednik pomarańczu z referencji) */
 .rowTotal > span:last-child {
   color: #c2a36b;
 }
@@ -272,8 +255,6 @@
 .secondary {
   margin-top: 0.75rem;
 }
-
-/* --- Korzyści ----------------------------------------------------------- */
 
 .perks {
   list-style: none;
@@ -303,8 +284,6 @@
   border-radius: 50%;
   background: #c2a36b;
 }
-
-/* --- Mobile ------------------------------------------------------------- */
 
 @media (max-width: 900px) {
   .content {

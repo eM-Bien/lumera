@@ -9,14 +9,12 @@
   padding-bottom: 12vh;
 }
 
-/* wyszukiwarka + filtry — trzymane w wyśrodkowanej kolumnie */
 .controlsWrap {
   max-width: 1240px;
   margin: 0 auto;
   padding: 0 6vw;
 }
 
-/* lista zabiegów — pełna szerokość, naprzemienne pasy */
 .list {
   list-style: none;
   margin: 8vh 0 0;
@@ -36,7 +34,6 @@
   text-align: center;
 }
 
-/* --- wskazania / przeciwwskazania ------------------------------------- */
 .panelsWrap {
   max-width: 1240px;
   margin: 14vh auto 0;
@@ -56,7 +53,6 @@
   align-items: stretch;
 }
 
-/* pionowa złota kreska pomiędzy tytułem a treścią */
 .panel > :last-child {
   border-left: 2px solid rgba(194, 163, 107, 0.4);
   padding-left: clamp(2rem, 4vw, 3.5rem);

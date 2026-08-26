@@ -17,12 +17,10 @@
     radial-gradient(#0a0720 0%, #060414 45%, #000 100%);
 }
 
-/* większy odstęp przed pasem CTA („Nie wiesz na co się zdecydować?") */
 .ctaWrap {
   margin-top: 12vh;
 }
 
-/* --- Nagłówek „Zabiegi" — jak „Witamy w Lumera" ------------------------- */
 .header {
   padding: 18vh 6vw 6vh;
   text-align: center;
@@ -37,7 +35,6 @@
   color: #f0e6d2;
 }
 
-/* ozdobny podtytuł pojawia się chwilę po nagłówku */
 .subtitle {
   animation: offerSubtitleIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: 1s;

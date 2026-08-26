@@ -6,7 +6,7 @@ import { getStripe } from "@/lib/stripe";
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  const body = await request.text(); // RAW body — wymagane do weryfikacji podpisu
+  const body = await request.text();
   const signature = request.headers.get("stripe-signature");
 
   if (!signature || !process.env.STRIPE_WEBHOOK_SECRET) {
@@ -25,9 +25,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Zły podpis" }, { status: 400 });
   }
 
-  // Idempotencja: Stripe potrafi wysłać ten sam event kilka razy.
-  // TODO: zapisz event.id w bazie i pomiń, jeśli już przetworzony.
-
   switch (event.type) {
     case "checkout.session.completed": {
       const session = event.data.object as Stripe.Checkout.Session;
@@ -36,7 +33,6 @@ export async function POST(request: Request) {
         const email = session.customer_details?.email;
         const itemIds = (session.metadata?.itemIds ?? "").split(",");
 
-        // TODO: DOSTARCZENIE PRODUKTU (signed URL + mail)
         console.log("Opłacono:", { email, itemIds });
       }
       break;

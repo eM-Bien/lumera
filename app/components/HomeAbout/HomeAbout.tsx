@@ -50,8 +50,6 @@ export default function HomeAbout() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-          // na mobile kafle są jeden pod drugim, więc „Odkryj Lumerę"
-          // odsłaniamy już przy wejściu w sekcję (nie po kaflu Kontakt)
           if (window.matchMedia("(max-width: 820px)").matches) {
             setHeadIn(true);
           }
@@ -64,14 +62,11 @@ export default function HomeAbout() {
     return () => io.disconnect();
   }, []);
 
-  // kafle wpływają, gdy wjadą w widok; „Zabiegi" i „Kontakt" dopiero przy dole.
-  // Nagłówek „Odkryj Lumerę" wjeżdża dopiero, gdy pojawi się Kontakt.
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
     shapeRefs.current.forEach((el, i) => {
       if (!el) return;
       const key = SHAPES[i]?.key;
-      // moment wjazdu każdego kafla (im większy %, tym później)
       const BOTTOM: Record<string, string> = {
         ebooki: "-18%",
         oferta: "-24%",
@@ -82,7 +77,7 @@ export default function HomeAbout() {
         ([e]) => {
           if (e.isIntersecting) {
             el.classList.add(styles.shapeIn);
-            if (key === "kontakt") setHeadIn(true); // nagłówek po Kontakcie
+            if (key === "kontakt") setHeadIn(true);
             io.disconnect();
           }
         },

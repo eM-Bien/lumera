@@ -12,8 +12,6 @@
   padding: 4vh 6vw;
 }
 
-/* --- Grafika (lewa) ----------------------------------------------------- */
-
 .media {
   flex: 0 0 45%;
   align-self: center;
@@ -28,8 +26,6 @@
     0 20px 50px rgba(0, 0, 0, 0.55),
     0 2px 10px rgba(0, 0, 0, 0.4);
 }
-
-/* --- Opis (prawa) ------------------------------------------------------- */
 
 .body {
   flex: 1;
@@ -69,8 +65,6 @@
   color: #c9bfa8;
 }
 
-/* --- Dla kogo ----------------------------------------------------------- */
-
 .forWhom {
   margin: 2rem 0 0;
 }
@@ -103,7 +97,6 @@
   color: #c9bfa8;
 }
 
-/* złoty znacznik zamiast standardowej kropki */
 .forWhomList li::before {
   content: "";
   position: absolute;
@@ -114,8 +107,6 @@
   border-radius: 50%;
   background: #c2a36b;
 }
-
-/* --- Szczegóły (format / strony / język) -------------------------------- */
 
 .meta {
   display: flex;
@@ -143,8 +134,6 @@
   color: #9a8c6f;
 }
 
-/* --- Cena + przycisk ---------------------------------------------------- */
-
 .buy {
   display: flex;
   margin: 2.5rem 0 0;
@@ -160,8 +149,6 @@
 .note + .note {
   margin-top: 0.4rem;
 }
-
-/* --- Mobile ------------------------------------------------------------- */
 
 @media (max-width: 768px) {
   .card {

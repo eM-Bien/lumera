@@ -7,7 +7,6 @@
   display: block;
 }
 
-/* słowo się nie łamie w środku; spacja (nbsp) trzyma się słowa */
 .word {
   display: inline-block;
   white-space: nowrap;

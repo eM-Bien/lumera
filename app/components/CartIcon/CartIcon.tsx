@@ -14,11 +14,10 @@ export default function CartIcon({ onClick, style }: CartIconProps) {
   const { totalCount, hydrated } = useCart();
 
   const handleClick = () => {
-    onClick?.(); // np. zamknięcie menu na mobile
+    onClick?.();
     navigate("/koszyk");
   };
 
-  // licznik dopiero po hydratacji — inaczej SSR(0) vs client(N) = mismatch
   const showBadge = hydrated && totalCount > 0;
 
   return (

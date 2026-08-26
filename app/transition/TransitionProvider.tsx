@@ -15,8 +15,8 @@ export function useTransition() {
   return ctx;
 }
 
-const EXIT_MS = 850; // zagęszczanie + wirowanie zanim zmieni się trasa
-const SETTLE_MS = 1100; // uspokajanie na nowej stronie
+const EXIT_MS = 850;
+const SETTLE_MS = 1100;
 
 export default function TransitionProvider({
   children,
@@ -26,18 +26,17 @@ export default function TransitionProvider({
   const [phase, setPhase] = useState<TransitionPhase>("idle");
   const router = useRouter();
   const pathname = usePathname();
-  const pendingRef = useRef(false); // czy czekamy na zmianę trasy
+  const pendingRef = useRef(false);
 
   const navigate = (href: string) => {
-    if (phase !== "idle") return; // blokada podwójnego kliknięcia
+    if (phase !== "idle") return;
     setPhase("exiting");
     pendingRef.current = true;
     setTimeout(() => router.push(href), EXIT_MS);
   };
 
-  // gdy trasa faktycznie się zmieni po zainicjowanym wyjściu → uspokajanie
   useEffect(() => {
-    if (!pendingRef.current) return; // pomija pierwszy mount
+    if (!pendingRef.current) return;
     pendingRef.current = false;
     setPhase("settling");
     const t = setTimeout(() => setPhase("idle"), SETTLE_MS);

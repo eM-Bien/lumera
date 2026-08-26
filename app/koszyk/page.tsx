@@ -39,7 +39,6 @@ export default function CartPage() {
           </header>
 
           <div className={styles.content}>
-            {/* --- Lista pozycji --- */}
             <ul className={styles.items}>
               {items.map((item) => (
                 <li key={item.id} className={styles.item}>
@@ -95,7 +94,6 @@ export default function CartPage() {
               ))}
             </ul>
 
-            {/* --- Podsumowanie --- */}
             <aside className={styles.aside}>
               <div className={styles.summary}>
                 <h2 className={styles.summaryTitle}>Podsumowanie</h2>

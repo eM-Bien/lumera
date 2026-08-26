@@ -12,11 +12,11 @@ type Payload = {
   telefon?: string;
   wiadomosc?: string;
   zgoda?: boolean;
-  firma?: string; // honeypot — powinno zostać puste
+  firma?: string;
 };
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+$/; // tekst @ tekst
-const PHONE_RE = /^\d{9}$/; // dokładnie 9 cyfr
+const EMAIL_RE = /^[^\s@]+@[^\s@]+$/;
+const PHONE_RE = /^\d{9}$/;
 
 function escapeHtml(s: string): string {
   return s
@@ -41,7 +41,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Nieprawidłowe dane" }, { status: 400 });
   }
 
-  // Honeypot: bot wypełnił ukryte pole — udajemy sukces, nie wysyłamy.
   if (body.firma && body.firma.trim() !== "") {
     return NextResponse.json({ ok: true });
   }
@@ -77,7 +76,6 @@ export async function POST(request: Request) {
   }
 
   const zabiegNazwa = bookingTitle((body.zabieg ?? "").trim());
-  // Uwaga: `||`, nie `??` — puste CONTACT_FROM (="") też ma wpaść w domyślne.
   const from =
     process.env.CONTACT_FROM?.trim() || "Lumera <onboarding@resend.dev>";
   const to = process.env.CONTACT_TO?.trim() || "kontakt@lumera-clinic.pl";

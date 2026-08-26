@@ -17,16 +17,15 @@ export default function ScrollReveal({
 }: ScrollRevealProps) {
   const elRef = useRef<HTMLElement | null>(null);
   const wordsRef = useRef<HTMLSpanElement[]>([]);
-  const linesRef = useRef<HTMLSpanElement[][]>([]); // słowa pogrupowane w linie
-  const maxRef = useRef<number[]>([]); // zatrzask krycia per linia
+  const linesRef = useRef<HTMLSpanElement[][]>([]);
+  const maxRef = useRef<number[]>([]);
   const words = text.replace(/\s+/g, " ").trim().split(" ");
 
-  // przelicz grupy linii po layoutcie i przy resize
   const groupLines = () => {
     const map = new Map<number, HTMLSpanElement[]>();
     wordsRef.current.forEach((w) => {
       if (!w) return;
-      const top = w.offsetTop; // słowa w tej samej linii mają ten sam offsetTop
+      const top = w.offsetTop;
       if (!map.has(top)) map.set(top, []);
       map.get(top)!.push(w);
     });
@@ -55,8 +54,8 @@ export default function ScrollReveal({
       raf = 0;
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      const start = vh * 0.85; // top bloku tu zaczyna odsłanianie
-      const end = vh * 0.35; // i tu kończy
+      const start = vh * 0.85;
+      const end = vh * 0.35;
       const span = rect.height + (start - end);
       const prog = Math.min(1, Math.max(0, (start - rect.top) / span));
 
@@ -64,12 +63,11 @@ export default function ScrollReveal({
       const max = maxRef.current;
       const n = lines.length;
       lines.forEach((lineWords, i) => {
-        // każda linia ma swój próg; +0.6 = sąsiednie linie lekko na siebie zachodzą
         let lp = Math.min(1, Math.max(0, prog * n - i * 0.6));
         if (lp < max[i]) lp = max[i];
-        else max[i] = lp; // zatrzask: raz zapalone zostaje
-        const op = String(0.12 + 0.88 * lp); // 0.12 ciemny duch -> 1 pełne
-        const ty = `translateY(${(1 - lp) * 0.25}em)`; // delikatny dojazd w górę
+        else max[i] = lp;
+        const op = String(0.12 + 0.88 * lp);
+        const ty = `translateY(${(1 - lp) * 0.25}em)`;
         lineWords.forEach((w) => {
           w.style.opacity = op;
           w.style.transform = ty;

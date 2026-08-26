@@ -30,7 +30,6 @@
   line-height: var(--display-desc-line);
 }
 
-/* wariant „wide" — większy tekst i szersza kolumna */
 .wide .column {
   max-width: 70%;
 }

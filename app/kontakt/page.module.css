@@ -13,27 +13,23 @@
     radial-gradient(#0a0720 0%, #060414 45%, #000 100%);
 }
 
-/* siatka na całą wysokość: lewa = formularz, prawa = kontakt + adresy */
 .grid {
   position: relative;
-  z-index: 2; /* nad LetterBackground */
+  z-index: 2;
   height: 100dvh;
   display: grid;
   grid-template-columns: minmax(0, 900px) 1fr;
   gap: 0;
 }
 
-/* --- LEWA: kontakt nad panelem, panel wypełnia resztę wysokości do dołu -- */
-
 .formCol {
-  position: relative; /* kontekst dla napisu w tle */
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 0;
-  padding-top: 11vh; /* zejście spod nawigacji (reszta odstępu z .reach) */
+  padding-top: 11vh;
 }
 
-/* „Zadzwoń / Napisz" — nad panelem, z większym odstępem do formularza */
 .reach {
   display: flex;
   flex-wrap: nowrap;
@@ -70,15 +66,12 @@
   color: #fffaf0;
 }
 
-/* panel wypełnia pozostałą wysokość aż do dołu ekranu */
 .formWrap {
   position: relative;
   flex: 1;
   min-height: 0;
   display: flex;
 }
-
-/* --- PRAWA: telefon/mail u góry, adresy u dołu (grafika w tle) ----------- */
 
 .infoCol {
   display: flex;
@@ -116,8 +109,6 @@
   gap: 4vh;
 }
 
-/* --- Lokalizacje: miasto duże, obok na tej samej linii ulica + kod ------- */
-
 .locations {
   display: flex;
   flex-direction: column;
@@ -154,7 +145,6 @@
   color: #c9bfa8;
 }
 
-/* media */
 .social {
   display: flex;
   align-items: center;
@@ -179,7 +169,6 @@
     filter 0.3s ease;
 }
 
-/* adres — domyślnie schowany (zwinięty); rozwija się przy hoverze na desktopie */
 .socialLabel {
   max-width: 0;
   overflow: hidden;
@@ -206,8 +195,6 @@
   }
 }
 
-/* --- Mobile: jedna kolumna, naturalny przepływ --------------------------- */
-
 @media (max-width: 900px) {
   .contact {
     height: auto;
@@ -219,7 +206,6 @@
     height: auto;
     grid-template-columns: 1fr;
     gap: 6vh;
-    /* treść startuje pod grafiką „L" (litera + kwiaty u góry) */
     padding: 70vh 6vw 12vh;
   }
 

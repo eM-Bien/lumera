@@ -22,7 +22,7 @@ export default function CursorInk() {
   }, []);
 
   if (!desktop) return null;
-  if (pathname === "/") return null; // strona główna ma własny InkBackground
+  if (pathname === "/") return null;
   if (pathname?.startsWith("/koszyk")) return null;
 
   return (

@@ -8,11 +8,8 @@ type RGB = [number, number, number];
 type Variant = "light" | "dark";
 
 interface LightsBackgroundProps {
-  /** Mniejsza liczba = WIĘCEJ stałych drobinek (px² na 1 drobinkę). Domyślnie 14000. */
   density?: number;
-  /** Ile razy więcej drobinek w szczycie animacji. Domyślnie 2.5. */
   burstFactor?: number;
-  /** Czy drobinki unoszą się w górę. Domyślnie true. */
   rise?: boolean;
   className?: string;
   style?: CSSProperties;
@@ -26,7 +23,7 @@ interface Light {
   hx: number;
   hy: number;
   depth: number;
-  hueIndex: number; // indeks w palecie — pozwala zmienić paletę bez respawnu
+  hueIndex: number;
   rise: number;
   swA: number;
   swF: number;
@@ -37,7 +34,6 @@ interface Light {
   fade: number;
 }
 
-// paleta domyślna (ciemne strony) — chłodne światła
 const DEFAULT_HUES: RGB[] = [
   [80, 235, 235],
   [80, 160, 255],
@@ -46,20 +42,17 @@ const DEFAULT_HUES: RGB[] = [
   [200, 230, 255],
 ];
 
-// paleta złota (strona /oferta, jasne tło) — odcienie #c2a36b
 const GOLD_HUES: RGB[] = [
   [194, 163, 107],
   [180, 150, 100],
   [210, 185, 140],
 ];
 
-// konfiguracja per trasa — TU dodajesz kolejne jasne/ciemne strony
 function configForPath(path: string): { variant: Variant; hues: RGB[] } {
   if (path === "/oferta") return { variant: "light", hues: GOLD_HUES };
   return { variant: "dark", hues: DEFAULT_HUES };
 }
 
-// --- pokrętła leja ---
 const PULL_ACCEL = 1600;
 const SWIRL = 1.2;
 const RAMP = 4.5;
@@ -76,15 +69,12 @@ export default function LightsBackground({
 }: LightsBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // faza przejścia — przez ref (bez reinitu)
   const phase = useTransitionPhase();
   const phaseRef = useRef(phase);
   useEffect(() => {
     phaseRef.current = phase;
   }, [phase]);
 
-  // wariant + paleta zależne od trasy — też przez ref, by zmiana strony
-  // przerysowała kolor drobinek BEZ reinicjalizacji (ciągłość przejścia)
   const pathname = usePathname();
   const variantRef = useRef<Variant>(configForPath(pathname).variant);
   const huesRef = useRef<RGB[]>(configForPath(pathname).hues);
@@ -110,7 +100,7 @@ export default function LightsBackground({
     let H = 0;
     let dpr = 1;
     let rafId: number | null = null;
-    let running = false; // pętla aktywna tylko, gdy widoczna i karta na wierzchu
+    let running = false;
     const lights: Light[] = [];
     let pull = 0;
     let prevPhase: string = "idle";
@@ -130,7 +120,7 @@ export default function LightsBackground({
         hx: x,
         hy: y,
         depth: rand(0.3, 1),
-        hueIndex: (Math.random() * 5) | 0, // modulo wg długości palety przy rysowaniu
+        hueIndex: (Math.random() * 5) | 0,
         rise: rand(0.004, 0.02),
         swA: rand(0.004, 0.02),
         swF: rand(0.3, 1.0),
@@ -166,7 +156,7 @@ export default function LightsBackground({
     }
 
     function drawLight(m: Light, t: number): void {
-      if (m.fade <= 0.001) return; // uśpiona i niewidoczna — pomiń
+      if (m.fade <= 0.001) return;
 
       const palette = huesRef.current;
       const hue = palette[m.hueIndex % palette.length];
@@ -179,9 +169,6 @@ export default function LightsBackground({
       const a = (0.25 + 0.75 * m.depth) * tw * m.fade * (1 + pull * 0.8);
       const r = m.base * (0.5 + m.depth);
 
-      // ciemne tło: addytywne smugi światła (lighter).
-      // jasne tło: złoto rysowane normalnie — ciemniejsze od kremu, więc
-      // skomponowane nad stroną daje delikatne, ciepłe punkty.
       ctx.globalCompositeOperation =
         variant === "light" ? "source-over" : "lighter";
 
@@ -194,7 +181,6 @@ export default function LightsBackground({
       ctx.arc(px, py, r * 4, 0, 6.2832);
       ctx.fill();
 
-      // jasny rdzeń tylko na ciemnym tle (na jasnym by zniknął / rozjaśniał)
       if (variant === "dark") {
         ctx.fillStyle = rgba([255, 255, 255], a * 0.8);
         ctx.beginPath();
@@ -287,11 +273,9 @@ export default function LightsBackground({
     resize();
 
     if (reduce) {
-      // brak ruchu — jedna statyczna klatka
       frame(performance.now());
     }
 
-    // pauzujemy pętlę, gdy tło jest poza ekranem lub karta w tle (oszczędza CPU)
     let onScreen = true;
     const startLoop = () => {
       if (running || reduce) return;
@@ -327,7 +311,6 @@ export default function LightsBackground({
       document.removeEventListener("visibilitychange", sync);
       window.removeEventListener("resize", resize);
     };
-    // variant/hues/phase czytane przez ref — celowo poza deps, by nie reinitować
   }, [density, burstFactor, rise]);
 
   return (

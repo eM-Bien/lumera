@@ -13,10 +13,6 @@ const INTRO_KEY = "lumera_intro_seen";
 export default function Home() {
   const [skipIntro, setSkipIntro] = useState<boolean | null>(null);
   const [desktop, setDesktop] = useState(false);
-  // WebGL montujemy dopiero po zakończeniu przejścia — kompilacja shaderów
-  // to duży, jednorazowy koszt na wątku głównym, który zacinał animację.
-  // Zatrzask: gdy raz dojdziemy do „idle", zostaje zamontowany (bez odmontowań
-  // przy wychodzeniu ze strony, gdzie faza wraca do „exiting").
   const phase = useTransitionPhase();
   const [inkReady, setInkReady] = useState(false);
   useEffect(() => {
@@ -58,9 +54,9 @@ export default function Home() {
         </div>
         {desktop && inkReady && (
           <InkBackground
-            zIndex={4} /* nad hero i sekcją „Odkryj" (z-index:3), pod nawigacją (50) */
-            blendMode="screen" /* rozjaśnia las jak smugi światła */
-            ink={[0.95, 0.82, 0.55]} /* ciepłe, jasne złoto */
+            zIndex={4}
+            blendMode="screen"
+            ink={[0.95, 0.82, 0.55]}
             intensity={0.8}
             dissipation={1.0}
           />

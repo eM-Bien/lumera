@@ -14,7 +14,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Pusty koszyk" }, { status: 400 });
     }
 
-    // Budujemy pozycje WYŁĄCZNIE z cennika serwerowego — cena z klienta jest ignorowana.
     const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
     for (const { id, qty } of items) {
       const entry = getEntry(id);
@@ -29,7 +28,7 @@ export async function POST(request: Request) {
         quantity,
         price_data: {
           currency: "pln",
-          unit_amount: entry.amount, // grosze, brutto (zawiera VAT 5%)
+          unit_amount: entry.amount,
           product_data: { name: entry.title },
         },
       });
@@ -44,14 +43,11 @@ export async function POST(request: Request) {
       success_url: `${base}/platnosc/sukces?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${base}/koszyk`,
 
-      // dane do faktury: adres + opcjonalny NIP
       billing_address_collection: "required",
       tax_id_collection: { enabled: true },
 
-      // automatyczna faktura Stripe
       invoice_creation: { enabled: true },
 
-      // do dostarczenia pliku w webhooku
       metadata: {
         itemIds: items.map((i) => i.id).join(","),
       },

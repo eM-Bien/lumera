@@ -37,7 +37,6 @@
     "zabiegi center order";
 }
 
-/* --- nagłówek + krótkie info (lewy górny róg) -------------------------- */
 .head {
   grid-area: title;
   align-self: start;
@@ -45,7 +44,7 @@
 
 .heading {
   margin: 0;
-  overflow: hidden; /* maska — tekst wyłania się z dołu */
+  overflow: hidden;
   padding-bottom: 0.12em;
   font-family: var(--font-header), serif;
   font-size: clamp(2.6rem, 6vw, 4.6rem);
@@ -56,12 +55,11 @@
 
 .headingInner {
   display: inline-block;
-  transform: translateY(118%); /* schowany pod maską */
+  transform: translateY(118%);
   transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
-/* wyłania się z dołu, gdy nagłówek wjedzie w widok */
 .headIn .headingInner {
   transform: translateY(0);
 }
@@ -86,7 +84,6 @@
   transform: none;
 }
 
-/* --- kształty ---------------------------------------------------------- */
 .shape {
   position: relative;
   display: flex;
@@ -94,7 +91,6 @@
   justify-content: flex-end;
   gap: 0.3rem;
   width: 100%;
-  /* prawy padding większy, żeby tekst nie dotykał krawędzi */
   padding: clamp(1.5rem, 2.4vw, 2.6rem) clamp(2.4rem, 4.5vw, 5rem)
     clamp(1.5rem, 2.4vw, 2.6rem) clamp(1.5rem, 2.4vw, 2.6rem);
   border: none;
@@ -121,7 +117,6 @@
   box-shadow: 0 34px 70px rgba(0, 0, 0, 0.55);
 }
 
-/* poświata w rogu każdego kształtu */
 .shape::before {
   content: "";
   position: absolute;
@@ -134,13 +129,12 @@
   pointer-events: none;
 }
 
-/* Zabiegi — landscape po lewej, duży zaokrąglony róg dolny-prawy */
 .oferta {
   grid-area: zabiegi;
   aspect-ratio: 4 / 3;
   align-self: start;
   border-radius: 0 0 clamp(70px, 11vw, 160px) 0;
-  transform: translate(-50px, 40px); /* wpływa z lewej */
+  transform: translate(-50px, 40px);
   background:
     linear-gradient(
       110deg,
@@ -151,13 +145,12 @@
     url("/offer/wodorowe.jpg") center / cover no-repeat;
 }
 
-/* Ebooki — najwyższy kafel w środku, okładka ebooka w tle */
 .ebooki {
   grid-area: center;
-  align-self: stretch; /* rozciąga się na obie „wiersze" — najwyższy kafel */
+  align-self: stretch;
   min-height: clamp(460px, 52vw, 680px);
   border-radius: clamp(70px, 11vw, 170px) 0 clamp(70px, 11vw, 170px) 0;
-  transform: translateY(72px); /* wpływa z dołu */
+  transform: translateY(72px);
   background:
     linear-gradient(
       180deg,
@@ -168,15 +161,13 @@
     url("/ebooks/poznaj-swoja-skore-ebook.webp") center / cover no-repeat;
 }
 
-/* Kontakt — niższy, wąski kafel po prawej (kapsuła) */
 .kontakt {
   grid-area: kontakt;
   min-height: clamp(300px, 34vw, 440px);
   align-self: start;
-  /* lewy górny róg ostry, pozostałe zaokrąglone */
   border-radius: 0 clamp(60px, 9vw, 120px) clamp(60px, 9vw, 120px)
     clamp(60px, 9vw, 120px);
-  transform: translate(50px, 40px); /* wpływa z prawej */
+  transform: translate(50px, 40px);
   background: linear-gradient(155deg, #12224e 0%, #070f2e 55%, #03060f 100%);
 }
 
@@ -196,8 +187,6 @@
   color: rgba(240, 236, 226, 0.82);
 }
 
-
-/* --- „Umów wizytę" (jak Order Now) — dół po prawej --------------------- */
 .orderNow {
   position: relative;
   grid-area: order;
@@ -225,7 +214,6 @@
   background: rgba(216, 193, 160, 0.5);
 }
 
-/* etykieta z poświatą na hover — wyśrodkowaną na tekście (jak koszyk) */
 .orderLabel {
   position: relative;
 }
@@ -269,7 +257,6 @@
   transform: translate(-50%, -50%) scale(1);
 }
 
-/* --- Mobile ------------------------------------------------------------ */
 @media (max-width: 820px) {
   .inner {
     grid-template-columns: 1fr;

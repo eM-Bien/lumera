@@ -11,17 +11,14 @@ type LetterBackgroundProps = {
   fontFamily: string;
   fontWeight?: number | string;
   gold?: [number, number, number];
-  /** Wielkość samej litery (ułamek wysokości ekranu). */
   letterFrac?: number;
-  /** Skala całej kompozycji (litera + kwiaty). 1 = domyślna. */
   scale?: number;
   offsetY?: string;
   offsetX?: string;
   className?: string;
 };
 
-// proporcja szer/wys obrazka krwawnika (do wyliczenia wysokości z szerokości)
-const PLANT_ASPECT = 0.951; // proporcja szer/wys goździków
+const PLANT_ASPECT = 0.951;
 
 export default function LetterBackground({
   letter = "L",
@@ -37,14 +34,12 @@ export default function LetterBackground({
   const [box, setBox] = useState<LetterBox | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
 
-  // skala bazowa jako zmienna CSS — bez stylu liniowego dla wyglądu
   useEffect(() => {
     stageRef.current?.style.setProperty("--base-scale", String(scale));
     stageRef.current?.style.setProperty("--shift-y", offsetY);
     stageRef.current?.style.setProperty("--shift-x", offsetX);
   }, [scale, offsetY, offsetX]);
 
-  // postęp scrolla 0..1 — pełne zaniknięcie po przewinięciu ~jednego ekranu
   useEffect(() => {
     const el = stageRef.current;
     if (!el) return;
@@ -68,10 +63,8 @@ export default function LetterBackground({
     };
   }, []);
 
-  // goździki: szerokie na 1.4×wysokość litery; podstawa łodygi przy stopie litery
   const plantW = box ? box.h * 0.8 : 0;
   const plantH = plantW / PLANT_ASPECT;
-  // top tak dobrane, by DÓŁ rośliny był na ~box.cy + box.h*0.55 (stopa litery)
   const plantTop = box ? box.cy + box.h * 0.45 - plantH : 0;
 
   return (

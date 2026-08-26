@@ -6,8 +6,6 @@ import { useTransitionPhase } from "@/app/transition/TransitionProvider";
 import styles from "./LumeraReveal.module.css";
 import LightsBackground from "../LightsBackground";
 
-// Font tagline ładowany przez next/font — zero plików do hostowania.
-// subset latin-ext zawiera polskie znaki (m.in. Ł).
 const cinzel = Cinzel({
   subsets: ["latin-ext"],
   weight: "500",
@@ -36,45 +34,25 @@ export interface Box {
 }
 
 export interface LumeraOptions {
-  /** Ścieżka do logo (SVG). */
   src?: string;
-  /** Kolor docelowy logo (#d8c1a0). */
   gold?: RGB;
-  /** Chłodna paleta drobinek w locie. */
   hues?: RGB[];
-  /** Rozdzielczość próbkowania logo. */
   sampleRes?: number;
-  /** Krok próbkowania (mniej = więcej drobinek). */
   sampleStep?: number;
-  /** Maksymalna liczba drobinek logo. */
   maxParticles?: number;
-  /** Szerokość logo jako ułamek min(W,H). */
   logoFrac?: number;
-  /** Proporcje logo (szerokość/wysokość). 1 = kwadrat. */
   aspect?: number;
-  /** Czas zlatywania [s]. */
   gather?: number;
-  /** Rozrzut momentu startu drobinek [s]. */
   stagger?: number;
-  /** Siła końcowej poświaty. */
   settleGlow?: number;
-  /** px² na 1 drobinkę tła (większe = mniej). */
   ambientDensity?: number;
-  /** Start automatyczny po wczytaniu. */
   autoplay?: boolean;
-  /** Zapętlenie animacji. */
   loop?: boolean;
-  /** Pauza przed pętlą [s]. */
   loopDelay?: number;
-  /** Jak mocno przygasić drobinki po złożeniu. 0 = znikają całkowicie. */
   haloGlow?: number;
-  /** Czas przygaszania / znikania [s]. */
   haloFade?: number;
-  /** Wywołane gdy logo złożone (czas na pokazanie prawdziwego SVG). */
   onComplete?: (() => void) | null;
-  /** (box) -> wołane przy starcie i resize; box w px kontenera. */
   onLayout?: ((box: Box) => void) | null;
-  /** Wołane przy starcie nowego cyklu (replay / pętla). */
   onReplay?: (() => void) | null;
 }
 
@@ -85,9 +63,7 @@ export interface LumeraRevealApi {
   start(): void;
   stop(): void;
   replay(): void;
-  /** Wstrzymuje pętlę bez resetu stanu (np. gdy hero poza ekranem). */
   pause(): void;
-  /** Wznawia pętlę, zachowując postęp animacji. */
   resume(): void;
   destroy(): void;
   getBox(): Box;
@@ -160,7 +136,6 @@ export function createLumeraReveal(
     autoplay: true,
     loop: false,
     loopDelay: 2.4,
-    // 0 = drobinki ZNIKAJĄ po złożeniu logo (poprzednio 0.5 = zostawało halo)
     haloGlow: 0,
     haloFade: 0.4,
     onComplete: null,
@@ -177,7 +152,6 @@ export function createLumeraReveal(
     return t * t * (3 - 2 * t);
   };
 
-  // ---- sprite'y poświaty (znacznie szybsze niż gradient na klatkę) ----
   const SPR = 48;
   function glowSprite(c: RGB): HTMLCanvasElement {
     const s = document.createElement("canvas");
@@ -213,7 +187,6 @@ export function createLumeraReveal(
   const goldSprite = glowSprite(cfg.gold);
   const core = coreSprite();
 
-  // ---- stan ----
   let W = 0;
   let H = 0;
   let dpr = 1;
@@ -230,17 +203,8 @@ export function createLumeraReveal(
   let pauseStamp = 0;
 
   function computeBox(): void {
-    // ============================================================
-    //  ROZMIAR LOGO  ←  TUTAJ POWIĘKSZASZ / POMNIEJSZASZ LOGO
-    //  cfg.logoFrac = ułamek min(szerokość, wysokość) kontenera.
-    //    • większa wartość  =  WIĘKSZE logo  (np. 0.75)
-    //    • mniejsza wartość =  MNIEJSZE logo (np. 0.45)
-    //  Steruje JEDNOCZEŚNIE: drobinkami, ostrym SVG logo i taglinem,
-    //  bo wszystko pozycjonuje się względem tego `box`.
-    //  Wartość ustawiasz propem <LumeraReveal logoFrac={0.6} />.
-    // ============================================================
     const size = Math.min(W, H) * cfg.logoFrac;
-    const a = cfg.aspect > 0 ? cfg.aspect : 1; // szerokość/wysokość
+    const a = cfg.aspect > 0 ? cfg.aspect : 1;
     const w = a >= 1 ? size : size * a;
     const h = a >= 1 ? size / a : size;
     box = { x: (W - w) / 2, y: (H - h) / 2, w, h };
@@ -314,16 +278,14 @@ export function createLumeraReveal(
   }
 
   function drawParticles(t: number, elapsed: number): void {
-    // po złożeniu drobinki gasną; cfg.haloGlow = 0 => ZNIKAJĄ całkowicie
     const halo = completed
       ? 1 - (1 - cfg.haloGlow) * smooth(0, cfg.haloFade, elapsed - completeAt)
       : 1;
-    // gdy zgasły do zera — w ogóle ich nie rysujemy: logo zostaje czyste,
     if (completed && halo <= 0.001) return;
 
     ctx!.globalCompositeOperation = "lighter";
     for (const p of parts) {
-      let lt = (elapsed - p.delay) / p.dur; // 0..1 postęp lotu
+      let lt = (elapsed - p.delay) / p.dur;
       if (lt < 0) lt = 0;
       const settled = lt >= 1;
       let px: number;
@@ -337,13 +299,12 @@ export function createLumeraReveal(
         const ty = TY(p.ny);
         px = p.sx + (tx - p.sx) * e;
         py = p.sy + (ty - p.sy) * e;
-        const bow = Math.sin(e * Math.PI) * p.arc; // łuk: 0 na końcach, max w środku
+        const bow = Math.sin(e * Math.PI) * p.arc;
         px += Math.cos(p.arcDir) * bow;
         py += Math.sin(p.arcDir) * bow;
-        warm = smooth(0.55, 1, lt); // stygnięcie do złota
+        warm = smooth(0.55, 1, lt);
         scale = 0.7 + 0.5 * e;
       } else {
-        // osiadła: delikatny dygot wokół celu + migotanie
         const orb = reduce ? 0 : p.orbR;
         px = TX(p.nx) + Math.cos(t * p.orbF + p.orbP) * orb;
         py = TY(p.ny) + Math.sin(t * p.orbF * 1.3 + p.orbP) * orb;
@@ -356,7 +317,6 @@ export function createLumeraReveal(
         (0.3 + 0.55 * p.depth) * tw * (settled ? cfg.settleGlow * halo : 1);
       const r = p.base * (0.7 + p.depth) * scale * 4;
 
-      // poświata: chłodna -> złota (crossfade)
       if (warm < 0.98) {
         ctx!.globalAlpha = a * (1 - warm);
         ctx!.drawImage(hueSprites[p.hue], px - r, py - r, r * 2, r * 2);
@@ -365,7 +325,6 @@ export function createLumeraReveal(
         ctx!.globalAlpha = a * warm;
         ctx!.drawImage(goldSprite, px - r, py - r, r * 2, r * 2);
       }
-      // jasny rdzeń (iskra)
       const cr = p.base * scale * 1.6;
       ctx!.globalAlpha = a * 0.9;
       ctx!.drawImage(core, px - cr, py - cr, cr * 2, cr * 2);
@@ -419,14 +378,13 @@ export function createLumeraReveal(
         try {
           data = oc.getImageData(0, 0, S, S).data;
         } catch (e) {
-          reject(e); // tainted canvas (zły src/CORS)
+          reject(e);
           return;
         }
         const pts: Array<[number, number]> = [];
         for (let y = 0; y < S; y += cfg.sampleStep)
           for (let x = 0; x < S; x += cfg.sampleStep)
             if (data[(y * S + x) * 4 + 3] > 100) pts.push([x / S, y / S]);
-        // tasowanie i ograniczenie liczby
         for (let i = pts.length - 1; i > 0; i--) {
           const j = (Math.random() * (i + 1)) | 0;
           [pts[i], pts[j]] = [pts[j], pts[i]];
@@ -475,8 +433,6 @@ export function createLumeraReveal(
     cfg.onReplay?.();
     if (!running) start();
   }
-  // pauza/wznowienie BEZ resetu stanu (inaczej niż start/stop) — zachowuje
-  // postęp animacji, przesuwając znaczniki czasu o długość przerwy
   function pause(): void {
     if (!running) return;
     running = false;
@@ -499,7 +455,6 @@ export function createLumeraReveal(
   const onResize = (): void => resize();
   window.addEventListener("resize", onResize);
 
-  // init
   resize();
   const ready: Promise<void> = loadLogo().then(() => {
     buildParticles();
@@ -527,47 +482,22 @@ export function createLumeraReveal(
 }
 
 export interface LumeraRevealProps {
-  /** Ścieżka do logo w /public. */
   src?: string;
-  /** Czas zlatywania drobinek [s]. */
   gather?: number;
-  /** Rozrzut momentu startu drobinek [s]. */
   stagger?: number;
-  /** Liczba drobinek (więcej = gęściej, ale wolniej). */
   maxParticles?: number;
-  /**
-   * ROZMIAR LOGO — ułamek min(szerokość, wysokość) kontenera.
-   * Większe = większe logo, mniejsze = mniejsze logo. Domyślnie 0.6.
-   * Przykłady: 0.45 (mniejsze), 0.6 (domyślne), 0.75 (większe).
-   */
   logoFrac?: number;
-  /**
-   * Jak mocno drobinki świecą PO złożeniu logo.
-   * 0 = drobinki ZNIKAJĄ całkowicie (domyślnie). 0.5 = zostaje halo jak wcześniej.
-   */
   haloGlow?: number;
-  /** Zapętlenie animacji. */
   loop?: boolean;
-  /** Dodatkowa klasa na kontener. */
   className?: string;
-  /** URL zdjęcia w tle (np. '/tlo.jpg' z /public lub adres zdalny). */
   background?: string;
-  /** URL filmu w tle (np. '/clip.mp4'); ma pierwszeństwo przed `background`.
-   *  Jeśli to .mp4, komponent dołoży też źródło .webm o tej samej nazwie. */
   video?: string;
-  /** Plakat filmu (klatka pokazywana natychmiast, zanim film się zbuforuje). */
   poster?: string;
-  /** Przyciemnienie zdjęcia 0..1 (kontrast pod złote logo). Domyślnie 0.5. */
   scrim?: number;
-  /** Treść podpisu pod logo (renderowana wersalikami w foncie Cinzel). */
   tagline?: string;
-  /** Callback po złożeniu logo. */
   onComplete?: () => void;
-  /** Animacja wyjścia */
   exiting?: boolean;
-  /* intro tylko na start*/
   skipIntro?: boolean;
-  /** Parallax przy scrollu: logo w górę, film w dół — chowają się. */
   parallax?: boolean;
 }
 
@@ -576,9 +506,7 @@ export default function LumeraReveal({
   gather = 2.2,
   stagger = 0.7,
   maxParticles = 3000,
-  // ROZMIAR LOGO: zwiększ, by powiększyć; zmniejsz, by pomniejszyć.
   logoFrac = 0.6,
-  // 0 = drobinki znikają po pojawieniu się logo.
   haloGlow = 0,
   loop = false,
   className = "",
@@ -599,18 +527,12 @@ export default function LumeraReveal({
   const apiRef = useRef<LumeraRevealApi | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  // film w tle odtwarzamy dopiero po zakończeniu przejścia (faza "idle"),
-  // żeby dekodowanie nie zacinało animacji. Poster widoczny w międzyczasie.
   const phase = useTransitionPhase();
   useEffect(() => {
     if (phase !== "idle") return;
     videoRef.current?.play().catch(() => {});
   }, [phase]);
 
-  // Ustalamy breakpoint SYNCHRONICZNIE na pierwszym renderze — komponent montuje
-  // się wyłącznie po stronie klienta (strona gate'uje go za `skipIntro !== null`),
-  // więc `window` jest dostępne. Dzięki temu logo i tagline od razu liczą się dla
-  // właściwego układu i nie ma migotania „desktop → mobile" (tekst w złym miejscu/rozmiarze).
   const [isMobile, setIsMobile] = useState(
     () =>
       typeof window !== "undefined" &&
@@ -624,12 +546,8 @@ export default function LumeraReveal({
     return () => mq.removeEventListener("change", sync);
   }, []);
 
-  // parallax TYLKO na desktopie — na mobile transformy oparte na `vh` skaczą,
-  // gdy pasek adresu przeglądarki chowa się/pokazuje przy scrollu (100vh zmienia
-  // się), przez co hero „przeskakuje". Na dotyku zostawiamy statyczne hero.
   const useParallax = parallax && !isMobile;
 
-  // parallax sterowany scrollem — logo w górę, film w dół (chowają się)
   useEffect(() => {
     if (!useParallax) return;
     const stage = stageRef.current;
@@ -654,9 +572,7 @@ export default function LumeraReveal({
     };
   }, [useParallax]);
 
-  // na mobile drobinki I ostre logo to TYLKO górna część (lumera-top)
   const logoSrc = isMobile ? "/lumera-top.svg" : src;
-  // proporcje górnej części (przycięty viewBox 266.4 x 321.57); desktop = kwadrat
   const logoAspect = isMobile ? 266.4 / 321.57 : 1;
 
   useEffect(() => {
@@ -665,7 +581,6 @@ export default function LumeraReveal({
     const tag = tagRef.current;
     if (!canvas) return;
 
-    // pozycjonuje ostre logo ORAZ tekst tagline względem boxu logo
     const layout = (box: Box): void => {
       if (img) {
         img.style.left = `${box.x}px`;
@@ -677,7 +592,6 @@ export default function LumeraReveal({
         const cx = box.x + box.w / 2;
         tag.style.left = `${cx}px`;
         if (isMobile) {
-          // tuż POD górną częścią logo; kotwiczony górą, może się łamać
           tag.style.top = `${box.y + box.h + box.h * 0.04}px`;
           tag.style.whiteSpace = "normal";
           tag.style.width = "min(80vw, 22rem)";
@@ -699,25 +613,23 @@ export default function LumeraReveal({
       gather,
       stagger,
       maxParticles,
-      logoFrac, // <- ROZMIAR LOGO (większe / mniejsze)
-      haloGlow, // <- 0 = drobinki znikają po złożeniu logo
+      logoFrac,
+      haloGlow,
       loop,
       autoplay: !skipIntro,
-      onLayout: layout, // logo i tagline trzymają się nad drobinkami
+      onLayout: layout,
       onReplay: () => {
         img?.classList.remove(styles.show);
         tag?.classList.remove(styles.show);
       },
       onComplete: () => {
-        img?.classList.add(styles.show); // ostre logo na finiszu
-        tag?.classList.add(styles.show); // tekst pojawia się razem z logo
+        img?.classList.add(styles.show);
+        tag?.classList.add(styles.show);
         onComplete?.();
       },
     });
     apiRef.current = reveal;
 
-    // pauzowanie silnika drobinek, gdy hero jest poza ekranem lub karta w tle
-    // (podłączane dopiero PO starcie intra, by nie wyścigować się ze startem)
     let pauseIO: IntersectionObserver | null = null;
     let pauseSync: (() => void) | null = null;
 
@@ -758,7 +670,6 @@ export default function LumeraReveal({
       if (pauseSync) document.removeEventListener("visibilitychange", pauseSync);
       reveal.destroy();
     };
-    // celowo bez onComplete w deps, by nie re-inicjalizować animacji
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     logoSrc,
@@ -779,7 +690,6 @@ export default function LumeraReveal({
         useParallax ? styles.parallax : ""
       }`}
     >
-      {/* Tło (film lub zdjęcie) + przyciemnienie — pod canvasem */}
       {video ? (
         <>
           {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
@@ -793,7 +703,6 @@ export default function LumeraReveal({
             poster={poster}
             aria-hidden="true"
           >
-            {/* WebM preferowany (mniejszy), MP4 jako fallback */}
             {video.endsWith(".mp4") && (
               <source
                 src={video.replace(/\.mp4$/, ".webm")}
@@ -826,9 +735,7 @@ export default function LumeraReveal({
         </>
       ) : null}
       <canvas ref={canvasRef} className={styles.canvas} />
-      {/* logo + tagline w jednej warstwie — razem jadą do góry przy scrollu */}
       <div className={styles.foreground}>
-        {/* PRAWDZIWE logo — pojawia się ostre dokładnie tam, gdzie złożyły się drobinki */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           ref={imgRef}
@@ -837,7 +744,6 @@ export default function LumeraReveal({
           className={styles.logo}
           aria-hidden="true"
         />
-        {/* Tagline jako prawdziwy tekst (font Cinzel) — pojawia się razem z logo */}
         <span ref={tagRef} className={`${styles.tagline} ${cinzel.className}`}>
           {tagline}
         </span>

@@ -9,7 +9,6 @@
   padding-bottom: 12vh;
 }
 
-/* wyszukiwarka + filtry — trzymane w wyśrodkowanej kolumnie */
 .controlsWrap {
   max-width: 1240px;
   margin: 0 auto;
@@ -18,7 +17,7 @@
 
 .list {
   list-style: none;
-  margin: 8vh 0 0; /* odstęp od wyszukiwarki/filtrów */
+  margin: 8vh 0 0;
   padding: 0;
   display: flex;
   flex-direction: column;

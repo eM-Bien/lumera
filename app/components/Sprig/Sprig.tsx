@@ -1,15 +1,10 @@
 type SprigProps = {
-  /** pozycja nasady względem kontenera, w % */
   left: string;
   top: string;
-  /** rozmiar w px */
   size?: number | string;
-  /** obrót bazowy w stopniach */
   rotate?: number;
-  /** czas jednego wahnięcia [s] i opóźnienie [s] — różnicuj między gałązkami */
   sway?: number;
   delay?: number;
-  /** lustrzane odbicie w poziomie */
   flip?: boolean;
   color?: string;
   flowerScale?: number;
@@ -36,7 +31,6 @@ export default function Spring({
         top,
         width: dim,
         height: `calc(${dim} * 1.6)`,
-        // nasada na dole-środku: kołysanie obraca się stąd, jak prawdziwa łodyga
         transformOrigin: "50% 100%",
         transform: `translate(-50%, -100%) rotate(${rotate}deg) scaleX(${flip ? -1 : 1})`,
         pointerEvents: "none",
@@ -46,7 +40,6 @@ export default function Spring({
       aria-hidden="true"
     >
       <svg viewBox="0 0 60 100" width="100%" height="100%" fill="none">
-        {/* łodyga */}
         <path
           d="M30 100 C 30 70, 28 50, 30 20"
           stroke={color}
@@ -54,7 +47,6 @@ export default function Spring({
           strokeLinecap="round"
           opacity="0.7"
         />
-        {/* listki wzdłuż łodygi */}
         <g transform="translate(30 50) scale(0.7) translate(-30 -50)">
           <path
             d="M30 72 C 18 66, 12 56, 16 48 C 26 52, 31 62, 30 72 Z"
@@ -72,8 +64,6 @@ export default function Spring({
             opacity="0.45"
           />
         </g>
-        {/* kwiatki na szczycie */}
-        {/* kwiat: 5 płatków wokół środka */}
         <g
           transform={`translate(30 18) scale(${flowerScale}) translate(-30 -18)`}
         >

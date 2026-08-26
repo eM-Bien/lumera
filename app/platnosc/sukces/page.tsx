@@ -17,7 +17,6 @@ export default function PaymentSuccessPage() {
   const { clearCart } = useCart();
   const cleared = useRef(false);
 
-  // po powrocie z udanej płatności czyścimy koszyk (raz)
   useEffect(() => {
     if (!cleared.current) {
       cleared.current = true;

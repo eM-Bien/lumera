@@ -6,7 +6,7 @@
 .btn {
   position: relative;
   overflow: hidden;
-  isolation: isolate; /* zamyka blask (z-index:-1) w obrębie przycisku */
+  isolation: isolate;
 
   font-family: var(--font-basic), sans-serif;
   font-size: 1rem;
@@ -38,7 +38,6 @@
     opacity 0.3s ease;
 }
 
-/* skośny blask — przejeżdża raz na cykl, potem odpoczywa */
 .btn::before {
   content: "";
   position: absolute;
@@ -93,7 +92,6 @@
   animation: none;
 }
 
-/* wariant pełnej szerokości */
 .fullWidth {
   display: block;
   width: 100%;

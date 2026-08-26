@@ -25,7 +25,6 @@
   backdrop-filter: blur(6px);
   cursor: pointer;
 
-  /* stan ukryty */
   opacity: 0;
   transform: translateY(0.75rem);
   pointer-events: none;

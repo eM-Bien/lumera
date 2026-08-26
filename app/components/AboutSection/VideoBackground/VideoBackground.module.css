@@ -1,12 +1,11 @@
 .video {
-  position: fixed; /* zostaje w tle przy scrollu */
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw; /* NIE 100% — na fixed liczy się względem treści, nie ekranu */
+  width: 100vw;
   height: 100dvh;
   object-fit: cover;
   z-index: 0;
-  /* parallax: przy scrollu zjeżdża w dół i gaśnie (--p ustawia strona) */
   transform: translateY(calc(var(--p, 0) * 30vh));
   opacity: calc(1 - var(--p, 0) * 0.85);
   will-change: transform, opacity;

@@ -1,15 +1,12 @@
 .stage {
-  position: fixed; /* przewija się razem ze stroną (nie fixed) */
+  position: fixed;
   inset: 0;
-  /* width: 100%; */
-  /* height: 100vh; */
   pointer-events: none;
-  z-index: 0; /* pod wszystkim, ale nad tłem strony */
+  z-index: 0;
   animation: letterFadeIn 0.8s ease both;
 
-  /* wartości domyślne zanim JS ustawi swoje */
-  --p: 0; /* postęp scrolla 0..1 (ustawia JS) */
-  --base-scale: 1; /* skala bazowa z propa (ustawia JS) */
+  --p: 0;
+  --base-scale: 1;
   --shift-y: 0px;
   --shift-x: 0px;
 }
@@ -23,8 +20,6 @@
   }
 }
 
-/* TU stroisz zachowanie przy scrollu — wszystko liczone z --p:
-   skala maleje, krycie spada, jasność gaśnie do zaniknięcia. */
 .inner {
   position: absolute;
   inset: 0;

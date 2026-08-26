@@ -11,8 +11,6 @@ import { createPortal } from "react-dom";
 import { values } from "../about.content";
 import styles from "./ValueCards.module.css";
 
-/** Ikony wartości (public/). Ostatnia — „troska" — jest większa w pliku,
- *  więc dostaje dodatkową klasę zmniejszającą rysunek. */
 const ICON_SRC = [
   "/harmonia.svg",
   "/wiedza.svg",
@@ -39,7 +37,6 @@ export default function ValueCards() {
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const lastFocused = useRef<HTMLElement | null>(null);
 
-  // pojawianie się sekcji przy scrollu
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
@@ -57,11 +54,9 @@ export default function ValueCards() {
   }, []);
 
   const openCard = (i: number, el: HTMLElement) => {
-    // punkt startowy animacji = środek klikniętego kafla względem środka ekranu
     const rect = el.getBoundingClientRect();
     const dx = rect.left + rect.width / 2 - window.innerWidth / 2;
     const dy = rect.top + rect.height / 2 - window.innerHeight / 2;
-    // FLIP: panel startuje dokładnie w rozmiarze kafla (pionowy), potem rośnie
     lastFocused.current = el;
     setOrigin({ dx, dy, cw: rect.width, ch: rect.height });
     setClosing(false);
@@ -70,7 +65,6 @@ export default function ValueCards() {
 
   const requestClose = useCallback(() => setClosing(true), []);
 
-  // koniec animacji: przy zamykaniu odmontowujemy i wracamy fokusem na kafel
   const onAnimEnd = () => {
     if (closing) {
       setOpen(null);
@@ -79,12 +73,8 @@ export default function ValueCards() {
     }
   };
 
-  // Escape + blokada scrolla + fokus na „zamknij", gdy otwarte
   useEffect(() => {
     if (open === null) return;
-    // Blokada scrolla BEZ ruszania overflow na body — przy Lenisie
-    // overflow:hidden potrafi zwinąć wysokość i „wyrzucić" stronę na górę.
-    // Zamiast tego zatrzymujemy Lenisa i blokujemy zdarzenia przewijania.
     const lenis = (
       window as unknown as { __lenis?: { stop: () => void; start: () => void } }
     ).__lenis;
@@ -127,7 +117,6 @@ export default function ValueCards() {
       ref={sectionRef}
       className={`${styles.section} ${inView ? styles.in : ""}`}
     >
-      {/* strumienie światła z samej góry — po jednym na kartę */}
       <div className={styles.beams} aria-hidden="true">
         {values.map((v, i) => (
           <span
@@ -208,8 +197,6 @@ export default function ValueCards() {
               </div>
             </div>
 
-            {/* stabilna ikona na czas powiększania — nie rozjeżdża się z panelem;
-                znika przed obrotem, potem pojawia się właściwa treść */}
             {!closing && (
               <span className={styles.flyLabel} aria-hidden="true">
                 {/* eslint-disable-next-line @next/next/no-img-element */}

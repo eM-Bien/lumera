@@ -28,14 +28,12 @@ export default function PaymentPage() {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // wysyłamy TYLKO id + ilość — cenę policzy serwer
         body: JSON.stringify({
           items: items.map((i) => ({ id: i.id, qty: i.qty })),
         }),
       });
       const data = await res.json();
       if (!res.ok || !data.url) throw new Error(data.error ?? "Błąd płatności");
-      // redirect na hostowaną stronę Stripe (zewnętrzny URL — bez transition)
       window.location.href = data.url;
     } catch (e) {
       setError(e instanceof Error ? e.message : "Coś poszło nie tak");
@@ -67,7 +65,6 @@ export default function PaymentPage() {
       </header>
 
       <div className={styles.content}>
-        {/* --- Podsumowanie --- */}
         <ul className={styles.items}>
           {items.map((item) => (
             <li key={item.id} className={styles.item}>
@@ -87,7 +84,6 @@ export default function PaymentPage() {
         </ul>
         <p className={styles.vatNote}>Cena zawiera podatek VAT (5%)</p>
 
-        {/* --- Zgody --- */}
         <div className={styles.consents}>
           <label className={styles.consent}>
             <input

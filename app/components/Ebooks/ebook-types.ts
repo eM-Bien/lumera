@@ -3,16 +3,16 @@
 export type Ebook = {
   id: string;
   title: string;
-  tagline: string; // jedno zdanie — co daje
-  cover: string; // ścieżka do grafiki w /public
+  tagline: string;
+  cover: string;
   description: string;
-  forWhom: string[]; // 2–4 punkty „dla kogo"
+  forWhom: string[];
   details: {
-    format: string; // np. "PDF"
+    format: string;
     pages: number;
-    language: string; // np. "polski"
+    language: string;
   };
-  price: number; // w złotych, np. 49 albo 49.99
+  price: number;
 };
 
 export const EBOOKS: Ebook[] = [
@@ -37,7 +37,6 @@ export const EBOOKS: Ebook[] = [
   },
 ];
 
-// formatuje cenę po polsku: 49 -> "49,00 zł"
 export function formatPrice(pln: number): string {
   return new Intl.NumberFormat("pl-PL", {
     style: "currency",

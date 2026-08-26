@@ -12,7 +12,6 @@
   will-change: opacity;
 }
 
-/* ciemny granat z leciutką chłodną poświatą (bez kolorowego tła) */
 .blue {
   background:
     radial-gradient(
@@ -23,7 +22,6 @@
     linear-gradient(160deg, #0a1836 0%, #050c22 60%, #02040e 100%);
 }
 
-/* dół obszaru — bardzo ciemny, niemal czarny */
 .navy {
   background:
     radial-gradient(

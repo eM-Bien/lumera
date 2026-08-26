@@ -8,7 +8,6 @@ import styles from "./OfferExplorer.module.css";
 
 export default function OfferExplorer() {
   const [query, setQuery] = useState("");
-  // opisy rozwinięte „na dzień dobry" — wszystkie zabiegi otwarte na start
   const [openIds, setOpenIds] = useState<Set<string>>(
     () => new Set(OFFERS.map((o) => o.id)),
   );
@@ -36,7 +35,6 @@ export default function OfferExplorer() {
     const q = normalize(query.trim());
     return OFFERS.filter((o) => {
       const matchesQuery = q === "" || normalize(o.title).includes(q);
-      // lokalizacja: zabieg pasuje, jeśli MA którąś z zaznaczonych lokalizacji
       const matchesLocation =
         activeLoc.size === 0 || o.locations.some((loc) => activeLoc.has(loc));
       return matchesQuery && matchesLocation;

@@ -1,4 +1,3 @@
-// components/ScrollToTop/ScrollToTop.tsx
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -14,7 +13,6 @@ export default function ScrollToTop() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // sentinel = pierwszy viewport; widoczny → jesteśmy na górze → chowamy
         setVisible(!entry.isIntersecting);
       },
       { threshold: 0 },
@@ -26,7 +24,6 @@ export default function ScrollToTop() {
 
   const handleClick = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-    // znika sama dzięki observerowi, gdy sentinel wróci do widoku
   };
 
   return (

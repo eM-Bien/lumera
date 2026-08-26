@@ -1,5 +1,5 @@
 .stage {
-  --p: 0; /* postęp scrolla 0..1 (ustawia JS przy parallax) */
+  --p: 0;
   position: relative;
   width: 100%;
   height: 100%;
@@ -13,7 +13,6 @@
   );
 }
 
-/* warstwa z logo + taglinem — domyślnie statyczna, NAD winietą */
 .foreground {
   position: absolute;
   inset: 0;
@@ -21,7 +20,6 @@
   pointer-events: none;
 }
 
-/* winieta przyciemniająca dookoła — pod logo (z-index 2), nad filmem */
 .vignette {
   position: absolute;
   inset: 0;
@@ -36,8 +34,6 @@
   );
 }
 
-/* wygaszenie dołu hero do czerni — żeby film „ginął" w #000000 dokładnie tam,
-   gdzie zaczyna się sekcja HomeAbout (bez widocznej krawędzi styku) */
 .stage::after {
   content: "";
   position: absolute;
@@ -50,7 +46,6 @@
   background: linear-gradient(180deg, transparent 0%, #000000 100%);
 }
 
-/* parallax: film zjeżdża w dół (wolniej), logo ucieka w górę (szybciej) */
 .parallax .bg {
   transform: translateY(calc(var(--p) * 30vh));
   opacity: calc(1 - var(--p) * 0.85);
@@ -84,7 +79,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* film na cały ekran */
+  object-fit: cover;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -94,7 +89,6 @@
   inset: 0;
 }
 
-/* PRAWDZIWE logo — ostre SVG (na mobile to górna część, JS podmienia src) */
 .logo {
   position: absolute;
   z-index: 1;
@@ -111,9 +105,6 @@
   filter: drop-shadow(0 0 30px rgba(216, 193, 160, 0.45));
 }
 
-/* Tagline — pozycję/rozmiar ustawia JS; tu wygląd i animacja.
-   data-anchor="center" (desktop) -> centrowany w pionie na punkcie,
-   data-anchor="top"   (mobile)  -> kotwiczony górą pod logo. */
 .tagline {
   position: absolute;
   z-index: 3;
@@ -136,7 +127,6 @@
   transform: translate(-50%, -50%);
 }
 
-/* mobile: tagline kotwiczony górą (nie centrowany w pionie) */
 .tagline[data-anchor="top"] {
   transform: translate(-50%, 12px);
 }
@@ -175,7 +165,6 @@
   box-shadow: 0 0 28px rgba(216, 193, 160, 0.25);
 }
 
-/* na mobile tylko delikatnie zmiękczamy tagline (łamanie w 2 linie) */
 @media (max-width: 768px) {
   .tagline {
     line-height: 1.4;
@@ -185,5 +174,4 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* animacja sama redukuje ruch */
 }

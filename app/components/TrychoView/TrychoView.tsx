@@ -14,7 +14,6 @@ import styles from "./TrychoView.module.css";
 export default function TrychoView() {
   const [query, setQuery] = useState("");
   const [activeLoc, setActiveLoc] = useState<Set<Location>>(new Set());
-  // opisy rozwinięte „na dzień dobry" — wszystkie zabiegi otwarte na start
   const [openIds, setOpenIds] = useState<Set<string>>(
     () => new Set(TRYCHO_TREATMENTS.map((t) => t.id)),
   );

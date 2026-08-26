@@ -1,17 +1,14 @@
 import { type Location } from "./offer-types";
 
-// Zabieg trychologiczny — model prostszy niż Offer:
-// bez listy „efektów", za to z lokalizacjami do filtrowania.
 export type TrychoTreatment = {
   id: string;
   title: string;
-  price: string; // np. "150 zł" lub "od 150 zł"
+  price: string;
   description: string;
   locations: Location[];
-  image?: string; // ścieżka w /public
+  image?: string;
 };
 
-// Lokalizacje ustawione domyślnie na obie — dostosuj do realnej dostępności.
 export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
   {
     id: "konsultacja-trychologiczna",
@@ -60,7 +57,6 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
   },
 ];
 
-// Wspólne dla całej sekcji trychologicznej.
 export const TRYCHO_WSKAZANIA: string[] = [
   "Nadmierne wypadanie włosów",
   "Przerzedzenie włosów",

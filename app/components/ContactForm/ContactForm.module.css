@@ -2,8 +2,6 @@
    ContactForm — formularz rezerwacji (ciemny „liquid glass" LUMERA).
    ========================================================================= */
 
-/* Panel przyklejony do lewej krawędzi: pełna wysokość, bez ramki, bez
-   zaokrągleń po lewej — część strony, nie wiszący kafelek. */
 .form {
   display: flex;
   flex-direction: column;
@@ -23,10 +21,9 @@
   -webkit-backdrop-filter: blur(16px) saturate(150%);
   border: none;
   border-right: 1px solid rgba(194, 163, 107, 0.22);
-  border-radius: 0 24px 0 0; /* dół płasko — panel schodzi do krawędzi */
+  border-radius: 0 24px 0 0;
   box-shadow: 24px 0 70px rgba(0, 0, 0, 0.35);
   overflow-y: auto;
-  /* na dzień dobry: panel wysuwa się od lewej krawędzi */
   animation: formSlideIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -62,7 +59,7 @@
   border: none;
   padding: 0;
   margin: 0;
-  min-width: 0; /* pozwala polu skurczyć się w kolumnie grid (np. input[type=date]) */
+  min-width: 0;
 }
 
 .label {
@@ -80,7 +77,6 @@
 }
 
 @media (max-width: 900px) {
-  /* na mobile wraca zwykły „kafelek", pełna szerokość kolumny */
   .form {
     height: auto;
     padding: 2rem 1.6rem;
@@ -128,7 +124,6 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   padding-right: 2.6rem;
-  /* własny złoty „chevron" spójny z resztą strony */
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9' fill='none'><path d='M1 1l6 6 6-6' stroke='%23c2a36b' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
   background-repeat: no-repeat;
   background-position: right 1rem center;
@@ -144,8 +139,6 @@
   color: #9a8c6f;
 }
 
-/* input[type=date] na mobile (iOS) ma natywną, sztywną szerokość i wychodzi
-   poza kolumnę — zdejmujemy natywny wygląd i pozwalamy mu się skurczyć */
 .input[type="date"] {
   -webkit-appearance: none;
   appearance: none;
@@ -163,7 +156,6 @@
   box-shadow: 0 0 0 3px rgba(194, 163, 107, 0.18);
 }
 
-/* lista opcji spójna z ciemnym motywem formularza */
 .select option {
   color: #f0e6d2;
   background: #140f2e;
@@ -175,8 +167,6 @@
   font-style: normal;
   font-weight: 600;
 }
-
-/* --- chipy lokalizacji --------------------------------------------------- */
 
 .chips {
   display: flex;
@@ -215,8 +205,6 @@
   border-color: rgba(240, 230, 200, 0.6);
 }
 
-/* --- zgoda / RODO -------------------------------------------------------- */
-
 .consent {
   display: flex;
   gap: 0.7rem;
@@ -237,8 +225,6 @@
   cursor: pointer;
 }
 
-/* --- honeypot (ukryty) --------------------------------------------------- */
-
 .hp {
   position: absolute;
   left: -9999px;
@@ -247,8 +233,6 @@
   overflow: hidden;
 }
 
-/* --- błąd / sukces ------------------------------------------------------- */
-
 .error {
   margin: 0;
   font-family: var(--font-basic), sans-serif;
@@ -256,14 +240,12 @@
   color: #e0a0a0;
 }
 
-/* komunikat pod pojedynczym polem */
 .errorText {
   font-family: var(--font-basic), sans-serif;
   font-size: 0.8rem;
   color: #e0a0a0;
 }
 
-/* podświetlenie pól z błędem */
 .input[aria-invalid="true"],
 .select[aria-invalid="true"] {
   border-color: rgba(224, 160, 160, 0.7);
@@ -272,31 +254,29 @@
 .success {
   width: 100%;
   max-width: 640px;
-  margin: auto; /* wyśrodkowanie w panelu — poziomo i pionowo */
+  margin: auto;
   padding: 3rem 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 2.4rem; /* większa przerwa między nagłówkiem a opisem */
-  transform: translateY(-8vh); /* trochę wyżej niż sam środek panelu */
+  gap: 2.4rem;
+  transform: translateY(-8vh);
 }
 
 @media (max-width: 900px) {
   .success {
-    transform: none; /* na mobile naturalny przepływ, bez podnoszenia */
+    transform: none;
   }
 }
 
 .successTitle {
   margin: 0;
-  /* rozmiar i styl jak nagłówki na /o-lumera */
   font-family: var(--font-header), serif;
   font-weight: 700;
   font-size: clamp(2.8rem, 7vw, 4.8rem);
   line-height: 1.02;
   color: #f0e6d2;
-  /* wjeżdża od dołu */
   animation: successRise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -307,7 +287,6 @@
   line-height: 1.7;
   color: #c9bfa8;
   max-width: 44ch;
-  /* wjeżdża od dołu, chwilę po nagłówku */
   animation: successRise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
 }
 

@@ -60,8 +60,8 @@ export default function RootLayout({
                 burstFactor={2.5}
               />{" "}
               <Nav />
-              <CursorInk /> {/* pył za kursorem — podstrony (bez koszyka), desktop */}
-              <TransitionOverlay /> {/* przyciemnienie tła — czyta fazę */}
+              <CursorInk />
+              <TransitionOverlay />
               {children}
               <CartDrawer />
             </TransitionProvider>

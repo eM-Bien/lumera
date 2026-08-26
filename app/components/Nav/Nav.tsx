@@ -43,7 +43,6 @@ export default function Nav() {
 
   return (
     <nav className={`${styles.nav} ${show ? styles.visible : ""}`}>
-      {/* księżyc z logo w lewym górnym rogu — link do strony głównej (nie na stronie głównej) */}
       {!isHome && (
         <Link
           href="/"
@@ -56,7 +55,6 @@ export default function Nav() {
         </Link>
       )}
 
-      {/* koszyk zawsze widoczny obok hamburgera — tylko mobile */}
       <span className={styles.cartMobile}>
         <CartIcon onClick={() => setOpen(false)} />
       </span>
@@ -102,7 +100,6 @@ export default function Nav() {
         ))}
       </div>
 
-      {/* koszyk — poza pastylką, przypięty do prawej; tylko desktop */}
       <span className={`${styles.linkItem} ${styles.cartDesktop}`}>
         <CartIcon onClick={() => setOpen(false)} />
       </span>

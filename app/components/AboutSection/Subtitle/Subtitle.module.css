@@ -5,7 +5,6 @@
   margin: 0 auto;
   text-align: center;
   z-index: 2;
-  /* pojawia się chwilę po nagłówku „na dzień dobry" */
   animation: subtitleIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: 1s;
 }
@@ -13,7 +12,7 @@
 .subtitle {
   font-size: var(--display-subtitle-size);
   font-family: var(--font-decoration);
-  color: #d8c1a0; /* złoty */
+  color: #d8c1a0;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
 }
 

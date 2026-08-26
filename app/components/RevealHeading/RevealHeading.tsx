@@ -8,9 +8,7 @@ type RevealHeadingProps = {
   text: string;
   as?: ElementType;
   className?: string;
-  /** "scroll" (domyślnie) — efekt sterowany scrollem; "load" — odtwarza się raz na wejściu. */
   mode?: "scroll" | "load";
-  /** Opóźnienie startu (ms) dla trybu "load". */
   delayMs?: number;
 };
 
@@ -30,7 +28,6 @@ export default function RevealHeading({
   const elRef = useRef<HTMLElement | null>(null);
   const lettersRef = useRef<Array<HTMLSpanElement | null>>([]);
 
-  // grupowanie po słowach (żeby słowo nie łamało się w środku), globalny indeks liter
   const words = text.split(" ");
   const wordMeta = words.map((w, i) => ({
     w,
@@ -48,7 +45,6 @@ export default function RevealHeading({
       Math.max(a, Math.min(b, v));
     const easeOut = (x: number) => 1 - Math.pow(1 - x, 3);
 
-    // ustawia litery dla postępu e (0 = rozjechane, 1 = na miejscu)
     const applyE = (e: number) => {
       const amp = Math.min(window.innerWidth * 0.018, 20);
       letters.forEach((s, k) => {
@@ -71,7 +67,6 @@ export default function RevealHeading({
 
     let raf = 0;
 
-    // --- tryb „load": jednorazowa animacja na wejściu ----------------------
     if (mode === "load") {
       applyE(0);
       const duration = 1100;
@@ -93,7 +88,6 @@ export default function RevealHeading({
       };
     }
 
-    // --- tryb „scroll": efekt związany z pozycją w oknie -------------------
     const update = () => {
       raf = 0;
       const rect = el.getBoundingClientRect();

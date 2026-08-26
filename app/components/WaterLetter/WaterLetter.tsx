@@ -3,29 +3,19 @@
 import { useEffect, useRef } from "react";
 
 export type LetterBox = {
-  /** środek litery w poziomie [px] */
   cx: number;
-  /** środek litery w pionie [px] */
   cy: number;
-  /** przybliżona szerokość litery [px] */
   w: number;
-  /** przybliżona wysokość litery (cap-height) [px] */
   h: number;
 };
 
 type WaterLetterProps = {
   letter?: string;
-  /** Rodzina fontu — przekaż cinzel.style.fontFamily z next/font. */
   fontFamily?: string;
-  /** Waga fontu do załadowania (musi zgadzać się z tą z next/font). */
   fontWeight?: number | string;
-  /** Kolor litery [r,g,b] 0..255. Domyślnie złoto LUMERA. */
   gold?: [number, number, number];
-  /** Wysokość litery jako ułamek wysokości ekranu. Mniej = mniejsza litera. */
   letterFrac?: number;
-  /** Pozycja lustra wody (0..1 od dołu). */
   waterline?: number;
-  /** Wołane po zbudowaniu/zmianie litery — zwraca jej realny box w px. */
   onLayout?: (box: LetterBox) => void;
   className?: string;
 };
@@ -60,7 +50,6 @@ export default function WaterLetter({
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    // ---- shadery ----
     const vsSrc = `
       attribute vec2 aPos;
       varying vec2 vUv;
@@ -118,7 +107,6 @@ export default function WaterLetter({
     gl.linkProgram(prog);
     gl.useProgram(prog);
 
-    // pełnoekranowy trójkąt
     const buf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
     gl.bufferData(
@@ -144,9 +132,8 @@ export default function WaterLetter({
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true); // teksturę „w górę" jak w GL
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 
-    // ---- rysowanie litery na offscreen 2D i upload jako tekstura ----
     const off = document.createElement("canvas");
     const octx = off.getContext("2d")!;
     let W = 0;
@@ -165,37 +152,32 @@ export default function WaterLetter({
       octx.textBaseline = "alphabetic";
       const [r, g, b] = gold;
       octx.fillStyle = `rgb(${r},${g},${b})`;
-      // poświata
       octx.shadowColor = `rgba(${r},${g},${b},0.55)`;
       octx.shadowBlur = fontPx * 0.12;
-      const baselineY = H * (1 - waterline); // litera „stoi" na tafli
+      const baselineY = H * (1 - waterline);
       octx.fillText(letter, W / 2, baselineY);
 
       gl.bindTexture(gl.TEXTURE_2D, tex);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, off);
 
-      // policz przybliżony box litery i zgłoś w górę (px w przestrzeni ekranu)
-      const cap = fontPx * 0.7; // przybliżona wysokość wersaliki
+      const cap = fontPx * 0.7;
       const top = baselineY - cap;
       onLayout?.({
         cx: W / 2,
         cy: top + cap / 2,
-        w: cap * 0.6, // przybliżona szerokość — dostrój pod konkretny font/literę
+        w: cap * 0.6,
         h: cap,
       });
     };
 
     const resize = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
-      // mierz z okna — clientWidth/Height na skalowanym/filtrowanym rodzicu
-      // potrafi zwrócić aspekt inny niż wyświetlany → spłaszczenie litery
       W = window.innerWidth;
       H = window.innerHeight;
       canvas.width = Math.floor(W * dpr);
       canvas.height = Math.floor(H * dpr);
       gl.viewport(0, 0, canvas.width, canvas.height);
 
-      // DEBUG: porównaj aspekt bufora z aspektem wyświetlania
       const r = canvas.getBoundingClientRect();
       console.log(
         "[WaterLetter] buffer",
@@ -227,7 +209,6 @@ export default function WaterLetter({
       raf = requestAnimationFrame(frame);
     };
 
-    // czekamy aż font będzie gotowy, potem przebudowujemy teksturę
     resize();
     if (document.fonts) {
       document.fonts.ready.then(() => buildTexture());

@@ -9,7 +9,6 @@ import SecondaryButton from "../../Buttons/SecondaryButton/SecondaryButton";
 import PrimaryButton from "../../Buttons/PrimaryButton/PrimaryButton";
 import { useTransition } from "@/app/transition/TransitionProvider";
 
-// poprawna polska odmiana: 1 produkt / 2–4 produkty / 5+ produktów
 function pluralProdukt(n: number): string {
   if (n === 1) return "produkt";
   const ones = n % 10;
@@ -23,7 +22,6 @@ export default function CartDrawer() {
   const panelRef = useRef<HTMLDivElement>(null);
   const { navigate } = useTransition();
 
-  // Escape zamyka
   useEffect(() => {
     if (!isOpen) return;
     const onKey = (e: KeyboardEvent) => {
@@ -33,7 +31,6 @@ export default function CartDrawer() {
     return () => window.removeEventListener("keydown", onKey);
   }, [isOpen, closeCart]);
 
-  // blokada scrolla tła, gdy drawer otwarty
   useEffect(() => {
     if (!isOpen) return;
     const prev = document.body.style.overflow;
@@ -43,7 +40,6 @@ export default function CartDrawer() {
     };
   }, [isOpen]);
 
-  // focus na panel po otwarciu (dostępność)
   useEffect(() => {
     if (isOpen) panelRef.current?.focus();
   }, [isOpen]);

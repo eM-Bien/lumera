@@ -37,7 +37,6 @@ const SOCIALS = [
 ];
 
 export default function ContactPage() {
-  // opóźnione pojawienie LetterBackground — czeka na font
   const [ready, setReady] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setReady(true), 1000);
@@ -46,7 +45,6 @@ export default function ContactPage() {
 
   return (
     <main className={styles.contact}>
-      {/* tło — litera odbita w wodzie + kwiaty, przesunięta w prawo i niżej */}
       {ready && (
         <LetterBackground
           fontFamily={cinzel.style.fontFamily}
@@ -59,7 +57,6 @@ export default function ContactPage() {
       )}
 
       <div className={styles.grid}>
-        {/* LEWA — kontakt (zadzwoń/napisz) nad panelem, panel do dołu */}
         <div className={styles.formCol}>
           <div className={styles.reach}>
             <a className={styles.reachItem} href={`tel:${PHONE_HREF}`}>
@@ -79,7 +76,6 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* PRAWA — adresy pod grafiką */}
         <div className={styles.infoCol}>
           <div className={styles.infoBottom}>
             <div className={styles.locations}>
