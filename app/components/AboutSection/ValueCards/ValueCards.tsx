@@ -163,9 +163,6 @@ export default function ValueCards() {
             </span>
             <h3 className={styles.label}>{v.label}</h3>
             <p className={styles.text}>{v.text}</p>
-            <span className={styles.more} aria-hidden="true">
-              Czytaj więcej
-            </span>
           </article>
         ))}
       </div>

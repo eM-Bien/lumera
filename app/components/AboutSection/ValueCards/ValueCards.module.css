@@ -279,17 +279,6 @@
   outline-offset: 4px;
 }
 
-/* delikatna podpowiedź, że kafel jest klikalny */
-.more {
-  margin-top: 0.4rem;
-  font-family: var(--font-basic), sans-serif;
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #c2a36b;
-  opacity: 0.85;
-}
-
 /* --- tło modala (przyciemnienie + rozmycie), zamyka po kliknięciu --------- */
 .overlay {
   position: fixed;

@@ -24,17 +24,17 @@ export const values = [
   {
     label: "Wiedza",
     text: "Nieustannie rozwijamy swoje kompetencje, aby oferować rozwiązania oparte na aktualnej wiedzy z zakresu kosmetologii i trychologii.",
-    long: "Kosmetologia i trychologia nieustannie się rozwijają — i my razem z nimi. Regularnie się szkolimy, śledzimy badania i weryfikujemy metody, aby proponować rozwiązania skuteczne i bezpieczne, a nie modne na chwilę. Każdą rekomendację opieramy na wiedzy, nie na domysłach.",
+    long: "Za Lumera stoi wieloletnie doświadczenie w branży beauty, setki godzin praktyki oraz wiedza zdobywana podczas szkoleń i specjalistycznych kursów. To doświadczenie pozwala lepiej rozumieć potrzeby skóry i włosów oraz dobierać rozwiązania, które mają realne uzasadnienie.\n\nKosmetologia i trychologia stale się rozwijają, dlatego w Lumera równie ważne jest ciągłe poszerzanie wiedzy, poznawanie nowych metod i świadome wybieranie tych, które warto wprowadzać do gabinetu.\n\nDzięki temu nie musisz przychodzić z gotową odpowiedzią na pytanie, jakiego zabiegu potrzebujesz. W Lumera możesz liczyć na rozmowę, indywidualne podejście i opiekę opartą na wiedzy i doświadczeniu.",
   },
   {
     label: "Indywidualne podejście",
     text: "Słuchamy, obserwujemy i dobieramy pielęgnację zgodnie z rzeczywistymi potrzebami naszych klientów",
-    long: "Nie wierzymy w uniwersalne recepty. Zanim cokolwiek zaproponujemy, słuchamy, pytamy i obserwujemy — bo Twoja skóra, skóra głowy i historia są niepowtarzalne. Pielęgnację dobieramy do Twoich realnych potrzeb, trybu życia i celów, a plan zmieniamy, gdy zmieniają się Twoje potrzeby.",
+    long: "Każda skóra jest inna i każda potrzebuje czegoś innego. Dlatego w Lumera nie ma miejsca na gotowe schematy i rozwiązania „dla każdego”. Najważniejsze jest to, czego w danym momencie potrzebujesz Ty i Twoja skóra.\n\nKażda wizyta zaczyna się od rozmowy i uważnego spojrzenia na potrzeby skóry. Na tej podstawie dobierana jest odpowiednia pielęgnacja i zabiegi — tak, aby miały sens właśnie w Twoim przypadku, a nie tylko odpowiadały aktualnym trendom.\n\nNie musisz też wiedzieć, jaki zabieg wybrać ani znać się na kosmetologii. W Lumera możesz po prostu opowiedzieć, czego potrzebujesz lub co Ci przeszkadza, a resztą zajmie się specjalista. Chodzi o to, żebyś czuła się wysłuchana, zaopiekowana i miała pewność, że to, co jest Ci proponowane, naprawdę jest dla Ciebie.",
   },
   {
     label: "Troska",
     text: "Tworzymy atmosferę bezpieczeństwa, zaufania i uważności, ponieważ wiemy, jak ważne jest poczucie zaopiekowania.",
-    long: "Chcemy, aby każda osoba czuła się tu bezpiecznie i zaopiekowana od pierwszej chwili. Dbamy o atmosferę zaufania, spokoju i uważności — bez oceniania i bez pośpiechu. Dla nas troska nie jest dodatkiem do zabiegu, lecz jego sednem.",
+    long: "W Lumera ważne jest nie tylko to, z jakim efektem wyjdziesz z gabinetu, ale też jak będziesz się w nim czuła. Każda wizyta ma być chwilą, podczas której możesz się odprężyć, poczuć swobodnie i mieć pewność, że jesteś w dobrych rękach.\n\nTroska zaczyna się od małych rzeczy — spokojnej rozmowy, uważności na Twój komfort, odpowiedzi na pytania i stworzenia atmosfery, w której nie musisz się niczym stresować. Bez oceniania, pośpiechu i skrępowania.\n\nLumera ma być miejscem, do którego przychodzisz nie tylko zadbać o swoją skórę, włosy czy ciało, ale również po prostu zrobić coś dobrego dla siebie i poczuć się naprawdę zaopiekowana.",
   },
 ];
 
