@@ -8,7 +8,10 @@ type IncomingItem = { id: string; qty: number };
 
 export async function POST(request: Request) {
   try {
-    const { items } = (await request.json()) as { items: IncomingItem[] };
+    const { items, marketing } = (await request.json()) as {
+      items: IncomingItem[];
+      marketing?: boolean;
+    };
 
     if (!Array.isArray(items) || items.length === 0) {
       return NextResponse.json({ error: "Pusty koszyk" }, { status: 400 });
@@ -50,6 +53,7 @@ export async function POST(request: Request) {
 
       metadata: {
         itemIds: items.map((i) => i.id).join(","),
+        marketing: marketing ? "1" : "0",
       },
     });
 

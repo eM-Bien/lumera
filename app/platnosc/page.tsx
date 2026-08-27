@@ -15,6 +15,7 @@ export default function PaymentPage() {
 
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [acceptDelivery, setAcceptDelivery] = useState(false);
+  const [acceptMarketing, setAcceptMarketing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,6 +31,7 @@ export default function PaymentPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           items: items.map((i) => ({ id: i.id, qty: i.qty })),
+          marketing: acceptMarketing,
         }),
       });
       const data = await res.json();
@@ -117,6 +119,18 @@ export default function PaymentPage() {
             <span>
               Żądam dostarczenia treści cyfrowych natychmiast po zakupie i
               przyjmuję do wiadomości, że tracę prawo odstąpienia od umowy.
+            </span>
+          </label>
+
+          <label className={styles.consent}>
+            <input
+              type="checkbox"
+              checked={acceptMarketing}
+              onChange={(e) => setAcceptMarketing(e.target.checked)}
+            />
+            <span>
+              Chcę otrzymywać od Lumery e-maile o nowościach, poradach i
+              promocjach. Zgoda dobrowolna, możesz ją w każdej chwili wycofać.
             </span>
           </label>
         </div>
