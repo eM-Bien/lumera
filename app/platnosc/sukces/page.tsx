@@ -57,15 +57,15 @@ export default function PaymentSuccessPage() {
         </p>
 
         <div className={styles.actions}>
-          <PrimaryButton onClick={() => navigate("/")}>
-            Strona główna
+          <PrimaryButton onClick={() => navigate("/oferta")}>
+            Przeglądaj zabiegi
           </PrimaryButton>
           <button
             type="button"
             className={styles.secondaryBtn}
-            onClick={() => navigate("/ebooki")}
+            onClick={() => navigate("/")}
           >
-            Przeglądaj ebooki
+            Powrót na główną
           </button>
         </div>
       </div>
