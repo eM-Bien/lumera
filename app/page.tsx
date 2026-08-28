@@ -34,6 +34,7 @@ export default function Home() {
 
   const handleComplete = () => {
     sessionStorage.setItem(INTRO_KEY, "true");
+    window.dispatchEvent(new Event("lumera:intro-done"));
   };
 
   return (

@@ -33,8 +33,19 @@ export default function Nav() {
   useEffect(() => {
     if (!isHome) return;
     const seen = sessionStorage.getItem("lumera_intro_seen") === "true";
-    const t = setTimeout(() => setShow(true), seen ? 0 : HOME_DELAY_MS);
-    return () => clearTimeout(t);
+    if (seen) {
+      setShow(true);
+      return;
+    }
+    // Pokaż nawigację dokładnie w chwili zakończenia animacji intro.
+    // Timeout to tylko zabezpieczenie, gdyby zdarzenie nie dotarło.
+    const onDone = () => setShow(true);
+    window.addEventListener("lumera:intro-done", onDone);
+    const t = setTimeout(() => setShow(true), HOME_DELAY_MS);
+    return () => {
+      window.removeEventListener("lumera:intro-done", onDone);
+      clearTimeout(t);
+    };
   }, [isHome]);
 
   const visibleLinks = links.filter((link) => link.href !== pathname);
