@@ -1,20 +1,19 @@
-// lib/server-catalog.ts — ŹRÓDŁO PRAWDY CEN i PLIKÓW (po stronie serwera).
-// Klient przysyła tylko id produktów; kwotę i plik ustalamy TUTAJ.
-// Nigdy nie ufaj cenie z localStorage/koszyka — można ją podmienić.
-// Kwoty w GROSZACH (Stripe = najmniejsza jednostka). URL pliku trzymamy
-// w zmiennej środowiskowej (fileEnv), żeby nie commitować go do repo.
+// lib/server-catalog.ts — mapowanie naszych id produktów na zasoby Stripe/pliki
+// (po stronie serwera). Klient przysyła tylko id; cenę bierzemy z CENY W STRIPE
+// (Price ID), więc nie da się jej podmienić z koszyka. Price ID i URL pliku
+// trzymamy w zmiennych środowiskowych (osobne dla test/live) — bez commitowania.
 
 export type CatalogEntry = {
   title: string;
-  amount: number; // brutto w groszach, np. 49,00 zł = 4900
+  priceEnv: string; // nazwa env ze Stripe Price ID (np. EBOOK_1_PRICE_ID)
   fileName: string; // nazwa pliku widoczna przy pobieraniu (ASCII)
-  fileEnv: string; // nazwa zmiennej env z prywatnym URL-em pliku (Vercel Blob)
+  fileEnv: string; // nazwa env z prywatnym URL-em pliku (Vercel Blob)
 };
 
 export const CATALOG: Record<string, CatalogEntry> = {
   "ebook-1": {
     title: "Poznaj swoją skórę",
-    amount: 4900,
+    priceEnv: "EBOOK_1_PRICE_ID",
     fileName: "Poznaj-swoja-skore.pdf",
     fileEnv: "EBOOK_1_FILE_URL",
   },
@@ -22,6 +21,13 @@ export const CATALOG: Record<string, CatalogEntry> = {
 
 export function getEntry(id: string): CatalogEntry | null {
   return CATALOG[id] ?? null;
+}
+
+// Stripe Price ID — źródło prawdy ceny przy płatności (test/live wg env).
+export function getPriceId(id: string): string | null {
+  const entry = CATALOG[id];
+  if (!entry) return null;
+  return process.env[entry.priceEnv]?.trim() || null;
 }
 
 // Prywatny URL pliku w Vercel Blob — nigdy nie trafia do klienta, tylko

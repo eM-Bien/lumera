@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
-import { getEntry } from "@/lib/server-catalog";
+import { getEntry, getPriceId } from "@/lib/server-catalog";
 
 type IncomingItem = { id: string; qty: number };
 
@@ -19,22 +19,15 @@ export async function POST(request: Request) {
 
     const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
     for (const { id, qty } of items) {
-      const entry = getEntry(id);
-      if (!entry) {
+      const priceId = getPriceId(id);
+      if (!getEntry(id) || !priceId) {
         return NextResponse.json(
           { error: `Nieznany produkt: ${id}` },
           { status: 400 },
         );
       }
       const quantity = Number.isInteger(qty) && qty > 0 ? qty : 1;
-      line_items.push({
-        quantity,
-        price_data: {
-          currency: "pln",
-          unit_amount: entry.amount,
-          product_data: { name: entry.title },
-        },
-      });
+      line_items.push({ price: priceId, quantity });
     }
 
     const base = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";

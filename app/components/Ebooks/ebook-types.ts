@@ -1,5 +1,3 @@
-// Dane i typ ebooka. Dodanie kolejnego = dopisanie obiektu do EBOOKS.
-
 export type Ebook = {
   id: string;
   title: string;
