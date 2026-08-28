@@ -12,7 +12,7 @@ import { getRedis } from "@/lib/redis";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const DOWNLOAD_LIMIT = 2;
+const DOWNLOAD_LIMIT = 1;
 const COUNTER_TTL_S = 7 * 24 * 60 * 60; // 7 dni
 
 // Zwraca true, jeśli wolno pobrać. Liczy użycia tego linku w Redisie; po
