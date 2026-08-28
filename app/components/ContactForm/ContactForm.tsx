@@ -13,7 +13,10 @@ import styles from "./ContactForm.module.css";
 
 type Status = "idle" | "sending" | "success" | "error";
 type Errors = Partial<
-  Record<"imie" | "email" | "telefon" | "lokalizacja" | "zgoda", string>
+  Record<
+    "imie" | "nazwisko" | "email" | "telefon" | "lokalizacja" | "zgoda",
+    string
+  >
 >;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+$/;
@@ -35,6 +38,7 @@ export default function ContactForm() {
   const [data, setData] = useState("");
   const [pora, setPora] = useState("");
   const [imie, setImie] = useState("");
+  const [nazwisko, setNazwisko] = useState("");
   const [email, setEmail] = useState("");
   const [telefon, setTelefon] = useState("");
   const [wiadomosc, setWiadomosc] = useState("");
@@ -58,6 +62,7 @@ export default function ContactForm() {
   const validate = (): Errors => {
     const e: Errors = {};
     if (!imie.trim()) e.imie = "Podaj imię.";
+    if (!nazwisko.trim()) e.nazwisko = "Podaj nazwisko.";
     if (!EMAIL_RE.test(email.trim())) e.email = "Niepoprawny adres e-mail.";
     if (!telefon.trim()) e.telefon = "Podaj numer telefonu.";
     else if (!PHONE_RE.test(telefon.trim()))
@@ -94,6 +99,7 @@ export default function ContactForm() {
           data,
           pora,
           imie,
+          nazwisko,
           email,
           telefon,
           wiadomosc,
@@ -203,18 +209,36 @@ export default function ContactForm() {
         </label>
       </div>
 
-      <label className={styles.field}>
-        <span className={styles.label}>Imię *</span>
-        <input
-          type="text"
-          className={styles.input}
-          value={imie}
-          onChange={(e) => setImie(e.target.value)}
-          autoComplete="given-name"
-          aria-invalid={!!errors.imie}
-        />
-        {errors.imie && <span className={styles.errorText}>{errors.imie}</span>}
-      </label>
+      <div className={styles.row}>
+        <label className={styles.field}>
+          <span className={styles.label}>Imię *</span>
+          <input
+            type="text"
+            className={styles.input}
+            value={imie}
+            onChange={(e) => setImie(e.target.value)}
+            autoComplete="given-name"
+            aria-invalid={!!errors.imie}
+          />
+          {errors.imie && (
+            <span className={styles.errorText}>{errors.imie}</span>
+          )}
+        </label>
+        <label className={styles.field}>
+          <span className={styles.label}>Nazwisko *</span>
+          <input
+            type="text"
+            className={styles.input}
+            value={nazwisko}
+            onChange={(e) => setNazwisko(e.target.value)}
+            autoComplete="family-name"
+            aria-invalid={!!errors.nazwisko}
+          />
+          {errors.nazwisko && (
+            <span className={styles.errorText}>{errors.nazwisko}</span>
+          )}
+        </label>
+      </div>
 
       <div className={styles.row}>
         <label className={styles.field}>

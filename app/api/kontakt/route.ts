@@ -8,6 +8,7 @@ type Payload = {
   data?: string;
   pora?: string;
   imie?: string;
+  nazwisko?: string;
   email?: string;
   telefon?: string;
   wiadomosc?: string;
@@ -46,12 +47,14 @@ export async function POST(request: Request) {
   }
 
   const imie = (body.imie ?? "").trim();
+  const nazwisko = (body.nazwisko ?? "").trim();
   const email = (body.email ?? "").trim();
   const telefon = (body.telefon ?? "").trim();
   const lokalizacja = (body.lokalizacja ?? "").trim();
 
   if (
     !imie ||
+    !nazwisko ||
     !EMAIL_RE.test(email) ||
     !PHONE_RE.test(telefon) ||
     !lokalizacja ||
@@ -60,7 +63,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         error:
-          "Uzupełnij imię, poprawny e-mail, telefon (9 cyfr), lokalizację i zgodę.",
+          "Uzupełnij imię i nazwisko, poprawny e-mail, telefon (9 cyfr), lokalizację i zgodę.",
       },
       { status: 400 },
     );
@@ -88,6 +91,7 @@ export async function POST(request: Request) {
         ${row("Lokalizacja", lokalizacja)}
         ${row("Preferowany termin", [body.data, body.pora].filter(Boolean).join(", "))}
         ${row("Imię", imie)}
+        ${row("Nazwisko", nazwisko)}
         ${row("E-mail", email)}
         ${row("Telefon", telefon)}
         ${row("Wiadomość", (body.wiadomosc ?? "").trim())}
@@ -100,6 +104,7 @@ export async function POST(request: Request) {
     `Lokalizacja: ${lokalizacja}`,
     `Termin: ${[body.data, body.pora].filter(Boolean).join(", ") || "—"}`,
     `Imię: ${imie}`,
+    `Nazwisko: ${nazwisko}`,
     `E-mail: ${email}`,
     `Telefon: ${telefon || "—"}`,
     `Wiadomość: ${(body.wiadomosc ?? "").trim() || "—"}`,
@@ -116,7 +121,7 @@ export async function POST(request: Request) {
         from,
         to,
         reply_to: email,
-        subject: `Rezerwacja: ${zabiegNazwa} — ${imie}`,
+        subject: `Rezerwacja: ${zabiegNazwa} — ${imie} ${nazwisko}`,
         html,
         text,
       }),
