@@ -24,6 +24,27 @@
   padding: 1vh 6vw 4vh;
 }
 
+.headerReveal {
+  animation: headerRise 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes headerRise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .headerReveal {
+    animation: none;
+  }
+}
+
 .loading {
   padding: 4vh 6vw 14vh;
   color: #9a8c6f;
@@ -58,10 +79,10 @@
 
 .content {
   display: grid;
-  grid-template-columns: 1fr 360px;
-  gap: clamp(2rem, 5vw, 5rem);
+  grid-template-columns: 1fr 520px;
+  gap: clamp(2rem, 4vw, 4rem);
   align-items: start;
-  max-width: 1200px;
+  max-width: 1340px;
   margin: 0 auto;
   padding: 2vh 6vw 14vh;
 }
@@ -87,7 +108,7 @@
 
 .cover {
   flex: 0 0 auto;
-  width: clamp(120px, 18vw, 170px);
+  width: clamp(170px, 26vw, 260px);
   height: auto;
   border-radius: 10px;
   object-fit: contain;
@@ -204,18 +225,18 @@
 }
 
 .summary {
-  padding: 1.8rem;
+  padding: clamp(1.8rem, 2.6vw, 2.6rem);
   border: 1px solid rgba(194, 163, 107, 0.22);
-  border-radius: 16px;
+  border-radius: 18px;
   background: rgba(255, 255, 255, 0.025);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
 
 .summaryTitle {
-  margin: 0 0 1.3rem;
+  margin: 0 0 1.5rem;
   font-family: var(--font-header), serif;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #f0e6d2;
 }
@@ -250,6 +271,67 @@
   margin: 0.5rem 0 1.5rem;
   font-size: 0.78rem;
   color: #9a8c6f;
+}
+
+.consents {
+  margin: 0.5rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.consent {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #c9bfa8;
+  cursor: pointer;
+}
+
+.consent input {
+  margin-top: 0.15rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: #c2a36b;
+  flex: none;
+  cursor: pointer;
+}
+
+.link {
+  color: #c2a36b;
+  text-decoration: underline;
+}
+
+.req {
+  color: #c2a36b;
+  font-weight: 700;
+  margin-left: 0.15rem;
+}
+
+.required {
+  margin: 0.9rem 0 0;
+  font-size: 0.78rem;
+  color: #9a8c6f;
+}
+
+.error {
+  margin: 1.2rem 0 0;
+  font-size: 0.88rem;
+  color: #d88c8c;
+}
+
+.payBtn {
+  margin-top: 1.8rem;
+}
+
+.note {
+  margin: 1.1rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #9a8c6f;
+  text-align: center;
 }
 
 .secondary {
@@ -300,6 +382,6 @@
     padding: 2rem 0;
   }
   .cover {
-    width: clamp(90px, 28vw, 120px);
+    width: clamp(120px, 34vw, 170px);
   }
 }

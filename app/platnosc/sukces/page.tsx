@@ -36,7 +36,7 @@ export default function PaymentSuccessPage() {
       </span>
 
       <div className={styles.stepsWrap}>
-        <CheckoutSteps current={3} size="compact" />
+        <CheckoutSteps current={2} size="compact" />
       </div>
 
       <div className={styles.inner}>

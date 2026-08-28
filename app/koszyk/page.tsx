@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import styles from "./page.module.css";
 import { useTransition } from "@/app/transition/TransitionProvider";
 import { useCart } from "@/app/components/Ebooks/Cart/CartContext";
@@ -15,10 +16,36 @@ export default function CartPage() {
   const { items, totalCount, totalPrice, removeItem, updateQty, hydrated } =
     useCart();
 
-  const isEmpty = hydrated && items.length === 0;
+  const [acceptTerms, setAcceptTerms] = useState(false);
+  const [acceptDelivery, setAcceptDelivery] = useState(false);
+  const [acceptMarketing, setAcceptMarketing] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleCheckout = () => {
-    navigate("/platnosc");
+  const isEmpty = hydrated && items.length === 0;
+  const canPay =
+    acceptTerms && acceptDelivery && items.length > 0 && !loading;
+
+  const handlePay = async () => {
+    if (!canPay) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((i) => ({ id: i.id, qty: i.qty })),
+          marketing: acceptMarketing,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) throw new Error(data.error ?? "Błąd płatności");
+      window.location.href = data.url;
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Coś poszło nie tak");
+      setLoading(false);
+    }
   };
 
   return (
@@ -33,21 +60,23 @@ export default function CartPage() {
 
       {hydrated && items.length > 0 && (
         <>
-          <CheckoutSteps current={1} />
-          <header className={styles.head}>
-            <DecorativeSubtitle>Gotowe do zakupu</DecorativeSubtitle>
-          </header>
+          <div className={styles.headerReveal}>
+            <CheckoutSteps current={1} />
+            <header className={styles.head}>
+              <DecorativeSubtitle>Gotowe do zakupu</DecorativeSubtitle>
+            </header>
+          </div>
 
           <div className={styles.content}>
             <ul className={styles.items}>
-              {items.map((item) => (
+              {items.map((item) => {
+                const ebook = EBOOKS.find((e) => e.id === item.id);
+                return (
                 <li key={item.id} className={styles.item}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     className={styles.cover}
-                    src={
-                      EBOOKS.find((e) => e.id === item.id)?.cover ?? item.cover
-                    }
+                    src={ebook?.cover ?? item.cover}
                     alt={item.title}
                   />
 
@@ -57,7 +86,8 @@ export default function CartPage() {
                       {formatPrice(item.price * item.qty)}
                     </span>
                     <p className={styles.itemMeta}>
-                      Format PDF · dostęp dożywotni
+                      {ebook ? `${ebook.details.pages} stron · ` : ""}Format PDF ·
+                      dostęp dożywotni
                     </p>
 
                     <div className={styles.controls}>
@@ -93,7 +123,8 @@ export default function CartPage() {
                     </div>
                   </div>
                 </li>
-              ))}
+                );
+              })}
             </ul>
 
             <aside className={styles.aside}>
@@ -120,10 +151,75 @@ export default function CartPage() {
                   <span>{formatPrice(totalPrice)}</span>
                 </div>
 
-                <p className={styles.vatNote}>Cena zawiera podatek VAT</p>
+                <p className={styles.vatNote}>Cena zawiera podatek VAT (5%)</p>
 
-                <PrimaryButton fullWidth onClick={handleCheckout}>
-                  Przejdź do płatności
+                <div className={styles.consents}>
+                  <label className={styles.consent}>
+                    <input
+                      type="checkbox"
+                      checked={acceptTerms}
+                      onChange={(e) => setAcceptTerms(e.target.checked)}
+                    />
+                    <span>
+                      Akceptuję{" "}
+                      <a
+                        href="/regulamin"
+                        target="_blank"
+                        className={styles.link}
+                      >
+                        Regulamin sklepu
+                      </a>{" "}
+                      oraz zapoznałam/em się z{" "}
+                      <a
+                        href="/polityka-prywatnosci"
+                        target="_blank"
+                        className={styles.link}
+                      >
+                        Polityką prywatności
+                      </a>
+                      .<span className={styles.req}>*</span>
+                    </span>
+                  </label>
+
+                  <label className={styles.consent}>
+                    <input
+                      type="checkbox"
+                      checked={acceptDelivery}
+                      onChange={(e) => setAcceptDelivery(e.target.checked)}
+                    />
+                    <span>
+                      Wyrażam zgodę na natychmiastowe dostarczenie e-booka i
+                      przyjmuję do wiadomości, że po jego dostarczeniu utracę
+                      prawo odstąpienia od umowy.
+                      <span className={styles.req}>*</span>
+                    </span>
+                  </label>
+
+                  <label className={styles.consent}>
+                    <input
+                      type="checkbox"
+                      checked={acceptMarketing}
+                      onChange={(e) => setAcceptMarketing(e.target.checked)}
+                    />
+                    <span>
+                      Chcę otrzymywać od Lumery e-maile z poradami dotyczącymi
+                      pielęgnacji, nowościami i specjalnymi ofertami. Zgodę mogę
+                      wycofać w każdej chwili.
+                    </span>
+                  </label>
+                </div>
+
+                <p className={styles.required}>* pola wymagane do zakupu</p>
+
+                {error && <p className={styles.error}>{error}</p>}
+
+                <PrimaryButton
+                  fullWidth
+                  className={styles.payBtn}
+                  onClick={handlePay}
+                  disabled={!canPay}
+                >
+                  {loading ? "Przekierowanie…" : "Zapłać i pobierz"}
                 </PrimaryButton>
 
                 <SecondaryButton
@@ -133,6 +229,11 @@ export default function CartPage() {
                 >
                   Kontynuuj zakupy
                 </SecondaryButton>
+
+                <p className={styles.note}>
+                  Płatność obsługuje Stripe — zostaniesz przekierowany na
+                  bezpieczną stronę płatności.
+                </p>
 
                 <ul className={styles.perks}>
                   <li>Bezpieczna płatność elektroniczna</li>

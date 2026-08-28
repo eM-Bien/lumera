@@ -1,10 +1,10 @@
 import { Fragment } from "react";
 import styles from "./CheckoutSteps.module.css";
 
-const STEPS = ["Koszyk", "Podsumowanie", "Potwierdzenie"];
+const STEPS = ["Koszyk", "Potwierdzenie"];
 
 type CheckoutStepsProps = {
-  current: number; // 1 = Koszyk, 2 = Podsumowanie, 3 = Potwierdzenie
+  current: number; // 1 = Koszyk, 2 = Potwierdzenie
   size?: "title" | "compact"; // title = aktywny krok jako nagłówek; compact = równy pasek
 };
 
