@@ -165,6 +165,7 @@ export default function CartPage() {
                       <a
                         href="/regulamin"
                         target="_blank"
+                        rel="noopener noreferrer"
                         className={styles.link}
                       >
                         Regulamin sklepu
@@ -173,6 +174,7 @@ export default function CartPage() {
                       <a
                         href="/polityka-prywatnosci"
                         target="_blank"
+                        rel="noopener noreferrer"
                         className={styles.link}
                       >
                         Polityką prywatności
@@ -219,7 +221,7 @@ export default function CartPage() {
                   onClick={handlePay}
                   disabled={!canPay}
                 >
-                  {loading ? "Przekierowanie…" : "Zapłać i pobierz"}
+                  {loading ? "Przekierowanie…" : "Kupuję i płacę"}
                 </PrimaryButton>
 
                 <SecondaryButton
