@@ -41,26 +41,29 @@ export async function sendDeliveryEmail(
   const buttons = links
     .map(
       (l) => `
-      <a href="${l.url}"
-         style="display:inline-block;margin:0 0 14px;padding:17px 40px;border-radius:999px;background:#c2a36b;color:#0a0720;font-size:16px;font-weight:bold;text-decoration:none">
-        Pobierz ebook
-      </a><br>`,
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 12px">
+        <tr><td bgcolor="#14102e" style="background-color:#14102e;border-radius:999px">
+          <a href="${l.url}" style="display:inline-block;padding:16px 42px;font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:bold;color:#e9d9b8;text-decoration:none">Pobierz ebook</a>
+        </td></tr>
+      </table>`,
     )
     .join("");
 
   const html = `
-    <div style="margin:0;padding:0;background:#0a0720">
-      <div style="max-width:600px;margin:0 auto;padding:60px 40px;text-align:left;background-color:#0a0720;background:linear-gradient(160deg,#1c1446 0%,#0a0720 58%,#05030f 100%);font-family:Arial,Helvetica,sans-serif">
-        <p style="margin:0 0 26px;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#c2a36b">Lumera</p>
-        <h1 style="margin:0 0 14px;font-family:Georgia,'Times New Roman',serif;font-size:36px;line-height:1.15;font-weight:normal;color:#f0e6d2">Dziękujemy za zakup&nbsp;🤍</h1>
-        <p style="margin:0 0 34px;font-size:17px;line-height:1.65;color:#c9bfa8">Twój ebook jest gotowy do pobrania. Kliknij poniżej:</p>
-        ${buttons}
-        <p style="margin:26px 0 0;font-size:13px;line-height:1.7;color:#8a7d63">
-          Link jest ważny 7 dni. Jeśli wygaśnie lub coś nie zadziała, napisz na
-          <a href="mailto:${SUPPORT_EMAIL}" style="color:#c2a36b">${SUPPORT_EMAIL}</a>.
-        </p>
-      </div>
-    </div>`;
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f3ece0" style="margin:0;padding:0;background-color:#f3ece0">
+      <tr><td align="center" style="padding:28px 12px;background-color:#f3ece0">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#fffcf6" style="width:100%;max-width:600px;background-color:#fffcf6;border:1px solid #e8dcc6;border-radius:14px">
+          <tr><td style="padding:52px 44px;font-family:Arial,Helvetica,sans-serif;color:#3a3428">
+            <div style="font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#a8824a;margin:0 0 10px">Lumera</div>
+            <div style="height:1px;line-height:1px;font-size:0;background-color:#e6d8bf;width:44px;margin:0 0 26px">&nbsp;</div>
+            <div style="font-family:Georgia,'Times New Roman',serif;font-size:32px;line-height:1.2;color:#1b1640;margin:0 0 14px">Dziękujemy za zakup&nbsp;<span style="color:#1b1640">&#10084;</span></div>
+            <div style="font-size:16px;line-height:1.65;color:#6a6152;margin:0 0 32px">Twój ebook jest gotowy do pobrania. Kliknij poniżej:</div>
+            ${buttons}
+            <div style="font-size:13px;line-height:1.7;color:#9a907d;margin:28px 0 0">Link jest ważny 7 dni. Jeśli wygaśnie lub coś nie zadziała, napisz na <a href="mailto:${SUPPORT_EMAIL}" style="color:#a8824a">${SUPPORT_EMAIL}</a>.</div>
+          </td></tr>
+        </table>
+      </td></tr>
+    </table>`;
 
   const text = [
     "Dziękujemy za zakup w Lumerze!",
@@ -82,7 +85,7 @@ export async function sendDeliveryEmail(
       from,
       to,
       reply_to: SUPPORT_EMAIL,
-      subject: "Ebook z Lumery czeka na Ciebie 🤍",
+      subject: "Ebook z Lumery czeka na Ciebie 🤎",
       html,
       text,
     }),
