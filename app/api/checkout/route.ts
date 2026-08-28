@@ -17,6 +17,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Pusty koszyk" }, { status: 400 });
     }
 
+    const taxRateId = process.env.STRIPE_TAX_RATE_ID?.trim();
+
     const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
     for (const { id, qty } of items) {
       const priceId = getPriceId(id);
@@ -27,7 +29,11 @@ export async function POST(request: Request) {
         );
       }
       const quantity = Number.isInteger(qty) && qty > 0 ? qty : 1;
-      line_items.push({ price: priceId, quantity });
+      line_items.push({
+        price: priceId,
+        quantity,
+        ...(taxRateId ? { tax_rates: [taxRateId] } : {}),
+      });
     }
 
     const base = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
