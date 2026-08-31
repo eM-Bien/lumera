@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { LOCATIONS } from "../OfferExplorer/offer-types";
 import PrimaryButton from "../Buttons/PrimaryButton/PrimaryButton";
@@ -48,6 +48,16 @@ export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [submitted, setSubmitted] = useState(false);
+
+  // Minimalna data = dziś (liczona po stronie klienta, żeby nie było rozjazdu
+  // z czasem serwera przy różnych strefach). Blokuje wybór dat z przeszłości.
+  const [minDate, setMinDate] = useState("");
+  useEffect(() => {
+    const d = new Date();
+    const pad = (n: number) => String(n).padStart(2, "0");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMinDate(`${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`);
+  }, []);
 
   const groups = useMemo(() => {
     const map = new Map<string, typeof BOOKING_OPTIONS>();
@@ -190,6 +200,7 @@ export default function ContactForm() {
             type="date"
             className={styles.input}
             value={data}
+            min={minDate}
             onChange={(e) => setData(e.target.value)}
           />
         </label>
