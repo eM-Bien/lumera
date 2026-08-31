@@ -10,7 +10,7 @@ import styles from "./Nav.module.css";
 
 const links = [
   { href: "/o-lumera", name: "O Lumera" },
-  { href: "/oferta", name: "Oferta" },
+  { href: "/oferta", name: "Zabiegi" },
   { href: "/ebooki", name: "Ebooki" },
   { href: "/kontakt", name: "Kontakt" },
 ];
