@@ -9,7 +9,7 @@ const SHAPES = [
     key: "oferta",
     title: "Zabiegi",
     sub: "Twarz, ciało i skóra głowy",
-    href: "/oferta",
+    href: "/zabiegi",
   },
   {
     key: "ebooki",

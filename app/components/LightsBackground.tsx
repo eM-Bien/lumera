@@ -49,7 +49,7 @@ const GOLD_HUES: RGB[] = [
 ];
 
 function configForPath(path: string): { variant: Variant; hues: RGB[] } {
-  if (path === "/oferta") return { variant: "light", hues: GOLD_HUES };
+  if (path === "/zabiegi") return { variant: "light", hues: GOLD_HUES };
   return { variant: "dark", hues: DEFAULT_HUES };
 }
 

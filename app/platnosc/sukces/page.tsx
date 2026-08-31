@@ -57,7 +57,7 @@ export default function PaymentSuccessPage() {
         </p>
 
         <div className={styles.actions}>
-          <PrimaryButton onClick={() => navigate("/oferta")}>
+          <PrimaryButton onClick={() => navigate("/zabiegi")}>
             Przeglądaj zabiegi
           </PrimaryButton>
           <button

@@ -15,7 +15,7 @@ type CtaBandProps = {
 
 /**
  * Zamykający pas CTA pełnej szerokości — bez kafelka, z subtelną poświatą.
- * Wspólny dla /oferta i /o-lumera.
+ * Wspólny dla /zabiegi i /o-lumera.
  */
 export default function CtaBand({
   eyebrow,

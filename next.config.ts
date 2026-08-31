@@ -42,6 +42,10 @@ const nextConfig: NextConfig = {
       { source: "/api/pobierz", headers: noReferrer },
     ];
   },
+  async redirects() {
+    // Strona zabiegów zmieniła adres z /oferta na /zabiegi.
+    return [{ source: "/oferta", destination: "/zabiegi", permanent: true }];
+  },
 };
 
 export default nextConfig;
