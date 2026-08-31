@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import styles from "./page.module.css";
 import RevealHeading from "../components/RevealHeading/RevealHeading";
 import {
@@ -7,6 +8,12 @@ import {
 import OfferTabs from "../components/OfferTabs/OfferTabs";
 import CtaBand from "../components/CtaBand/CtaBand";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
+
+export const metadata: Metadata = {
+  title: "Oferta zabiegów",
+  description:
+    "Zabiegi kosmetologiczne i trychologiczne w Lumerze — na twarz, ciało i skórę głowy. Sprawdź ofertę w Sierpcu i Andrespolu.",
+};
 
 export default function OfferPage() {
   return (

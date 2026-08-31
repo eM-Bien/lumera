@@ -3,7 +3,9 @@ import styles from "./page.module.css";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 
 export const metadata: Metadata = {
-  title: "Regulamin sklepu — Lumera",
+  title: "Regulamin sklepu",
+  description:
+    "Regulamin sklepu internetowego Lumera — zasady zakupu i dostarczania ebooków.",
 };
 
 export default function RegulaminPage() {

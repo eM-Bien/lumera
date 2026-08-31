@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import styles from "./page.module.css";
 import RevealHeading from "../components/RevealHeading/RevealHeading";
 import {
@@ -6,6 +7,12 @@ import {
 } from "../components/PageHeader/Typography";
 import EbookCard from "../components/Ebooks/EbookCard/EbookCard";
 import { EBOOKS } from "../components/Ebooks/ebook-types";
+
+export const metadata: Metadata = {
+  title: "Ebooki",
+  description:
+    "Ebooki Lumery o świadomej pielęgnacji skóry — praktyczna wiedza, która z Tobą zostanie.",
+};
 
 export default function EbooksPage() {
   return (

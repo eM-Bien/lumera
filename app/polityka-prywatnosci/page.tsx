@@ -3,7 +3,9 @@ import styles from "./page.module.css";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 
 export const metadata: Metadata = {
-  title: "Polityka prywatności — Lumera",
+  title: "Polityka prywatności",
+  description:
+    "Polityka prywatności Lumera — jak przetwarzamy dane osobowe zgodnie z RODO.",
 };
 
 export default function PolitykaPrywatnosciPage() {
