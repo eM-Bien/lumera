@@ -3,10 +3,27 @@ import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
 import { getEntry, getPriceId } from "@/lib/server-catalog";
+import { checkRateLimit } from "@/lib/rate-limit";
+
+export const runtime = "nodejs";
 
 type IncomingItem = { id: string; qty: number };
 
 export async function POST(request: Request) {
+  // Każde wywołanie tworzy sesję w Stripe — bez limitu da się zaśmiecić
+  // dashboard i dobić do limitów API.
+  const { rateLimited, retryAfterS } = await checkRateLimit(request, {
+    bucket: "checkout",
+    limit: 10,
+    windowS: 10 * 60,
+  });
+  if (rateLimited) {
+    return NextResponse.json(
+      { error: "Zbyt wiele prób płatności. Spróbuj ponownie za chwilę." },
+      { status: 429, headers: { "Retry-After": String(retryAfterS) } },
+    );
+  }
+
   try {
     const { items, marketing } = (await request.json()) as {
       items: IncomingItem[];

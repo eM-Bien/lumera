@@ -1,6 +1,9 @@
 // app/api/kontakt/route.ts — przyjmuje formularz kontaktowy i wysyła maila przez Resend.
 import { NextResponse } from "next/server";
 import { bookingTitle } from "@/app/components/ContactForm/booking-options";
+import { checkRateLimit } from "@/lib/rate-limit";
+
+export const runtime = "nodejs";
 
 type Payload = {
   zabieg?: string;
@@ -35,6 +38,20 @@ function row(label: string, value: string): string {
 }
 
 export async function POST(request: Request) {
+  // Honeypot zatrzymuje proste boty, ale skrypt uderzający prosto w API go
+  // omija — bez limitu ten endpoint jest darmowym generatorem maili.
+  const { rateLimited, retryAfterS } = await checkRateLimit(request, {
+    bucket: "kontakt",
+    limit: 5,
+    windowS: 60 * 60,
+  });
+  if (rateLimited) {
+    return NextResponse.json(
+      { error: "Zbyt wiele zgłoszeń. Spróbuj ponownie za chwilę." },
+      { status: 429, headers: { "Retry-After": String(retryAfterS) } },
+    );
+  }
+
   let body: Payload;
   try {
     body = (await request.json()) as Payload;
