@@ -50,16 +50,16 @@ export async function sendDeliveryEmail(
     .join("");
 
   const html = `
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f3ece0" style="margin:0;padding:0;background-color:#f3ece0">
-      <tr><td align="center" style="padding:28px 12px;background-color:#f3ece0">
-        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#fffcf6" style="width:100%;max-width:600px;background-color:#fffcf6;border:1px solid #e8dcc6;border-radius:14px">
-          <tr><td style="padding:52px 44px;font-family:Arial,Helvetica,sans-serif;color:#3a3428">
-            <div style="font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#a8824a;margin:0 0 10px">Lumera</div>
-            <div style="height:1px;line-height:1px;font-size:0;background-color:#e6d8bf;width:44px;margin:0 0 26px">&nbsp;</div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#edeef1" style="margin:0;padding:0;background-color:#edeef1">
+      <tr><td align="center" style="padding:28px 12px;background-color:#edeef1">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="width:100%;max-width:600px;background-color:#ffffff;border:1px solid #e6e6ea;border-radius:14px">
+          <tr><td style="padding:52px 44px;font-family:Arial,Helvetica,sans-serif;color:#33333a">
+            <div style="font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#c2a36b;margin:0 0 10px">Lumera</div>
+            <div style="height:1px;line-height:1px;font-size:0;background-color:#e6e6ea;width:44px;margin:0 0 26px">&nbsp;</div>
             <div style="font-family:Georgia,'Times New Roman',serif;font-size:32px;line-height:1.2;color:#1b1640;margin:0 0 14px">Dziękujemy za zakup&nbsp;<span style="color:#1b1640">&#10084;</span></div>
-            <div style="font-size:16px;line-height:1.65;color:#6a6152;margin:0 0 32px">Twój ebook jest gotowy do pobrania. Kliknij poniżej:</div>
+            <div style="font-size:16px;line-height:1.65;color:#5a5a63;margin:0 0 32px">Twój ebook jest gotowy do pobrania. Kliknij poniżej:</div>
             ${buttons}
-            <div style="font-size:13px;line-height:1.7;color:#9a907d;margin:28px 0 0">Link jest ważny 7 dni. Jeśli wygaśnie lub coś nie zadziała, napisz na <a href="mailto:${SUPPORT_EMAIL}" style="color:#a8824a">${SUPPORT_EMAIL}</a>.</div>
+            <div style="font-size:13px;line-height:1.7;color:#8a8a92;margin:28px 0 0">Link jest ważny 7 dni. Jeśli wygaśnie lub coś nie zadziała, napisz na <a href="mailto:${SUPPORT_EMAIL}" style="color:#c2a36b">${SUPPORT_EMAIL}</a>.</div>
           </td></tr>
         </table>
       </td></tr>
@@ -85,7 +85,7 @@ export async function sendDeliveryEmail(
       from,
       to,
       reply_to: SUPPORT_EMAIL,
-      subject: "Ebook z Lumery czeka na Ciebie 🤎",
+      subject: "Ebook z Lumery czeka na Ciebie 🩶",
       html,
       text,
     }),

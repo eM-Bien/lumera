@@ -32,8 +32,8 @@ function escapeHtml(s: string): string {
 
 function row(label: string, value: string): string {
   return `<tr>
-    <td style="padding:6px 12px;color:#9a8c6f;white-space:nowrap;vertical-align:top">${label}</td>
-    <td style="padding:6px 12px;color:#f0e6d2">${escapeHtml(value) || "—"}</td>
+    <td style="padding:7px 0;color:#8a8a92;white-space:nowrap;vertical-align:top;font-size:14px">${label}</td>
+    <td style="padding:7px 0 7px 16px;color:#33333a;font-size:14px">${escapeHtml(value) || "-"}</td>
   </tr>`;
 }
 
@@ -101,19 +101,26 @@ export async function POST(request: Request) {
   const to = process.env.CONTACT_TO?.trim() || "kontakt@lumera-clinic.pl";
 
   const html = `
-    <div style="font-family:Arial,sans-serif;background:#0a0720;padding:24px">
-      <table style="width:100%;max-width:560px;margin:0 auto;border-collapse:collapse;background:#12102a;border-radius:12px;overflow:hidden">
-        <tr><td style="padding:18px 12px;font-size:18px;color:#c2a36b;font-weight:bold">Nowa prośba o rezerwację</td></tr>
-        ${row("Zabieg", zabiegNazwa)}
-        ${row("Lokalizacja", lokalizacja)}
-        ${row("Preferowany termin", [body.data, body.pora].filter(Boolean).join(", "))}
-        ${row("Imię", imie)}
-        ${row("Nazwisko", nazwisko)}
-        ${row("E-mail", email)}
-        ${row("Telefon", telefon)}
-        ${row("Wiadomość", (body.wiadomosc ?? "").trim())}
-      </table>
-    </div>`;
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#edeef1" style="margin:0;padding:0;background-color:#edeef1">
+      <tr><td align="center" style="padding:28px 12px;background-color:#edeef1">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="width:100%;max-width:600px;background-color:#ffffff;border:1px solid #e6e6ea;border-radius:14px">
+          <tr><td style="padding:40px 44px;font-family:Arial,Helvetica,sans-serif;color:#33333a">
+            <div style="font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#c2a36b;margin:0 0 10px">Lumera</div>
+            <div style="font-family:Georgia,'Times New Roman',serif;font-size:24px;line-height:1.2;color:#1b1640;margin:0 0 20px">Nowa prośba o rezerwację</div>
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;border-collapse:collapse">
+              ${row("Zabieg", zabiegNazwa)}
+              ${row("Lokalizacja", lokalizacja)}
+              ${row("Preferowany termin", [body.data, body.pora].filter(Boolean).join(", "))}
+              ${row("Imię", imie)}
+              ${row("Nazwisko", nazwisko)}
+              ${row("E-mail", email)}
+              ${row("Telefon", telefon)}
+              ${row("Wiadomość", (body.wiadomosc ?? "").trim())}
+            </table>
+          </td></tr>
+        </table>
+      </td></tr>
+    </table>`;
 
   const text = [
     "Nowa prośba o rezerwację",
@@ -151,6 +158,71 @@ export async function POST(request: Request) {
         { error: "Nie udało się wysłać wiadomości. Spróbuj później." },
         { status: 502 },
       );
+    }
+
+    // Automatyczne potwierdzenie dla klienta. Nie blokuje zgłoszenia —
+    // powiadomienie do salonu już poszło, więc błąd tutaj tylko logujemy.
+    try {
+      const termin = [body.data, body.pora].filter(Boolean).join(", ");
+      const clientFrom = process.env.DELIVERY_FROM?.trim() || from;
+      const recap = [
+        `<strong style="color:#1b1640">Zabieg:</strong> ${escapeHtml(zabiegNazwa)}`,
+        `<strong style="color:#1b1640">Lokalizacja:</strong> ${escapeHtml(lokalizacja)}`,
+        termin
+          ? `<strong style="color:#1b1640">Preferowany termin:</strong> ${escapeHtml(termin)}`
+          : "",
+      ]
+        .filter(Boolean)
+        .join("<br>");
+
+      const confHtml = `
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#edeef1" style="margin:0;padding:0;background-color:#edeef1">
+          <tr><td align="center" style="padding:28px 12px;background-color:#edeef1">
+            <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="width:100%;max-width:600px;background-color:#ffffff;border:1px solid #e6e6ea;border-radius:14px">
+              <tr><td style="padding:52px 44px;font-family:Arial,Helvetica,sans-serif;color:#33333a">
+                <div style="font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#c2a36b;margin:0 0 10px">Lumera</div>
+                <div style="height:1px;line-height:1px;font-size:0;background-color:#e6e6ea;width:44px;margin:0 0 26px">&nbsp;</div>
+                <div style="font-family:Georgia,'Times New Roman',serif;font-size:32px;line-height:1.2;color:#1b1640;margin:0 0 14px">Dziękujemy&nbsp;<span style="color:#1b1640">&#10084;</span></div>
+                <div style="font-size:16px;line-height:1.65;color:#5a5a63;margin:0 0 24px">Otrzymaliśmy Twoje zgłoszenie i wkrótce odezwiemy się, żeby potwierdzić termin.</div>
+                <div style="font-size:15px;line-height:1.9;color:#33333a;margin:0 0 8px">${recap}</div>
+                <div style="font-size:13px;line-height:1.7;color:#8a8a92;margin:28px 0 0">To wiadomość automatyczna - prosimy na nią nie odpowiadać. W razie pytań napisz na <a href="mailto:${to}" style="color:#c2a36b">${to}</a> lub zadzwoń +48 505 829 913.</div>
+              </td></tr>
+            </table>
+          </td></tr>
+        </table>`;
+
+      const confText = [
+        "Dziękujemy!",
+        "",
+        "Otrzymaliśmy Twoje zgłoszenie i wkrótce odezwiemy się, żeby potwierdzić termin.",
+        "",
+        `Zabieg: ${zabiegNazwa}`,
+        `Lokalizacja: ${lokalizacja}`,
+        termin ? `Preferowany termin: ${termin}` : "",
+        "",
+        "To wiadomość automatyczna - prosimy na nią nie odpowiadać.",
+        `W razie pytań: ${to} lub tel. +48 505 829 913`,
+      ]
+        .filter((line) => line !== "")
+        .join("\n");
+
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: clientFrom,
+          to: email,
+          reply_to: to,
+          subject: "Dziękujemy za wiadomość — Lumera",
+          html: confHtml,
+          text: confText,
+        }),
+      });
+    } catch (err) {
+      console.error("Auto-potwierdzenie nie wysłane:", err);
     }
 
     return NextResponse.json({ ok: true });

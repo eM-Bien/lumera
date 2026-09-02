@@ -24,9 +24,9 @@ const PHONE_RE = /^\d{9}$/;
 
 const PORA_OPTIONS = [
   "",
-  "Rano (9–12)",
-  "Południe (12–15)",
-  "Popołudnie (15–19)",
+  "Rano (9-12)",
+  "Południe (12-15)",
+  "Popołudnie (15-19)",
 ];
 
 export default function ContactForm() {
