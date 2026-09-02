@@ -9,6 +9,7 @@ import Nav from "./components/Nav/Nav";
 import { CartProvider } from "./components/Ebooks/Cart/CartContext";
 import CartDrawer from "./components/Ebooks/Cart/CartDrawer";
 import CursorInk from "./components/CursorInk/CursorInk";
+import Footer from "./components/Footer/Footer";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -107,6 +108,7 @@ export default function RootLayout({
               <CursorInk />
               <TransitionOverlay />
               {children}
+              <Footer />
               <CartDrawer />
             </TransitionProvider>
             <SmoothScroll />

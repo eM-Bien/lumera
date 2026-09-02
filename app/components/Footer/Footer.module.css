@@ -1,0 +1,35 @@
+.footer {
+  position: relative;
+  z-index: 46;
+  background-color: #000000;
+  color: #b9b6c9;
+  border-top: 1px solid rgba(194, 163, 107, 0.18);
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  text-align: center;
+  font-family: var(--font-basic), Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+
+.credit {
+  color: #b9b6c9;
+}
+
+.name {
+  color: #e9d9b8;
+  transition: color 0.2s ease;
+}
+
+.name:hover {
+  color: #c2a36b;
+}
