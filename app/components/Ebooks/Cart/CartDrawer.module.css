@@ -141,6 +141,13 @@
   color: #c2a36b;
 }
 
+.regularPrice {
+  margin-right: 0.5rem;
+  color: #9a8c6f;
+  text-decoration: line-through;
+  text-decoration-color: rgba(154, 140, 111, 0.7);
+}
+
 .summary {
   margin: 1.5rem 0 0;
   font-size: 0.95rem;

@@ -11,6 +11,8 @@ export type Ebook = {
     language: string;
   };
   price: number;
+  /** Cena regularna (przekreślona) — obecna tylko, gdy trwa promocja. */
+  regularPrice?: number;
 };
 
 export const EBOOKS: Ebook[] = [
@@ -32,6 +34,7 @@ export const EBOOKS: Ebook[] = [
       language: "polski",
     },
     price: 49,
+    regularPrice: 89,
   },
 ];
 

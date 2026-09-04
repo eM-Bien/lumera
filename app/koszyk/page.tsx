@@ -22,6 +22,12 @@ export default function CartPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const totalSavings = items.reduce((sum, i) => {
+    const ebook = EBOOKS.find((e) => e.id === i.id);
+    const reg = ebook?.regularPrice;
+    return reg != null && reg > i.price ? sum + (reg - i.price) * i.qty : sum;
+  }, 0);
+
   const isEmpty = hydrated && items.length === 0;
   const canPay =
     acceptTerms && acceptDelivery && items.length > 0 && !loading;
@@ -83,6 +89,12 @@ export default function CartPage() {
                   <div className={styles.itemBody}>
                     <h2 className={styles.itemTitle}>{item.title}</h2>
                     <span className={styles.itemPrice}>
+                      {ebook?.regularPrice != null &&
+                        ebook.regularPrice > item.price && (
+                          <span className={styles.itemRegularPrice}>
+                            {formatPrice(ebook.regularPrice * item.qty)}
+                          </span>
+                        )}
                       {formatPrice(item.price * item.qty)}
                     </span>
                     <p className={styles.itemMeta}>
@@ -140,6 +152,13 @@ export default function CartPage() {
                   <span>Razem:</span>
                   <span>{formatPrice(totalPrice)}</span>
                 </div>
+
+                {totalSavings > 0 && (
+                  <div className={`${styles.row} ${styles.savingsRow}`}>
+                    <span>Oszczędzasz:</span>
+                    <span>−{formatPrice(totalSavings)}</span>
+                  </div>
+                )}
 
                 <div className={styles.row}>
                   <span>Koszt dostawy:</span>

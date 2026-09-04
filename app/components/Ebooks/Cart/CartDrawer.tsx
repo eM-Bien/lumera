@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useCart } from "./CartContext";
-import { formatPrice } from "../ebook-types";
+import { EBOOKS, formatPrice } from "../ebook-types";
 import styles from "./CartDrawer.module.css";
 import SecondaryButton from "../../Buttons/SecondaryButton/SecondaryButton";
 import PrimaryButton from "../../Buttons/PrimaryButton/PrimaryButton";
@@ -88,9 +88,22 @@ export default function CartDrawer() {
             />
             <div className={styles.info}>
               <p className={styles.productTitle}>{lastAdded.title}</p>
-              <p className={styles.productPrice}>
-                {formatPrice(lastAdded.price)}
-              </p>
+              {(() => {
+                const ebook = EBOOKS.find((e) => e.id === lastAdded.id);
+                const onSale =
+                  ebook?.regularPrice != null &&
+                  ebook.regularPrice > lastAdded.price;
+                return (
+                  <p className={styles.productPrice}>
+                    {onSale && (
+                      <span className={styles.regularPrice}>
+                        {formatPrice(ebook!.regularPrice!)}
+                      </span>
+                    )}
+                    {formatPrice(lastAdded.price)}
+                  </p>
+                );
+              })()}
             </div>
           </div>
         )}

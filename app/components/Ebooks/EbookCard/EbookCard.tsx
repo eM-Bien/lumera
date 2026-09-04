@@ -4,6 +4,7 @@ import { type Ebook, formatPrice } from "../ebook-types";
 import { useCart } from "../Cart/CartContext";
 import styles from "./EbookCard.module.css";
 import PrimaryButton from "../../Buttons/PrimaryButton/PrimaryButton";
+import PromoBadge from "../../PromoBadge/PromoBadge";
 
 type EbookCardProps = {
   ebook: Ebook;
@@ -11,6 +12,8 @@ type EbookCardProps = {
 
 export default function EbookCard({ ebook }: EbookCardProps) {
   const { addItem } = useCart();
+  const onSale =
+    ebook.regularPrice != null && ebook.regularPrice > ebook.price;
 
   return (
     <article className={styles.card}>
@@ -22,7 +25,18 @@ export default function EbookCard({ ebook }: EbookCardProps) {
       <div className={styles.body}>
         <h2 className={styles.title}>{ebook.title}</h2>
         <p className={styles.tagline}>{ebook.tagline}</p>
-        <span className={styles.price}>{formatPrice(ebook.price)}</span>
+        <div className={styles.priceBlock}>
+          {onSale && <PromoBadge className={styles.promo} />}
+          <span className={styles.price}>{formatPrice(ebook.price)}</span>
+          {onSale && (
+            <span className={styles.regularPrice}>
+              <s className={styles.regularStrike}>
+                {formatPrice(ebook.regularPrice!)}
+              </s>{" "}
+              – cena regularna
+            </span>
+          )}
+        </div>
         <p className={styles.desc}>{ebook.description}</p>
 
         <div className={styles.forWhom}>
