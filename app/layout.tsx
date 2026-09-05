@@ -10,6 +10,7 @@ import { CartProvider } from "./components/Ebooks/Cart/CartContext";
 import CartDrawer from "./components/Ebooks/Cart/CartDrawer";
 import CursorInk from "./components/CursorInk/CursorInk";
 import Footer from "./components/Footer/Footer";
+import LocalBusinessJsonLd from "./components/StructuredData/LocalBusinessJsonLd";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -76,6 +77,7 @@ export const metadata: Metadata = {
     images: ["/hero-lumera-poster.jpg"],
   },
   robots: { index: true, follow: true },
+  alternates: { canonical: "/" },
 };
 
 export default function RootLayout({
@@ -97,6 +99,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <LocalBusinessJsonLd />
         <CartProvider>
           <div className="appWrapper">
             <TransitionProvider>

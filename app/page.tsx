@@ -40,6 +40,9 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
+        <h1 className={styles.srOnly}>
+          Lumera — harmonia skóry głowy, twarzy i ciała
+        </h1>
         <div className={styles.reveal}>
           {skipIntro !== null && (
             <LumeraReveal

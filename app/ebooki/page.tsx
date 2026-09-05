@@ -7,11 +7,13 @@ import {
 } from "../components/PageHeader/Typography";
 import EbookCard from "../components/Ebooks/EbookCard/EbookCard";
 import { EBOOKS } from "../components/Ebooks/ebook-types";
+import ProductJsonLd from "../components/StructuredData/ProductJsonLd";
 
 export const metadata: Metadata = {
   title: "Ebooki",
   description:
     "Ebooki Lumery o świadomej pielęgnacji skóry — praktyczna wiedza, która z Tobą zostanie.",
+  alternates: { canonical: "/ebooki" },
 };
 
 export default function EbooksPage() {
@@ -40,6 +42,10 @@ export default function EbooksPage() {
           <EbookCard key={ebook.id} ebook={ebook} />
         ))}
       </div>
+
+      {EBOOKS.map((ebook) => (
+        <ProductJsonLd key={ebook.id} ebook={ebook} />
+      ))}
     </div>
   );
 }

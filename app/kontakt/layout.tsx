@@ -4,6 +4,7 @@ export const metadata: Metadata = {
   title: "Kontakt",
   description:
     "Umów wizytę w Lumerze — Sierpc i Andrespol. Napisz na kontakt@lumera-clinic.pl lub zadzwoń: +48 505 829 913.",
+  alternates: { canonical: "/kontakt" },
 };
 
 export default function KontaktLayout({

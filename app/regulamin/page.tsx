@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Regulamin sklepu",
   description:
     "Regulamin sklepu internetowego Lumera — zasady zakupu i dostarczania ebooków.",
+  alternates: { canonical: "/regulamin" },
 };
 
 export default function RegulaminPage() {

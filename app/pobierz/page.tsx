@@ -2,11 +2,17 @@
 // a nie prosto do pliku: samo wejście na stronę nic nie pobiera (skanery
 // poczty nie zużywają limitu). Pobranie uruchamia dopiero kliknięcie przycisku,
 // które trafia do /api/pobierz (tam liczy się limit i nakładany jest znak wodny).
+import type { Metadata } from "next";
 import { verifyDownload } from "@/lib/download-token";
 import { getEntry } from "@/lib/server-catalog";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
+
+// Strona z prywatnym linkiem do pliku — nigdy nie powinna trafić do Google.
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export default async function PobierzPage({
   searchParams,

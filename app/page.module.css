@@ -1,3 +1,17 @@
+/* Nagłówek H1 dla SEO/czytników — obecny w DOM, niewidoczny wizualnie
+   (logo w intro jest grafiką, więc potrzebny jest semantyczny tytuł). */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .page {
   --background: #03020c;
   --foreground: #fff;

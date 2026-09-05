@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Polityka prywatności",
   description:
     "Polityka prywatności Lumera — jak przetwarzamy dane osobowe zgodnie z RODO.",
+  alternates: { canonical: "/polityka-prywatnosci" },
 };
 
 export default function PolitykaPrywatnosciPage() {

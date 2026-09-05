@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   title: "Oferta zabiegów",
   description:
     "Zabiegi kosmetologiczne i trychologiczne w Lumerze — na twarz, ciało i skórę głowy. Sprawdź ofertę w Sierpcu i Andrespolu.",
+  alternates: { canonical: "/zabiegi" },
 };
 
 export default function OfferPage() {
