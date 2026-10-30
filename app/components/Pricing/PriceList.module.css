@@ -130,6 +130,7 @@
   margin-bottom: 1rem;
   padding: 1.4rem 1.5rem;
   border-radius: 16px;
+  cursor: pointer;
   background: linear-gradient(
     160deg,
     rgba(255, 255, 255, 0.05),
@@ -155,6 +156,11 @@
   box-shadow:
     0 14px 34px rgba(0, 0, 0, 0.35),
     0 0 0 1px rgba(194, 163, 107, 0.1);
+}
+
+.card:focus-visible {
+  outline: 2px solid rgba(194, 163, 107, 0.75);
+  outline-offset: 3px;
 }
 
 .cardHead {
@@ -221,6 +227,58 @@
   font-weight: 700;
   color: #c2a36b;
   white-space: nowrap;
+}
+
+/* Podpis „Umów →" — ukryty w spoczynku, pojawia się na hover/focus */
+.bookHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 1.2rem 0 0;
+  font-family: var(--font-basic), sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #e9d9b8;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.card:hover .bookHint,
+.card:focus-visible .bookHint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Na ekranach dotykowych (brak hovera) podpis zostaje widoczny */
+@media (hover: none) {
+  .bookHint {
+    opacity: 1;
+    transform: none;
+    color: #9a8c6f;
+  }
+}
+
+.bookArrow {
+  transition: transform 0.3s ease;
+}
+
+.card:hover .bookArrow,
+.card:focus-visible .bookArrow {
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bookHint {
+    transform: none;
+    transition: opacity 0.3s ease;
+  }
+  .bookArrow {
+    transition: none;
+  }
 }
 
 .footnote {

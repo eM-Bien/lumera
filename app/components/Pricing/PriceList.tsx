@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { PRICING } from "./pricing-data";
+import { useTransition } from "@/app/transition/TransitionProvider";
+import { PRICING, treatmentId } from "./pricing-data";
 import styles from "./PriceList.module.css";
 
 // Krótsze etykiety na zakładki (pełne tytuły zostają w nagłówkach grup).
@@ -13,6 +14,7 @@ const TAB_LABELS: Record<string, string> = {
 };
 
 export default function PriceList() {
+  const { navigate } = useTransition();
   const [activeId, setActiveId] = useState(PRICING[0]?.id);
   const group = PRICING.find((g) => g.id === activeId) ?? PRICING[0];
 
@@ -85,31 +87,48 @@ export default function PriceList() {
         </div>
 
         <div className={styles.grid} key={group.id}>
-          {group.items.map((item, i) => (
-            <article
-              key={item.name}
-              className={styles.card}
-              style={{ animationDelay: `${Math.min(i, 10) * 55}ms` }}
-            >
-              <div className={styles.cardHead}>
-                <h3 className={styles.name}>{item.name}</h3>
-                {item.price && (
-                  <span className={styles.priceChip}>{item.price}</span>
+          {group.items.map((item, i) => {
+            const href = `/kontakt?zabieg=${treatmentId(group.id, item.name)}`;
+            return (
+              <article
+                key={item.name}
+                className={styles.card}
+                role="button"
+                tabIndex={0}
+                aria-label={`Umów: ${item.name}`}
+                onClick={() => navigate(href)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    navigate(href);
+                  }
+                }}
+                style={{ animationDelay: `${Math.min(i, 10) * 55}ms` }}
+              >
+                <div className={styles.cardHead}>
+                  <h3 className={styles.name}>{item.name}</h3>
+                  {item.price && (
+                    <span className={styles.priceChip}>{item.price}</span>
+                  )}
+                </div>
+                {item.note && <p className={styles.note}>{item.note}</p>}
+                {item.variants && (
+                  <ul className={styles.variants}>
+                    {item.variants.map((v) => (
+                      <li key={v.label} className={styles.variant}>
+                        <span className={styles.variantLabel}>{v.label}</span>
+                        <span className={styles.variantPrice}>{v.price}</span>
+                      </li>
+                    ))}
+                  </ul>
                 )}
-              </div>
-              {item.note && <p className={styles.note}>{item.note}</p>}
-              {item.variants && (
-                <ul className={styles.variants}>
-                  {item.variants.map((v) => (
-                    <li key={v.label} className={styles.variant}>
-                      <span className={styles.variantLabel}>{v.label}</span>
-                      <span className={styles.variantPrice}>{v.price}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </article>
-          ))}
+                <span className={styles.bookHint} aria-hidden="true">
+                  Umów
+                  <span className={styles.bookArrow}>→</span>
+                </span>
+              </article>
+            );
+          })}
         </div>
 
         {group.footnote && <p className={styles.footnote}>{group.footnote}</p>}

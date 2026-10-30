@@ -26,6 +26,31 @@ export type PriceGroup = {
   footnote?: string;
 };
 
+/** Slug bez polskich znaków — do stabilnych id w linkach (?zabieg=…). */
+export function slugifyPl(s: string): string {
+  const map: Record<string, string> = {
+    ą: "a",
+    ć: "c",
+    ę: "e",
+    ł: "l",
+    ń: "n",
+    ó: "o",
+    ś: "s",
+    ż: "z",
+    ź: "z",
+  };
+  return s
+    .toLowerCase()
+    .replace(/[ąćęłńóśżź]/g, (c) => map[c] ?? c)
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/** Id zabiegu = grupa + slug nazwy (nazwa bywa powtórzona w różnych grupach). */
+export function treatmentId(groupId: string, name: string): string {
+  return `${groupId}-${slugifyPl(name)}`;
+}
+
 export const PRICING: PriceGroup[] = [
   {
     id: "depilacja-laserowa",
@@ -163,3 +188,14 @@ export const PRICING: PriceGroup[] = [
     ],
   },
 ];
+
+export type BookingEntry = { id: string; title: string; group: string };
+
+/** Płaska lista zabiegów z cennika — źródło opcji w formularzu kontaktu. */
+export const BOOKING_FROM_PRICING: BookingEntry[] = PRICING.flatMap((g) =>
+  g.items.map((it) => ({
+    id: treatmentId(g.id, it.name),
+    title: it.name,
+    group: g.title,
+  })),
+);

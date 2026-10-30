@@ -1,24 +1,14 @@
-import { OFFERS } from "../OfferExplorer/offer-types";
-import { TRYCHO_TREATMENTS } from "../OfferExplorer/trycho-types";
+import { BOOKING_FROM_PRICING } from "../Pricing/pricing-data";
 
 export type BookingOption = {
   id: string;
   title: string;
-  group: "Twarz i ciało" | "Trychologia";
+  group: string;
 };
 
-export const BOOKING_OPTIONS: BookingOption[] = [
-  ...OFFERS.map((o) => ({
-    id: o.id,
-    title: o.title,
-    group: "Twarz i ciało" as const,
-  })),
-  ...TRYCHO_TREATMENTS.map((t) => ({
-    id: t.id,
-    title: t.title,
-    group: "Trychologia" as const,
-  })),
-];
+// Opcje zabiegów wprost z cennika (PRICING) — jedno źródło prawdy, więc
+// lista w formularzu zawsze zgadza się z linkami „Umów" z cennika.
+export const BOOKING_OPTIONS: BookingOption[] = BOOKING_FROM_PRICING;
 
 export const CONSULTATION_VALUE = "konsultacja";
 
