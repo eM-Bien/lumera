@@ -84,38 +84,33 @@ export default function PriceList() {
           )}
         </div>
 
-        <ul className={styles.items}>
-          {group.items.map((item) => (
-            <li key={item.name} className={styles.item}>
-              {item.variants ? (
-                <>
-                  <div className={styles.itemHead}>
-                    <span className={styles.name}>{item.name}</span>
-                  </div>
-                  {item.note && <p className={styles.note}>{item.note}</p>}
-                  <ul className={styles.variants}>
-                    {item.variants.map((v) => (
-                      <li key={v.label} className={styles.variant}>
-                        <span className={styles.variantLabel}>{v.label}</span>
-                        <span className={styles.dots} aria-hidden="true" />
-                        <span className={styles.price}>{v.price}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              ) : (
-                <>
-                  <div className={styles.itemHead}>
-                    <span className={styles.name}>{item.name}</span>
-                    <span className={styles.dots} aria-hidden="true" />
-                    <span className={styles.price}>{item.price}</span>
-                  </div>
-                  {item.note && <p className={styles.note}>{item.note}</p>}
-                </>
+        <div className={styles.grid} key={group.id}>
+          {group.items.map((item, i) => (
+            <article
+              key={item.name}
+              className={styles.card}
+              style={{ animationDelay: `${Math.min(i, 10) * 55}ms` }}
+            >
+              <div className={styles.cardHead}>
+                <h3 className={styles.name}>{item.name}</h3>
+                {item.price && (
+                  <span className={styles.priceChip}>{item.price}</span>
+                )}
+              </div>
+              {item.note && <p className={styles.note}>{item.note}</p>}
+              {item.variants && (
+                <ul className={styles.variants}>
+                  {item.variants.map((v) => (
+                    <li key={v.label} className={styles.variant}>
+                      <span className={styles.variantLabel}>{v.label}</span>
+                      <span className={styles.variantPrice}>{v.price}</span>
+                    </li>
+                  ))}
+                </ul>
               )}
-            </li>
+            </article>
           ))}
-        </ul>
+        </div>
 
         {group.footnote && <p className={styles.footnote}>{group.footnote}</p>}
       </section>
