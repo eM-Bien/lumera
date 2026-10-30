@@ -5,7 +5,7 @@ import {
   DecorativeSubtitle,
   Description,
 } from "../components/PageHeader/Typography";
-import OfferTabs from "../components/OfferTabs/OfferTabs";
+import PriceList from "../components/Pricing/PriceList";
 import CtaBand from "../components/CtaBand/CtaBand";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 
@@ -31,13 +31,13 @@ export default function OfferPage() {
           Znajdź coś dla siebie
         </DecorativeSubtitle>
         <Description className={styles.desc}>
-          Zabiegi na twarz, ciało i skórę głowy — oczyszczanie, nawilżanie,
-          odmładzanie, modelowanie. Wyszukaj po nazwie lub zawęź po lokalizacji,
-          żeby łatwiej znaleźć coś dla siebie.
+          Depilacja laserowa, trychologia oraz zabiegi na twarz i ciało —
+          oczyszczanie, nawilżanie, odmładzanie i modelowanie. Pełny cennik
+          znajdziesz poniżej.
         </Description>
       </header>
 
-      <OfferTabs />
+      <PriceList />
 
       <div className={styles.ctaWrap}>
         <CtaBand
