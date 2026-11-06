@@ -13,7 +13,7 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
   {
     id: "konsultacja-trychologiczna",
     title: "Konsultacja trychologiczna z badaniem skóry głowy",
-    price: "500 zł",
+    price: "200 zł",
     locations: ["Sierpc", "Andrespol"],
     image: "/offer/konsultacja-trychologiczna.webp",
     description:
@@ -49,7 +49,7 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
   {
     id: "infuzja-skora-glowy",
     title: "Infuzja na skórę głowy",
-    price: "500 zł",
+    price: "200 zł",
     locations: ["Sierpc", "Andrespol"],
     image: "/offer/infuzja-skora-glowy.webp",
     description:

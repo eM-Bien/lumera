@@ -18,7 +18,7 @@ export const OFFERS: Offer[] = [
   {
     id: "oczyszczanie-wodorowe",
     title: "Oczyszczanie wodorowe",
-    price: "500 zł",
+    price: "250 zł",
     category: "Twarz",
     locations: ["Sierpc", "Andrespol"],
     image: "/offer/wodorowe.jpg",
@@ -35,7 +35,7 @@ export const OFFERS: Offer[] = [
   {
     id: "infuzja-tlenowa",
     title: "Infuzja tlenowa",
-    price: "500 zł",
+    price: "200 zł",
     category: "Twarz",
     locations: ["Sierpc", "Andrespol"],
     image: "/offer/infuzja.jpg",
@@ -52,7 +52,7 @@ export const OFFERS: Offer[] = [
   {
     id: "oczyszczanie-infuzja",
     title: "Oczyszczanie wodorowe + infuzja tlenowa",
-    price: "500 zł",
+    price: "330 zł",
     category: "Twarz",
     locations: ["Sierpc", "Andrespol"],
     image: "/offer/oczyszczanie-infuzja.webp",
@@ -69,7 +69,7 @@ export const OFFERS: Offer[] = [
   {
     id: "zelazko-twarz",
     title: "Żelazko przeciwzmarszczkowe — twarz",
-    price: "500 zł",
+    price: "200 zł",
     category: "Twarz",
     locations: ["Sierpc", "Andrespol"],
     image: "/offer/zelazko-twarz.webp",
@@ -86,7 +86,7 @@ export const OFFERS: Offer[] = [
   {
     id: "zelazko-cialo",
     title: "Żelazko antycellulitowe — ciało",
-    price: "500 zł",
+    price: "od 450 zł",
     category: "Ciało",
     locations: ["Sierpc", "Andrespol"],
     image: "/offer/zelazko-cialo.webp",
