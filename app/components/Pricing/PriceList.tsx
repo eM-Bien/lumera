@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useTransition } from "@/app/transition/TransitionProvider";
-import { PRICING, treatmentId } from "./pricing-data";
+import { PRICING, treatmentId, type PriceGroup } from "./pricing-data";
 import styles from "./PriceList.module.css";
 
 // Krótsze etykiety na zakładki (pełne tytuły zostają w nagłówkach grup).
@@ -15,25 +15,85 @@ const TAB_LABELS: Record<string, string> = {
   "drobne-uslugi": "Drobne usługi",
 };
 
-export default function PriceList() {
+/** Lista pozycji jednej kategorii — wspólna dla zakładek (desktop) i akordeonu (mobile). */
+function GroupItems({ group }: { group: PriceGroup }) {
   const { navigate } = useTransition();
+
+  return (
+    <>
+      <div className={styles.list}>
+        {group.items.map((item, i) => {
+          const href = `/kontakt?zabieg=${treatmentId(group.id, item.name)}`;
+          return (
+            <article
+              key={item.name}
+              className={styles.item}
+              role="button"
+              tabIndex={0}
+              aria-label={`Umów: ${item.name}`}
+              onClick={() => navigate(href)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  navigate(href);
+                }
+              }}
+              style={{ animationDelay: `${Math.min(i, 12) * 40}ms` }}
+            >
+              <div className={styles.row}>
+                <h3 className={styles.name}>{item.name}</h3>
+                {item.price && (
+                  <>
+                    <span className={styles.leader} aria-hidden="true" />
+                    <span className={styles.price}>{item.price}</span>
+                  </>
+                )}
+              </div>
+              {item.note && <p className={styles.note}>{item.note}</p>}
+              {item.variants && (
+                <ul className={styles.variants}>
+                  {item.variants.map((v) => (
+                    <li key={v.label} className={styles.variant}>
+                      <span className={styles.variantLabel}>{v.label}</span>
+                      <span className={styles.leader} aria-hidden="true" />
+                      <span className={styles.variantPrice}>{v.price}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <span className={styles.bookHint} aria-hidden="true">
+                Umów
+                <span className={styles.bookArrow}>→</span>
+              </span>
+            </article>
+          );
+        })}
+      </div>
+
+      {group.footnote && <p className={styles.footnote}>{group.footnote}</p>}
+    </>
+  );
+}
+
+export default function PriceList() {
   const [activeId, setActiveId] = useState(PRICING[0]?.id);
   const group = PRICING.find((g) => g.id === activeId) ?? PRICING[0];
 
-  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-
-  const selectTab = (id: string) => {
-    setActiveId(id);
-    // Na wąskim ekranie zakładki się przewijają — pokaż wybraną w całości.
-    tabRefs.current[id]?.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "nearest",
+  // Akordeon (mobile): sekcje otwierane niezależnie, na start pierwsza.
+  const [openIds, setOpenIds] = useState<Set<string>>(
+    () => new Set(PRICING[0] ? [PRICING[0].id] : []),
+  );
+  const toggle = (id: string) =>
+    setOpenIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
     });
-  };
 
   return (
     <div className={styles.pricing}>
+      {/* ───── Desktop: zakładki + panel ───── */}
       <div className={styles.menu}>
         <div className={styles.tabsWrap}>
           <div
@@ -51,17 +111,13 @@ export default function PriceList() {
                   role="tab"
                   aria-selected={selected}
                   aria-controls="pricing-panel"
-                  ref={(el) => {
-                    tabRefs.current[g.id] = el;
-                  }}
                   className={`${styles.tab} ${selected ? styles.tabActive : ""}`}
-                  onClick={() => selectTab(g.id)}
+                  onClick={() => setActiveId(g.id)}
                 >
                   {TAB_LABELS[g.id] ?? g.title}
                 </button>
               );
             })}
-            <span className={styles.tabsFill} aria-hidden="true" />
           </div>
         </div>
 
@@ -82,59 +138,49 @@ export default function PriceList() {
             </span>
           </div>
 
-          <div className={styles.list} key={group.id}>
-            {group.items.map((item, i) => {
-              const href = `/kontakt?zabieg=${treatmentId(group.id, item.name)}`;
-              return (
-                <article
-                  key={item.name}
-                  className={styles.item}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`Umów: ${item.name}`}
-                  onClick={() => navigate(href)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      navigate(href);
-                    }
-                  }}
-                  style={{ animationDelay: `${Math.min(i, 12) * 40}ms` }}
-                >
-                  <div className={styles.row}>
-                    <h3 className={styles.name}>{item.name}</h3>
-                    {item.price && (
-                      <>
-                        <span className={styles.leader} aria-hidden="true" />
-                        <span className={styles.price}>{item.price}</span>
-                      </>
-                    )}
-                  </div>
-                  {item.note && <p className={styles.note}>{item.note}</p>}
-                  {item.variants && (
-                    <ul className={styles.variants}>
-                      {item.variants.map((v) => (
-                        <li key={v.label} className={styles.variant}>
-                          <span className={styles.variantLabel}>{v.label}</span>
-                          <span className={styles.leader} aria-hidden="true" />
-                          <span className={styles.variantPrice}>{v.price}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  <span className={styles.bookHint} aria-hidden="true">
-                    Umów
-                    <span className={styles.bookArrow}>→</span>
-                  </span>
-                </article>
-              );
-            })}
-          </div>
-
-          {group.footnote && (
-            <p className={styles.footnote}>{group.footnote}</p>
-          )}
+          <GroupItems key={group.id} group={group} />
         </section>
+      </div>
+
+      {/* ───── Mobile: akordeon — kategorie jak rozdziały menu ───── */}
+      <div className={styles.accordion}>
+        {PRICING.map((g) => {
+          const open = openIds.has(g.id);
+          return (
+            <section
+              key={g.id}
+              className={`${styles.acc} ${open ? styles.accOpen : ""}`}
+            >
+              <h2 className={styles.accHeading}>
+                <button
+                  type="button"
+                  id={`acc-${g.id}`}
+                  className={styles.accButton}
+                  aria-expanded={open}
+                  aria-controls={`acc-panel-${g.id}`}
+                  onClick={() => toggle(g.id)}
+                >
+                  <span className={styles.accTitle}>{g.title}</span>
+                  <span className={styles.accChevron} aria-hidden="true" />
+                </button>
+              </h2>
+              <div
+                id={`acc-panel-${g.id}`}
+                role="region"
+                aria-labelledby={`acc-${g.id}`}
+                className={styles.accBody}
+                inert={!open}
+              >
+                <div className={styles.accInner}>
+                  {g.subtitle && (
+                    <p className={styles.accSubtitle}>{g.subtitle}</p>
+                  )}
+                  <GroupItems group={g} />
+                </div>
+              </div>
+            </section>
+          );
+        })}
       </div>
     </div>
   );

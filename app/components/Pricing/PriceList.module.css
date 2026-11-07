@@ -86,11 +86,6 @@
   border-bottom-color: transparent;
 }
 
-/* na desktopie zbędne — na mobile domyka linię za ostatnią zakładką */
-.tabsFill {
-  display: none;
-}
-
 /* ───────── Panel z pozycjami ───────── */
 
 .panel {
@@ -168,6 +163,17 @@
 
 .item:hover {
   background-color: rgba(194, 163, 107, 0.06);
+}
+
+/* cienka linia oddzielająca kolejne zabiegi */
+.item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 1.1rem;
+  right: 1.1rem;
+  bottom: 0;
+  height: 1px;
+  background: rgba(194, 163, 107, 0.16);
 }
 
 .item:focus-visible {
@@ -336,23 +342,152 @@
   text-align: center;
 }
 
-/* ───────── Tablet: zakładki przewijane poziomo, jedna kolumna ───────── */
+/* ───────── Mobile: akordeon zamiast zakładek ───────── */
+
+/* domyślnie (desktop) akordeon ukryty */
+.accordion {
+  display: none;
+  --menu-line: rgba(194, 163, 107, 0.28);
+  --menu-bg: rgba(255, 255, 255, 0.035);
+}
+
+.acc + .acc {
+  border-top: 1px solid var(--menu-line);
+}
+
+.accHeading {
+  margin: 0;
+}
+
+.accButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.35rem 1.4rem;
+  background: none;
+  border: none;
+  font-family: var(--font-header), serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: left;
+  color: #f0e6d2;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.accOpen .accButton {
+  color: #e9d9b8;
+}
+
+.accButton:focus-visible {
+  outline: 2px solid rgba(194, 163, 107, 0.6);
+  outline-offset: -4px;
+  border-radius: 16px;
+}
+
+/* złoty szewron w kółku, obraca się przy otwarciu */
+.accChevron {
+  position: relative;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgba(194, 163, 107, 0.45);
+  border-radius: 50%;
+  transition:
+    transform 0.35s ease,
+    background-color 0.35s ease;
+}
+
+.accChevron::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 1.5px solid #c2a36b;
+  border-bottom: 1.5px solid #c2a36b;
+  transform: translate(-50%, -70%) rotate(45deg);
+}
+
+.accOpen .accChevron {
+  transform: rotate(180deg);
+  background-color: rgba(194, 163, 107, 0.14);
+}
+
+/* płynne rozwijanie bez mierzenia wysokości (grid 0fr → 1fr) */
+.accBody {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.accOpen .accBody {
+  grid-template-rows: 1fr;
+}
+
+.accInner {
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 1.4rem;
+}
+
+.accOpen .accInner {
+  padding-bottom: 1.4rem;
+}
+
+.accSubtitle {
+  margin: -0.4rem 0 0.6rem;
+  font-family: var(--font-basic), sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: #9a8c6f;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accBody,
+  .accChevron {
+    transition: none;
+  }
+}
 
 @media (max-width: 860px) {
+  .menu {
+    display: none;
+  }
+
+  .accordion {
+    display: block;
+    background: var(--menu-bg);
+    border: 1px solid var(--menu-line);
+    border-radius: 28px;
+    overflow: hidden;
+  }
+
   .list {
     column-count: 1;
   }
 
-  .tab {
-    flex: 0 0 auto;
-    padding: 0.95rem 1.1rem 0.85rem;
-    white-space: nowrap;
+  .footnote {
+    margin-top: 1rem;
   }
 
-  .tabsFill {
-    display: block;
-    flex: 1 0 0.6rem;
-    border-bottom: 1px solid var(--menu-line);
+  /* na dotyku „Umów" widać przy każdej pozycji — lżejsza, obrysowana wersja,
+     żeby lista nie była pełna złotych pigułek */
+  .bookHint {
+    background: none;
+    border-color: rgba(194, 163, 107, 0.55);
+    box-shadow: none;
+    color: #e9d9b8;
+    padding: 0.4rem 0.95rem;
+    font-size: 0.85rem;
+  }
+
+  .item {
+    padding-bottom: 3.1rem;
   }
 }
 
