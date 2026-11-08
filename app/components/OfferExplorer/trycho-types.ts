@@ -2,6 +2,8 @@ import { type Location } from "./offer-types";
 
 export type TrychoTreatment = {
   id: string;
+  /** Id pozycji w cenniku — wstępny wybór zabiegu w formularzu. */
+  bookingId: string;
   title: string;
   price: string;
   description: string;
@@ -12,6 +14,7 @@ export type TrychoTreatment = {
 export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
   {
     id: "konsultacja-trychologiczna",
+    bookingId: "trychologia-konsultacja-trychologiczna-z-badaniem",
     title: "Konsultacja trychologiczna z badaniem skóry głowy",
     price: "200 zł",
     locations: ["Sierpc", "Andrespol"],
@@ -21,6 +24,7 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
   },
   {
     id: "leczenie-lysienia",
+    bookingId: "trychologia-konsultacja-trychologiczna-z-badaniem",
     title: "Leczenie łysienia",
     price: "500 zł",
     locations: ["Sierpc", "Andrespol"],
@@ -30,6 +34,7 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
   },
   {
     id: "leczenie-azs-lupiezu",
+    bookingId: "trychologia-konsultacja-trychologiczna-z-badaniem",
     title: "Leczenie AZS, łupieżu i innych schorzeń skóry głowy",
     price: "500 zł",
     locations: ["Sierpc", "Andrespol"],
@@ -39,6 +44,7 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
   },
   {
     id: "leczenie-wszawicy",
+    bookingId: "trychologia-konsultacja-trychologiczna-z-badaniem",
     title: "Leczenie wszawicy",
     price: "500 zł",
     locations: ["Sierpc", "Andrespol"],
@@ -48,6 +54,7 @@ export const TRYCHO_TREATMENTS: TrychoTreatment[] = [
   },
   {
     id: "infuzja-skora-glowy",
+    bookingId: "trychologia-infuzja-tlenowa-na-porost-wlosow",
     title: "Infuzja na skórę głowy",
     price: "200 zł",
     locations: ["Sierpc", "Andrespol"],

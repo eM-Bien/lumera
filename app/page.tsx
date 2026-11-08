@@ -14,10 +14,10 @@ export default function Home() {
   const [skipIntro, setSkipIntro] = useState<boolean | null>(null);
   const [desktop, setDesktop] = useState(false);
   const phase = useTransitionPhase();
+  // Tusz włączamy raz, po pierwszym przejściu do fazy „idle" (stan
+  // aktualizowany w trakcie renderu — wzorzec React zamiast efektu).
   const [inkReady, setInkReady] = useState(false);
-  useEffect(() => {
-    if (phase === "idle") setInkReady(true);
-  }, [phase]);
+  if (phase === "idle" && !inkReady) setInkReady(true);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect

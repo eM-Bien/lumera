@@ -8,6 +8,8 @@ import styles from "./OfferCard.module.css";
 
 type CardData = {
   id: string;
+  /** Id zabiegu z cennika dla linku „Umów" (gdy różni się od id karty). */
+  bookingId?: string;
   title: string;
   price: string;
   description: string;
@@ -199,7 +201,7 @@ export default function OfferCard({
         <div className={styles.actions}>
           <PrimaryButton
             className={styles.bookBtn}
-            onClick={() => navigate(`/kontakt?zabieg=${offer.id}`)}
+            onClick={() => navigate(`/kontakt?zabieg=${offer.bookingId ?? offer.id}`)}
           >
             Umów
           </PrimaryButton>

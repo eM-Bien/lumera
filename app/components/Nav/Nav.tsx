@@ -34,6 +34,9 @@ export default function Nav() {
     if (!isHome) return;
     const seen = sessionStorage.getItem("lumera_intro_seen") === "true";
     if (seen) {
+      // sessionStorage jest dostępny dopiero w przeglądarce, więc odczyt
+      // musi być w efekcie (jak w app/page.tsx).
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShow(true);
       return;
     }

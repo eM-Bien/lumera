@@ -28,35 +28,35 @@ export default function ContactPage() {
 
   return (
     <main>
-    <section className={styles.contact}>
-      {ready && (
-        <LetterBackground
-          fontFamily={cinzel.style.fontFamily}
-          gold={[240, 235, 235]}
-          scale={1}
-          letterFrac={0.45}
-          offsetX="24vw"
-          offsetY="2vh"
-        />
-      )}
+      <section className={styles.contact}>
+        {ready && (
+          <LetterBackground
+            fontFamily={cinzel.style.fontFamily}
+            gold={[240, 235, 235]}
+            scale={1}
+            letterFrac={0.45}
+            offsetX="24vw"
+            offsetY="2vh"
+          />
+        )}
 
-      <div className={styles.grid}>
-        <div className={styles.formCol}>
-          <header className={styles.header}>
-            <PageHeading className={styles.title}>Umów wizytę</PageHeading>
-            <DecorativeSubtitle className={styles.subtitle}>
-              Piękno w harmonii z Tobą
-            </DecorativeSubtitle>
-          </header>
+        <div className={styles.grid}>
+          <div className={styles.formCol}>
+            <header className={styles.header}>
+              <PageHeading className={styles.title}>Umów wizytę</PageHeading>
+              <DecorativeSubtitle className={styles.subtitle}>
+                Piękno w harmonii z Tobą
+              </DecorativeSubtitle>
+            </header>
 
-          <Suspense fallback={null}>
-            <ContactForm />
-          </Suspense>
+            <Suspense fallback={null}>
+              <ContactForm />
+            </Suspense>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <ContactDetails />
+      <ContactDetails />
     </main>
   );
 }

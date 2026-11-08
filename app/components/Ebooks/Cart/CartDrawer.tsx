@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Link from "next/link";
 import { useCart } from "./CartContext";
 import { EBOOKS, formatPrice } from "../ebook-types";
 import styles from "./CartDrawer.module.css";

@@ -5,6 +5,8 @@ export const LOCATIONS: Location[] = ["Sierpc", "Andrespol"];
 
 export type Offer = {
   id: string;
+  /** Id pozycji w cenniku — wstępny wybór zabiegu w formularzu. */
+  bookingId: string;
   title: string;
   category: Category;
   locations: Location[];
@@ -17,6 +19,7 @@ export type Offer = {
 export const OFFERS: Offer[] = [
   {
     id: "oczyszczanie-wodorowe",
+    bookingId: "twarz-oczyszczanie-wodorowe",
     title: "Oczyszczanie wodorowe",
     price: "250 zł",
     category: "Twarz",
@@ -34,6 +37,7 @@ export const OFFERS: Offer[] = [
   },
   {
     id: "infuzja-tlenowa",
+    bookingId: "twarz-infuzja-tlenowa",
     title: "Infuzja tlenowa",
     price: "200 zł",
     category: "Twarz",
@@ -51,6 +55,7 @@ export const OFFERS: Offer[] = [
   },
   {
     id: "oczyszczanie-infuzja",
+    bookingId: "twarz-oczyszczanie-i-infuzja-tlenowa",
     title: "Oczyszczanie wodorowe + infuzja tlenowa",
     price: "330 zł",
     category: "Twarz",
@@ -68,6 +73,7 @@ export const OFFERS: Offer[] = [
   },
   {
     id: "zelazko-twarz",
+    bookingId: "twarz-zelazko-przeciwzmarszczkowe",
     title: "Żelazko przeciwzmarszczkowe — twarz",
     price: "200 zł",
     category: "Twarz",
@@ -85,6 +91,7 @@ export const OFFERS: Offer[] = [
   },
   {
     id: "zelazko-cialo",
+    bookingId: "cialo-zelazko-antycellulitowe",
     title: "Żelazko antycellulitowe — ciało",
     price: "od 450 zł",
     category: "Ciało",
