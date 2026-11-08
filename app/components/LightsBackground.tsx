@@ -219,6 +219,14 @@ export default function LightsBackground({
 
       const dormantTarget = ph === "idle" ? 0 : 1;
 
+      // Płótno bez wymiarów (np. w trakcie zmiany układu / ukryte): nie ruszamy
+      // świetlików — dzielenie przez W = 0 dałoby Infinity/NaN w pozycjach,
+      // a potem błąd createRadialGradient („non-finite") w każdej klatce.
+      if (W <= 0 || H <= 0) {
+        if (!reduce && running) rafId = requestAnimationFrame(frame);
+        return;
+      }
+
       const cx = 0.5 * W;
       const cy = 0.5 * H;
 
@@ -253,6 +261,17 @@ export default function LightsBackground({
           const k = Math.min(1, dt * RETURN);
           m.x += (m.hx - m.x) * k;
           m.y += (m.hy - m.y) * k;
+        }
+
+        // Zabezpieczenie: świetlik z nieskończoną/NaN pozycją lub prędkością
+        // (np. po skrajnie długiej klatce) zastępujemy nowym.
+        if (
+          !Number.isFinite(m.x) ||
+          !Number.isFinite(m.y) ||
+          !Number.isFinite(m.vx) ||
+          !Number.isFinite(m.vy)
+        ) {
+          Object.assign(m, spawnLight(undefined, m.dormant));
         }
 
         if (rise && !reduce && ph === "idle" && !m.dormant) {
