@@ -88,6 +88,13 @@
     box-shadow 0.3s ease;
 }
 
+/* Wygodny cel dotyku (~44px). Przy okazji iOS nie zwija pustego pola daty
+   (z appearance: none Safari nie pokazuje w nim „dd.mm.rrrr"). */
+.input,
+.select {
+  min-height: 2.75rem;
+}
+
 .input:hover,
 .select:hover,
 .textarea:hover {
