@@ -1,5 +1,7 @@
 // Cennik zabiegów Lumery. Źródło: Cennik_Lumera.pdf (aktualizacja 2026-11).
 
+import type { Location } from "../OfferExplorer/offer-types";
+
 export type PriceVariant = {
   label: string;
   price: string;
@@ -13,6 +15,8 @@ export type PriceItem = {
   note?: string;
   /** Warianty (serie, pakiety, strefy) — zamiast pojedynczej ceny. */
   variants?: PriceVariant[];
+  /** Gdy zabieg jest tylko w części studiów (domyślnie: wszystkie). */
+  locations?: Location[];
 };
 
 export type PriceGroup = {
@@ -112,7 +116,10 @@ export const PRICING: PriceGroup[] = [
     title: "Modelowanie sylwetki",
     items: [
       {
-        name: "Icoone",
+        // „*" w nazwie nie zmienia id rezerwacji (slug nadal „icoone").
+        name: "Icoone *",
+        note: "* Zabieg dostępny tylko w Sierpcu",
+        locations: ["Sierpc"],
         variants: [
           { label: "Pojedynczy zabieg · 60 min", price: "250 zł" },
           { label: "Pakiet 5 zabiegów · 60 min", price: "999 zł" },
@@ -279,7 +286,12 @@ export const PRICING: PriceGroup[] = [
   },
 ];
 
-export type BookingEntry = { id: string; title: string; group: string };
+export type BookingEntry = {
+  id: string;
+  title: string;
+  group: string;
+  locations?: Location[];
+};
 
 /** Płaska lista zabiegów z cennika — źródło opcji w formularzu kontaktu. */
 export const BOOKING_FROM_PRICING: BookingEntry[] = PRICING.flatMap((g) =>
@@ -287,5 +299,6 @@ export const BOOKING_FROM_PRICING: BookingEntry[] = PRICING.flatMap((g) =>
     id: treatmentId(g.id, it.name),
     title: it.name,
     group: g.title,
+    locations: it.locations,
   })),
 );

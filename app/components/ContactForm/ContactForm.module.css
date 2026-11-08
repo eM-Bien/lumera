@@ -337,3 +337,22 @@
   }
 }
 
+
+/* lokalizacja niedostępna dla wybranego zabiegu */
+.chip:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.chip:disabled:hover {
+  border-color: rgba(194, 163, 107, 0.3);
+}
+
+.hint {
+  display: block;
+  margin-top: 0.4rem;
+  font-family: var(--font-basic), sans-serif;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #9a8c6f;
+}

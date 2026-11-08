@@ -1,6 +1,9 @@
 // app/api/kontakt/route.ts — przyjmuje formularz kontaktowy i wysyła maila przez Resend.
 import { NextResponse } from "next/server";
-import { bookingTitle } from "@/app/components/ContactForm/booking-options";
+import {
+  allowedLocations,
+  bookingTitle,
+} from "@/app/components/ContactForm/booking-options";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
@@ -82,6 +85,15 @@ export async function POST(request: Request) {
         error:
           "Uzupełnij imię i nazwisko, poprawny e-mail, telefon (9 cyfr), lokalizację i zgodę.",
       },
+      { status: 400 },
+    );
+  }
+
+  // Zabieg dostępny tylko w części studiów (np. Icoone → Sierpc).
+  const allowed: string[] = allowedLocations((body.zabieg ?? "").trim());
+  if (!allowed.includes(lokalizacja)) {
+    return NextResponse.json(
+      { error: `Ten zabieg jest dostępny tylko w: ${allowed.join(", ")}.` },
       { status: 400 },
     );
   }

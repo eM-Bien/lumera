@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { LOCATIONS } from "../OfferExplorer/offer-types";
 import PrimaryButton from "../Buttons/PrimaryButton/PrimaryButton";
 import {
+  allowedLocations,
   BOOKING_OPTIONS,
   CONSULTATION_VALUE,
   resolveBookingId,
@@ -22,6 +23,14 @@ type Errors = Partial<
 const EMAIL_RE = /^[^\s@]+@[^\s@]+$/;
 const PHONE_RE = /^\d{9}$/;
 
+// Miejscownik nazw studiów: „tylko w Sierpcu".
+const LOCATIVE: Record<string, string> = {
+  Sierpc: "Sierpcu",
+  Andrespol: "Andrespolu",
+};
+const onlyIn = (locs: string[]) =>
+  `Ten zabieg wykonujemy tylko w ${locs.map((l) => LOCATIVE[l] ?? l).join(" i ")}.`;
+
 const PORA_OPTIONS = [
   "",
   "Rano (9-12)",
@@ -34,7 +43,21 @@ export default function ContactForm() {
   const initialZabieg = resolveBookingId(searchParams.get("zabieg"));
 
   const [zabieg, setZabieg] = useState(initialZabieg);
-  const [lokalizacja, setLokalizacja] = useState<string>("");
+  // Zabieg dostępny tylko w jednym studiu (np. Icoone → Sierpc) — od razu
+  // je zaznaczamy, także gdy zabieg przyszedł z linku „Umów" w cenniku.
+  const [lokalizacja, setLokalizacja] = useState<string>(() => {
+    const allowed = allowedLocations(initialZabieg);
+    return allowed.length === 1 ? allowed[0] : "";
+  });
+  const allowed = allowedLocations(zabieg);
+
+  const onZabiegChange = (id: string) => {
+    setZabieg(id);
+    const next = allowedLocations(id);
+    if (next.length === 1) setLokalizacja(next[0]);
+    else if (lokalizacja && !next.some((l) => l === lokalizacja))
+      setLokalizacja("");
+  };
   const [data, setData] = useState("");
   const [pora, setPora] = useState("");
   const [imie, setImie] = useState("");
@@ -79,6 +102,8 @@ export default function ContactForm() {
     else if (!PHONE_RE.test(telefon.trim()))
       e.telefon = "Niepoprawny numer telefonu.";
     if (!lokalizacja) e.lokalizacja = "Wybierz lokalizację.";
+    else if (!allowed.some((l) => l === lokalizacja))
+      e.lokalizacja = onlyIn(allowed);
     if (!zgoda) e.zgoda = "Musisz wyrazić zgodę.";
     return e;
   };
@@ -161,7 +186,7 @@ export default function ContactForm() {
         <select
           className={styles.select}
           value={zabieg}
-          onChange={(e) => setZabieg(e.target.value)}
+          onChange={(e) => onZabiegChange(e.target.value)}
         >
           <option value={CONSULTATION_VALUE}>
             Konsultacja / jeszcze nie wiem
@@ -183,12 +208,14 @@ export default function ContactForm() {
         <div className={styles.chips}>
           {LOCATIONS.map((loc) => {
             const on = lokalizacja === loc;
+            const available = allowed.some((l) => l === loc);
             return (
               <button
                 key={loc}
                 type="button"
                 className={`${styles.chip} ${on ? styles.chipActive : ""}`}
                 aria-pressed={on}
+                disabled={!available}
                 onClick={() => setLokalizacja(loc)}
               >
                 {loc}
@@ -196,6 +223,9 @@ export default function ContactForm() {
             );
           })}
         </div>
+        {allowed.length < LOCATIONS.length && (
+          <span className={styles.hint}>{onlyIn(allowed)}</span>
+        )}
         {errors.lokalizacja && (
           <span className={styles.errorText}>{errors.lokalizacja}</span>
         )}
