@@ -4,6 +4,11 @@ import { Suspense, useEffect, useState } from "react";
 import { Cinzel } from "next/font/google";
 import LetterBackground from "../components/LetterBackground/LetterBackground";
 import ContactForm from "../components/ContactForm/ContactForm";
+import ContactDetails from "../components/ContactDetails/ContactDetails";
+import {
+  DecorativeSubtitle,
+  PageHeading,
+} from "../components/PageHeader/Typography";
 import styles from "./page.module.css";
 
 const cinzel = Cinzel({
@@ -12,30 +17,8 @@ const cinzel = Cinzel({
   variable: "--font-cinzel",
 });
 
-const PHONE = "+48 505 829 913";
-const PHONE_HREF = "+48505829913";
-const EMAIL = "kontakt@lumera-clinic.pl";
-
-const LOCATIONS = [
-  { city: "Sierpc", street: "ul. Andersa 11", zip: "09-200" },
-  { city: "Andrespol", street: "ul. Rokicińska 130/8", zip: "95-020" },
-];
-
-const SOCIALS = [
-  {
-    name: "Instagram",
-    href: "https://instagram.com/lumera_pl",
-    icon: "/icons/insta.svg",
-    label: "@lumera_pl",
-  },
-  {
-    name: "Facebook",
-    href: "https://facebook.com/lumera.selfcare",
-    icon: "/icons/facebook.svg",
-    label: "/lumera.selfcare",
-  },
-];
-
+// Strona kontaktu: formularz z literą L w kwiatach, a pod nimi dane
+// kontaktowe (studia, telefon, e-mail, social media, dokumenty).
 export default function ContactPage() {
   const [ready, setReady] = useState(false);
   useEffect(() => {
@@ -44,7 +27,8 @@ export default function ContactPage() {
   }, []);
 
   return (
-    <main className={styles.contact}>
+    <main>
+    <section className={styles.contact}>
       {ready && (
         <LetterBackground
           fontFamily={cinzel.style.fontFamily}
@@ -58,57 +42,21 @@ export default function ContactPage() {
 
       <div className={styles.grid}>
         <div className={styles.formCol}>
-          <div className={styles.reach}>
-            <a className={styles.reachItem} href={`tel:${PHONE_HREF}`}>
-              <span className={styles.reachLabel}>Zadzwoń</span>
-              <span className={styles.reachValue}>{PHONE}</span>
-            </a>
-            <a className={styles.reachItem} href={`mailto:${EMAIL}`}>
-              <span className={styles.reachLabel}>Napisz</span>
-              <span className={styles.reachValue}>{EMAIL}</span>
-            </a>
-          </div>
+          <header className={styles.header}>
+            <PageHeading className={styles.title}>Umów wizytę</PageHeading>
+            <DecorativeSubtitle className={styles.subtitle}>
+              Piękno w harmonii z Tobą
+            </DecorativeSubtitle>
+          </header>
 
-          <div className={styles.formWrap}>
-            <Suspense fallback={null}>
-              <ContactForm />
-            </Suspense>
-          </div>
-        </div>
-
-        <div className={styles.infoCol}>
-          <div className={styles.infoBottom}>
-            <div className={styles.locations}>
-              {LOCATIONS.map((loc) => (
-                <section className={styles.location} key={loc.city}>
-                  <h2 className={styles.city}>{loc.city}</h2>
-                  <address className={styles.address}>
-                    <span>{loc.street}</span>
-                    <span>{loc.zip}</span>
-                  </address>
-                </section>
-              ))}
-            </div>
-
-            <footer className={styles.social}>
-              {SOCIALS.map((s) => (
-                <a
-                  key={s.name}
-                  className={styles.socialLink}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.name}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img className={styles.socialIcon} src={s.icon} alt="" />
-                  <span className={styles.socialLabel}>{s.label}</span>
-                </a>
-              ))}
-            </footer>
-          </div>
+          <Suspense fallback={null}>
+            <ContactForm />
+          </Suspense>
         </div>
       </div>
+    </section>
+
+    <ContactDetails />
     </main>
   );
 }

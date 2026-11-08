@@ -3,14 +3,17 @@
   height: 100dvh;
   overflow: hidden;
   color: #d8c1a0;
+  /* Najwyższa warstwa: dół sceny płynnie przechodzi w tło strony, żeby
+     między sceną a stopką nie było widać krawędzi. */
   background:
+    linear-gradient(180deg, transparent 65%, var(--background) 100%),
     radial-gradient(
       69% 81% at 80% 68%,
       #483e6999 0%,
       #1e183740 50%,
       #0a072000 95%
     ),
-    radial-gradient(#0a0720 0%, #060414 45%, #000 100%);
+    radial-gradient(#0a0720 0%, #060414 45%, var(--background) 100%);
 }
 
 .grid {
@@ -18,181 +21,29 @@
   z-index: 2;
   height: 100dvh;
   display: grid;
-  grid-template-columns: minmax(0, 900px) 1fr;
-  gap: 0;
+  grid-template-columns: minmax(0, 800px) 1fr;
 }
 
+/* nagłówek + formularz jako jeden blok, wyśrodkowany w pionie */
 .formCol {
-  position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   min-height: 0;
-  padding-top: 11vh;
+  padding-top: 8vh;
 }
 
-.reach {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 1rem 2vw;
-  padding: 0 3vw 0 6vw;
-  margin-bottom: 4vh;
+.header {
+  padding-left: 10vw;
+  margin-bottom: 2.4rem;
 }
 
-.reachItem {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  text-decoration: none;
-}
-
-.reachLabel {
-  font-family: var(--font-basic), sans-serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #9a8c6f;
-}
-
-.reachValue {
-  font-family: var(--font-montserrat), sans-serif;
-  font-size: clamp(1.5rem, 2.2vw, 2.2rem);
-  letter-spacing: 0.05em;
-  white-space: nowrap;
-  color: #f0e6d2;
-  transition: color 0.3s ease;
-}
-
-.reachItem:hover .reachValue {
-  color: #fffaf0;
-}
-
-.formWrap {
-  position: relative;
-  flex: 1;
-  min-height: 0;
-  display: flex;
-}
-
-.infoCol {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
-  text-align: right;
-  min-height: 0;
-  padding: 4vh 6vw;
-}
-
-.contactTop {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.contactLink {
-  font-family: var(--font-montserrat), sans-serif;
-  font-size: clamp(1.1rem, 1.5vw, 1.5rem);
-  letter-spacing: 0.06em;
-  color: #f0e6d2;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.contactLink:hover {
-  color: #fffaf0;
-}
-
-.infoBottom {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4vh;
-}
-
-.locations {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 1.6rem;
-}
-
-.location {
-  display: flex;
-  align-items: baseline;
-  justify-content: flex-end;
-  gap: 1.5rem;
-}
-
-.city {
+.title {
   margin: 0;
-  font-family: var(--font-cinzel), serif;
-  font-weight: 400;
-  font-size: clamp(1.6rem, 2.8vw, 2.3rem);
-  letter-spacing: 0.06em;
-  color: #f0e6d2;
 }
 
-.address {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.4rem 1rem;
-  font-style: normal;
-  font-family: var(--font-basic), sans-serif;
-  font-size: clamp(1.05rem, 1.35vw, 1.35rem);
-  line-height: 1.5;
-  color: #c9bfa8;
-}
-
-.social {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 1.5rem;
-}
-
-.socialLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  text-decoration: none;
-  color: #d8c1a0;
-}
-
-.socialIcon {
-  width: 28px;
-  height: 28px;
-  flex: 0 0 auto;
-  transition:
-    transform 0.3s ease,
-    filter 0.3s ease;
-}
-
-.socialLabel {
-  max-width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  opacity: 0;
-  font-family: var(--font-montserrat), sans-serif;
-  font-size: 0.95rem;
-  letter-spacing: 0.04em;
-  color: #c9bfa8;
-  transition:
-    max-width 0.45s ease,
-    opacity 0.4s ease;
-}
-
-@media (hover: hover) {
-  .socialLink:hover .socialLabel,
-  .socialLink:focus-visible .socialLabel {
-    max-width: 240px;
-    opacity: 1;
-  }
-  .socialLink:hover .socialIcon {
-    transform: translateY(-1px);
-    filter: brightness(1.2);
-  }
+.subtitle {
+  margin: 0.2rem 0 0;
 }
 
 @media (max-width: 900px) {
@@ -205,57 +56,14 @@
   .grid {
     height: auto;
     grid-template-columns: 1fr;
-    gap: 6vh;
-    padding: 70vh 6vw 12vh;
+    padding: 70vh 6vw 10vh;
   }
 
   .formCol {
-    justify-content: flex-start;
     padding: 0;
   }
 
-  .reach {
-    flex-wrap: wrap;
-    padding: 0;
-    margin-bottom: 3vh;
-  }
-
-  .formWrap {
-    flex: none;
-  }
-
-  .infoCol {
-    align-items: flex-start;
-    text-align: left;
-    gap: 6vh;
-  }
-
-  .contactTop {
-    align-items: flex-start;
-  }
-
-  .infoBottom {
-    align-items: flex-start;
-    gap: 4vh;
-  }
-
-  .locations {
-    align-items: flex-start;
-    width: 100%;
-  }
-
-  .location {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 0.4rem;
-  }
-
-  .address {
-    justify-content: flex-start;
-  }
-
-  .social {
-    justify-content: flex-start;
+  .header {
+    padding-left: 0;
   }
 }

@@ -44,6 +44,7 @@ export default function ContactForm() {
   const [wiadomosc, setWiadomosc] = useState("");
   const [zgoda, setZgoda] = useState(false);
   const [firma, setFirma] = useState("");
+  const [showMsg, setShowMsg] = useState(false);
 
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -136,7 +137,10 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className={styles.success} role="status">
+      <div
+        className={styles.success}
+        role="status"
+      >
         <p className={styles.successTitle}>Do usłyszenia!</p>
         <p className={styles.successText}>
           Otrzymaliśmy Twoje zgłoszenie — odezwiemy się, żeby potwierdzić
@@ -147,7 +151,11 @@ export default function ContactForm() {
   }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit} noValidate>
+    <form
+      className={styles.form}
+      onSubmit={handleSubmit}
+      noValidate
+    >
       <label className={styles.field}>
         <span className={styles.label}>Zabieg</span>
         <select
@@ -170,8 +178,8 @@ export default function ContactForm() {
         </select>
       </label>
 
-      <fieldset className={styles.field}>
-        <span className={styles.label}>Lokalizacja *</span>
+      <fieldset className={`${styles.field} ${styles.inline}`}>
+        <legend className={styles.label}>Gdzie *</legend>
         <div className={styles.chips}>
           {LOCATIONS.map((loc) => {
             const on = lokalizacja === loc;
@@ -284,16 +292,29 @@ export default function ContactForm() {
         </label>
       </div>
 
-      <label className={styles.field}>
-        <span className={styles.label}>Wiadomość</span>
-        <textarea
-          className={styles.textarea}
-          value={wiadomosc}
-          onChange={(e) => setWiadomosc(e.target.value)}
-          rows={3}
-          placeholder="Coś, co powinniśmy o Tobie wiedzieć? (opcjonalnie)"
-        />
-      </label>
+      {/* Wiadomość jest opcjonalna — chowamy ją za linkiem, żeby formularz
+          był krótszy */}
+      {showMsg ? (
+        <label className={styles.field}>
+          <span className={styles.label}>Wiadomość</span>
+          <textarea
+            className={styles.textarea}
+            value={wiadomosc}
+            onChange={(e) => setWiadomosc(e.target.value)}
+            rows={2}
+            placeholder="Coś, co powinniśmy o Tobie wiedzieć?"
+            autoFocus
+          />
+        </label>
+      ) : (
+        <button
+          type="button"
+          className={styles.addMsg}
+          onClick={() => setShowMsg(true)}
+        >
+          + Dodaj wiadomość
+        </button>
+      )}
 
       <div className={styles.hp} aria-hidden="true">
         <label>
@@ -308,25 +329,27 @@ export default function ContactForm() {
         </label>
       </div>
 
-      <label className={styles.consent}>
-        <input
-          type="checkbox"
-          checked={zgoda}
-          onChange={(e) => setZgoda(e.target.checked)}
-          aria-invalid={!!errors.zgoda}
-        />
-        <span>
-          Wyrażam zgodę na przetwarzanie moich danych w celu kontaktu i
-          umówienia wizyty. *
-        </span>
-      </label>
+      <div className={styles.footer}>
+        <label className={styles.consent}>
+          <input
+            type="checkbox"
+            checked={zgoda}
+            onChange={(e) => setZgoda(e.target.checked)}
+            aria-invalid={!!errors.zgoda}
+          />
+          <span>
+            Zgadzam się na przetwarzanie danych w celu kontaktu i umówienia
+            wizyty. *
+          </span>
+        </label>
+
+        <PrimaryButton type="submit" disabled={status === "sending"}>
+          {status === "sending" ? "Wysyłanie…" : "Wyślij"}
+        </PrimaryButton>
+      </div>
       {errors.zgoda && <span className={styles.errorText}>{errors.zgoda}</span>}
 
       {status === "error" && <p className={styles.error}>{errorMsg}</p>}
-
-      <PrimaryButton type="submit" disabled={status === "sending"}>
-        {status === "sending" ? "Wysyłanie…" : "Wyślij"}
-      </PrimaryButton>
     </form>
   );
 }

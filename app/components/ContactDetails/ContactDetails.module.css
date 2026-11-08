@@ -1,0 +1,183 @@
+.details {
+  position: relative;
+  z-index: 2;
+  padding: 0 0 clamp(2rem, 6vh, 4rem);
+  font-family: var(--font-basic), Arial, sans-serif;
+  color: #b9b6c9;
+}
+
+/* ───────── Separator z gwiazdką ───────── */
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  color: #c2a36b;
+  font-size: 0.8rem;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(194, 163, 107, 0.35));
+}
+
+.divider::after {
+  background: linear-gradient(90deg, rgba(194, 163, 107, 0.35), transparent);
+}
+
+/* ───────── Kolumny ───────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1.25fr 1fr 1fr;
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vh, 3.5rem) 24px 0;
+}
+
+.heading {
+  margin: 0 0 1.3rem;
+  font-family: var(--font-header), serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #f0e6d2;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.place {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.city {
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
+  color: #c2a36b;
+}
+
+.link {
+  position: relative;
+  width: fit-content;
+  font-size: 1.08rem;
+  line-height: 1.5;
+  color: #b9b6c9;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+/* cienkie złote podkreślenie rozwijane od lewej */
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: #c2a36b;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.link:hover,
+.link:focus-visible {
+  color: #e9d9b8;
+}
+
+.link:hover::after,
+.link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* wiersz social media: ikona w kółku + nazwa profilu, cały klikalny */
+.socialRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+}
+
+.socialRow:hover .link,
+.socialRow:focus-visible .link {
+  color: #e9d9b8;
+}
+
+.socialRow:hover .link::after,
+.socialRow:focus-visible .link::after {
+  transform: scaleX(1);
+}
+
+.socialRow:hover .social,
+.socialRow:focus-visible .social {
+  border-color: #c2a36b;
+  background-color: rgba(194, 163, 107, 0.12);
+  transform: translateY(-2px);
+}
+
+.social {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(194, 163, 107, 0.35);
+  border-radius: 50%;
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.social img {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link::after,
+  .social {
+    transition: none;
+  }
+}
+
+/* ───────── Responsywność ───────── */
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.2rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .divider,
+  .grid {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .link {
+    font-size: 1rem;
+  }
+
+  /* jedna kolumna — w dwóch e-mail łamał się w połowie */
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}

@@ -172,8 +172,9 @@ export default function WaterLetter({
 
     const resize = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
-      W = window.innerWidth;
-      H = window.innerHeight;
+      // rozmiar płótna = rozmiar kontenera (pełny ekran albo np. sekcja stopki)
+      W = canvas.clientWidth || window.innerWidth;
+      H = canvas.clientHeight || window.innerHeight;
       canvas.width = Math.floor(W * dpr);
       canvas.height = Math.floor(H * dpr);
       gl.viewport(0, 0, canvas.width, canvas.height);

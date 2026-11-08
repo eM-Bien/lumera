@@ -9,7 +9,10 @@
   width: 100%;
   padding: clamp(12vh, 16vh, 20vh) 6vw clamp(14vh, 18vh, 22vh);
   border-radius: clamp(28px, 5vw, 64px) clamp(28px, 5vw, 64px) 0 0;
-  background: linear-gradient(180deg, #000000 0%, #030409 55%, #010205 100%);
+  background:
+    /* dół płynnie przechodzi w tło strony — bez krawędzi nad stopką */
+    linear-gradient(180deg, transparent calc(100% - 40vh), var(--background) 100%),
+    linear-gradient(180deg, #000000 0%, #030409 55%, #010205 100%);
   box-shadow: 0 -30px 80px rgba(0, 0, 0, 0.6);
   color: #e7e0d0;
 

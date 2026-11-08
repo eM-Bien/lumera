@@ -1,35 +1,73 @@
 .footer {
   position: relative;
   z-index: 46;
-  background-color: #000000;
+  overflow: hidden;
+  /* bez własnego tła i krawędzi — stopka płynnie kontynuuje ciemne tło
+     strony (i jej świetliki), a dopiero na samym dole schodzi do czerni */
+  background: linear-gradient(180deg, transparent 0%, transparent 55%, #000 100%);
   color: #b9b6c9;
-  border-top: 1px solid rgba(194, 163, 107, 0.18);
+  font-family: var(--font-basic), Arial, sans-serif;
 }
 
-.inner {
+/* ───────── Duży znak LUMÉRA ───────── */
+
+.wordmark {
+  position: relative;
+  margin: clamp(3rem, 8vh, 5rem) 0 -0.18em;
+  font-family: var(--font-header), serif;
+  font-size: clamp(3.5rem, 13vw, 12rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.3em;
+  /* wyrównanie optyczne — letter-spacing dodaje odstęp za ostatnią literą */
+  padding-left: 0.3em;
+  text-align: center;
+  white-space: nowrap;
+  color: transparent;
+  background: linear-gradient(
+    180deg,
+    rgba(216, 193, 160, 0.12) 0%,
+    rgba(194, 163, 107, 0.03) 70%,
+    transparent 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ───────── Dolny pasek ───────── */
+
+.bottom {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem 1.5rem;
+  flex-wrap: wrap;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 18px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  flex-wrap: wrap;
-  text-align: center;
-  font-family: var(--font-basic), Arial, sans-serif;
+  padding: 1.2rem 24px 1.6rem;
+  border-top: 1px solid rgba(194, 163, 107, 0.14);
   font-size: 12px;
   letter-spacing: 0.06em;
+  color: #7d7891;
 }
 
-.credit {
-  color: #b9b6c9;
-}
-
-.name {
+.author {
   color: #e9d9b8;
   transition: color 0.2s ease;
 }
 
-.name:hover {
+.author:hover {
   color: #c2a36b;
+}
+
+@media (max-width: 480px) {
+  .bottom {
+    flex-direction: column;
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+    text-align: center;
+  }
 }

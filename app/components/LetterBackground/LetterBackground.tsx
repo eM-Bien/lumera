@@ -47,7 +47,9 @@ export default function LetterBackground({
     const update = () => {
       raf = 0;
       const vh = window.innerHeight || 1;
-      const p = Math.min(1, Math.max(0, window.scrollY / vh));
+      // Litera gaśnie w ciągu pół ekranu przewijania — zanim dojedzie
+      // stopka, żeby nie prześwitywała przez nią (warstwa jest fixed).
+      const p = Math.min(1, Math.max(0, window.scrollY / (vh * 0.5)));
       el.style.setProperty("--p", String(p));
     };
     const onScroll = () => {
