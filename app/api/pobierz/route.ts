@@ -7,7 +7,7 @@ import { get } from "@vercel/blob";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { verifyDownload } from "@/lib/download-token";
 import { getEntry, getFileUrl } from "@/lib/server-catalog";
-import { getRedis } from "@/lib/redis";
+import { withRedis } from "@/lib/redis";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -19,18 +19,16 @@ const COUNTER_TTL_S = 7 * 24 * 60 * 60; // 7 dni
 // przekroczeniu limitu blokuje. Gdy Redis niedostępny — przepuszcza (limit to
 // bezpiecznik, nie zabezpieczenie krytyczne; nie blokujemy płacącego klienta).
 async function withinLimit(token: string): Promise<boolean> {
-  try {
-    const redis = await getRedis();
-    if (!redis) return true;
-    const key =
-      "dl:" + crypto.createHash("sha256").update(token).digest("hex");
-    const count = await redis.incr(key);
-    if (count === 1) await redis.expire(key, COUNTER_TTL_S);
-    return count <= DOWNLOAD_LIMIT;
-  } catch (err) {
-    console.error("Redis licznik error (przepuszczam pobranie):", err);
-    return true;
-  }
+  const key = "dl:" + crypto.createHash("sha256").update(token).digest("hex");
+  return withRedis(
+    async (redis) => {
+      const count = await redis.incr(key);
+      if (count === 1) await redis.expire(key, COUNTER_TTL_S);
+      return count <= DOWNLOAD_LIMIT;
+    },
+    true,
+    "download-limit",
+  );
 }
 
 // Stemplujemy każdą stronę dyskretnym podpisem z e-mailem kupującego —

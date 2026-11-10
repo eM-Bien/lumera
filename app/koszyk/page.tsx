@@ -45,8 +45,17 @@ export default function CartPage() {
           marketing: acceptMarketing,
         }),
       });
-      const data = await res.json();
-      if (!res.ok || !data.url) throw new Error(data.error ?? "Błąd płatności");
+      // Przy awarii serwera (np. timeout funkcji) Vercel zwraca tekst, nie
+      // JSON — wtedy pokazujemy zrozumiały komunikat zamiast błędu parsera.
+      const data = (await res.json().catch(() => null)) as {
+        url?: string;
+        error?: string;
+      } | null;
+      if (!res.ok || !data?.url)
+        throw new Error(
+          data?.error ??
+            "Nie udało się połączyć z płatnością. Spróbuj ponownie za chwilę.",
+        );
       window.location.href = data.url;
     } catch (e) {
       setError(e instanceof Error ? e.message : "Coś poszło nie tak");
